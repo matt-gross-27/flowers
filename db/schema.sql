@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS flowers_db;
+
+CREATE DATABASE flowers_db;
