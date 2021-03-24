@@ -4,13 +4,13 @@ const Messages = require('./Messages')
 const Flags = require('./Flags')
 
 // Users -> Flowers relationships
-Users.belongsToMany(User, {
+Users.belongsToMany(Users, {
   through: Flowers,
   foreignKey: 'sender_id',
   as: 'sent_flowers_to'
 });
 
-Users.belongsToMany(User, {
+Users.belongsToMany(Users, {
   through: Flowers,
   foreignKey: 'recipient_id',
   as: 'received_flowers_from'
