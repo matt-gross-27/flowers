@@ -57,8 +57,8 @@ router.post('/login', (req, res) => {
             return;
           }
           req.session.save(() => {
-            req.session.user_id = user.id
-            req.session.name = `${user.first_name} ${user.last_name}`
+            req.session.user_id = userData.id
+            req.session.name = `${userData.first_name} ${userData.last_name}`
             req.session.loggedIn = true;
           });
           res.json({ user: userData, session: req.session });
@@ -90,24 +90,61 @@ router.post('/logout', (req, res) => {
 router.get('/', (req, res) => {
   Users.findAll({
     attributes: { exclude: ['password'] },
-    include: { model: Flowers }
+    include: [
+      {
+        model: Users,
+        through: 'flowers',
+        as: 'sent_flowers_to',
+      },
+      {
+        model: Users,
+        through: 'flowers',
+        as: 'received_flowers_from',
+      }      
+    ]
   })
     .then(userData => res.json(userData))
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // GET /api/users/id -> (get one user by id)
 router.get('/:id', (req, res) => {
   Users.findOne({
     where: { id: req.params.id },
-    attributes: { exclude: ['password'] },
-    include: { model: Flowers }
+    attributes: { exclude: ['password'] }
   })
     .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // UPDATE
+// PUT /api/users/flowers -> (send flowers from one user to another)
+router.put('/flowers', (req, res) => {
+  if (req.session) {
+    // expects req.body === {"recipient_id: INT "}
+    Users.sendFlowers({
+      sender_id: req.session.user_id,
+      recipient_id: req.body.recipient_id
+    },
+    {
+      Flowers,
+      Users
+    })
+      .then(userData => res.json(userData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  } else {
+    res.status(400).json({ message: 'you must be logged in to send flowers!' })
+  }
+});
 
 // DELETE
 router.delete('/:id', (req, res) => {
@@ -115,7 +152,10 @@ router.delete('/:id', (req, res) => {
     where: { id: req.params.id },
   })
     .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;

@@ -1,8 +1,29 @@
 const { Model, DataTypes } = require('sequelize');
+const { Flowers } = require('.');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-class Users extends Model {}
+class Users extends Model {
+  static sendFlowers(obj, models) {
+    return models.Flowers.create({
+      recipient_id: obj.recipient_id,
+      sender_id: obj.sender_id
+    }).then(() => {
+      return Users.findOne({
+        where: { id: obj.sender_id },
+        attributes: [
+          'id', 'first_name', 'last_name',
+        ],
+        include: {
+          model: Users,
+          through: 'flowers',
+          as: 'sent_flowers_to',
+          attributes: ['id']
+        }
+      });
+    });
+  }
+}
 
 Users.init(
   {

@@ -1,25 +1,25 @@
+const Flowers = require('./Flowers');
 const Users = require('./Users');
-const Flowers = require('./Flowers')
-const Messages = require('./Messages')
-const Flags = require('./Flags')
 
-// Users -> Flowers relationships
+// Users -> Users relationship through Flowers
 Users.belongsToMany(Users, {
-  through: Flowers,
+  through: 'flowers',
   foreignKey: 'sender_id',
+  otherKey: 'recipient_id',
   as: 'sent_flowers_to'
 });
 
 Users.belongsToMany(Users, {
-  through: Flowers,
+  through: 'flowers',
   foreignKey: 'recipient_id',
+  otherKey: 'sender_id',
   as: 'received_flowers_from'
 });
 
-Users.hasMany(Flowers, {foreignKey: 'sender_id'});
-Users.hasMany(Flowers, {foreignKey: 'recipient_id'});
+Flowers.belongsTo(Users, { foreignKey: 'sender_id' });
+Flowers.belongsTo(Users, { foreignKey: 'recipient_id' });
 
-Flowers.belongsTo(Users, {foreignKey: 'sender_id'});
-Flowers.belongsTo(Users, {foreignKey: 'recipient_id'});
+Users.hasMany(Flowers, { foreignKey: 'sender_id' });
+Users.hasMany(Flowers, { foreignKey: 'recipient_id' });
 
-module.exports = { Users, Flowers, Messages, Flags };
+module.exports = { Users, Flowers }
