@@ -273,25 +273,25 @@ router.put('/flag', (req, res) => {
 });
 
 // PUT /api/users/:id -> (update user data with new data from user profile page)
-  /* expects to receive req.body === <Object Bellow>
-    {
-      "email": "test@hotmail.com",
-      "first_name": "Jane",
-      "last_name": "Test",
-      "password": "supersecret",
-      "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
-      "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-      "age": 35,
-      "gender": "f",
-      "interested_in_m": true,
-      "interested_in_f": true,
-      "interested_in_o": true,
-      "interested_in_min_age": 20,
-      "interested_in_max_age": 50,
-      "latitude": 34.08929,
-      "longitude": -118.382890
-    } */
 router.put('/:id', (req, res) => {
+  /* expects to receive req.body === <Object Bellow>
+  {
+    "email": "test@hotmail.com",
+    "first_name": "Jane",
+    "last_name": "Test",
+    "password": "supersecret",
+    "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
+    "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+    "age": 35,
+    "gender": "f",
+    "interested_in_m": true,
+    "interested_in_f": true,
+    "interested_in_o": true,
+    "interested_in_min_age": 20,
+    "interested_in_max_age": 50,
+    "latitude": 34.08929,
+    "longitude": -118.382890
+  } */
   Users.update(req.body, {
     where: { id: req.params.id }
   })
