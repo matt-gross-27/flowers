@@ -47,6 +47,12 @@ Users.init(
         len: [0, 130]
       }
     },
+    profile_picture_src: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
+    },
     age: {
       type: DataTypes.INTEGER,
       validate: {
