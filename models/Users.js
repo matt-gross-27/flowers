@@ -18,7 +18,6 @@ class Users extends Model {
           model: Users,
           through: 'flowers',
           as: 'sent_flowers_to',
-          attributes: ['id']
         }
       });
     });
