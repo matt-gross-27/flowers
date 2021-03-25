@@ -12,6 +12,7 @@ router.post('/', (req, res) => {
       "last_name": "Test",
       "password": "supersecret",
       "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
+      "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
       "age": 35,
       "gender": "f",
       "interested_in_m": true,
