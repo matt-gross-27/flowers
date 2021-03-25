@@ -1,4 +1,10 @@
 const Flowers = require('./Flowers');
+const Flags = require('./Flags');
+const Blocks = require('./Blocks');
+const UserInterests = require('./UserInterests');
+const UserTurnoffs = require('./UserTurnoffs');
+const Interests = require('./Interests');
+const Turnoffs = require('./Turnoffs');
 const Users = require('./Users');
 
 // Users -> Users relationship through Flowers
@@ -22,4 +28,88 @@ Flowers.belongsTo(Users, { foreignKey: 'recipient_id' });
 Users.hasMany(Flowers, { foreignKey: 'sender_id' });
 Users.hasMany(Flowers, { foreignKey: 'recipient_id' });
 
-module.exports = { Users, Flowers }
+// Users -> Users relationship through Blocks (Used to kill interaction with a user you are no longer interested in)
+Users.belongsToMany(Users, {
+  through: 'blocks',
+  foreignKey: 'sender_id',
+  otherKey: 'recipient_id',
+  as: 'sent_block_to'
+});
+
+Users.belongsToMany(Users, {
+  through: 'blocks',
+  foreignKey: 'recipient_id',
+  otherKey: 'sender_id',
+  as: 'received_block_from'
+});
+
+Blocks.belongsTo(Users, { foreignKey: 'sender_id' });
+Blocks.belongsTo(Users, { foreignKey: 'recipient_id' });
+
+Users.hasMany(Blocks, { foreignKey: 'sender_id' });
+Users.hasMany(Blocks, { foreignKey: 'recipient_id' });
+
+
+
+// Users -> Users relationship through Flags (Used to indicate a user has engaged in inappropriate behavior)
+Users.belongsToMany(Users, {
+  through: 'flags',
+  foreignKey: 'sender_id',
+  otherKey: 'recipient_id',
+  as: 'sent_flag_to'
+});
+
+Users.belongsToMany(Users, {
+  through: 'flags',
+  foreignKey: 'recipient_id',
+  otherKey: 'sender_id',
+  as: 'received_flag_from'
+});
+
+Flags.belongsTo(Users, { foreignKey: 'sender_id' });
+Flags.belongsTo(Users, { foreignKey: 'recipient_id' });
+
+Users.hasMany(Flags, { foreignKey: 'sender_id' });
+Users.hasMany(Flags, { foreignKey: 'recipient_id' });
+
+// Users -> Interests & Turnoffs relationship through UserInterests
+Users.belongsToMany(Interests, {
+  through: 'user_interests',
+  foreignKey: 'user_id',
+  as: 'users_interests'
+});
+
+Interests.belongsToMany(Users, {
+  through: 'user_interests',
+  foreignKey: 'interest_id',
+  as: 'interested_users'
+});
+
+Users.belongsToMany(Turnoffs, {
+  through: 'user_turnoffs',
+  foreignKey: 'user_id',
+  as: 'users_turnoffs'
+});
+
+Turnoffs.belongsToMany(Users, {
+  through: 'user_interests',
+  foreignKey: 'turnoff_id',
+  as: 'repulsed_users'
+});
+
+UserInterests.belongsTo(Users, { foreignKey: 'user_id' });
+UserInterests.belongsTo(Interests, { foreignKey: 'interest_id' });
+
+UserTurnoffs.belongsTo(Users, { foreignKey: 'user_id' });
+UserTurnoffs.belongsTo(Turnoffs, { foreignKey: 'turnoff_id' });
+
+Users.hasMany(UserInterests, { foreignKey: 'user_id' });
+Users.hasMany(UserTurnoffs, { foreignKey: 'user_id' });
+
+Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
+Interests.hasMany(UserTurnoffs, { foreignKey: 'interest_id' });
+
+Turnoffs.hasMany(UserInterests, { foreignKey: 'turnoff_id' });
+Turnoffs.hasMany(UserTurnoffs, { foreignKey: 'turnoff_id' });
+
+module.exports = { Flowers, Flags, Blocks, Users, UserInterests, UserTurnoffs, Interests, Turnoffs }

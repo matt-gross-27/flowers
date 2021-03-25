@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
-const { Flowers } = require('.');
+const { Flowers, Blocks, Flags } = require('.');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
 class Users extends Model {
+  // send flowers method
   static sendFlowers(obj, models) {
     return models.Flowers.create({
       recipient_id: obj.recipient_id,
@@ -16,12 +17,51 @@ class Users extends Model {
         ],
         include: {
           model: Users,
+          attributes: ['id'],
           through: 'flowers',
           as: 'sent_flowers_to',
         }
       });
     });
-  }
+  };
+  
+  // block another user method
+  static blockUser(obj, models) {
+    return models.Blocks.create({
+      recipient_id: obj.recipient_id,
+      sender_id: obj.sender_id
+    }).then(() => {
+      return Users.findOne({
+        where: { id: obj.sender_id },
+        attributes: [ 'id', 'first_name', 'last_name' ],
+        include: {
+          model: Users,
+          attributes: ['id'],
+          through: 'blocks',
+          as: 'sent_block_to',
+        }
+      });
+    });
+  };
+  
+  // flag another user method
+  static flagUser(obj, models) {
+    return models.Flags.create({
+      recipient_id: obj.recipient_id,
+      sender_id: obj.sender_id
+    }).then(() => {
+      return Users.findOne({
+        where: { id: obj.sender_id },
+        attributes: [ 'id', 'first_name', 'last_name' ],
+        include: {
+          model: Users,
+          attributes: ['id'],
+          through: 'flags',
+          as: 'sent_flag_to',
+        }
+      });
+    });
+  };
 }
 
 Users.init(
@@ -141,6 +181,6 @@ Users.init(
     sequelize,
     modelName: 'users'
   }
-)
+);
 
 module.exports = Users;
