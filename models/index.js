@@ -1,10 +1,11 @@
-const Flowers = require('./Flowers');
 const Flags = require('./Flags');
 const Blocks = require('./Blocks');
 const UserInterests = require('./UserInterests');
 const UserTurnoffs = require('./UserTurnoffs');
 const Interests = require('./Interests');
 const Turnoffs = require('./Turnoffs');
+const Matches = require('./Matches');
+const Flowers = require('./Flowers');
 const Users = require('./Users');
 
 // Users -> Users relationship through Flowers
@@ -72,6 +73,27 @@ Flags.belongsTo(Users, { foreignKey: 'recipient_id' });
 Users.hasMany(Flags, { foreignKey: 'sender_id' });
 Users.hasMany(Flags, { foreignKey: 'recipient_id' });
 
+
+
+// Users -> Users relationship through Matches (Used to indicate a two users have sent each other flowers)
+Users.belongsToMany(Users, {
+  through: 'matches',
+  foreignKey: 'user_id',
+  as: 'user_matches'
+});
+
+Users.belongsToMany(Users, {
+  through: 'matches',
+  foreignKey: 'match_user_id',
+  as: 'matched_users'
+});
+
+Matches.belongsTo(Users, { foreignKey: 'user_id' });
+Matches.belongsTo(Users, { foreignKey: 'match_user_id' });
+
+Users.hasMany(Matches, { foreignKey: 'user_id' });
+Users.hasMany(Matches, { foreignKey: 'match_user_id' });
+
 // Users -> Interests & Turnoffs relationship through UserInterests
 Users.belongsToMany(Interests, {
   through: 'user_interests',
@@ -112,4 +134,4 @@ Interests.hasMany(UserTurnoffs, { foreignKey: 'interest_id' });
 Turnoffs.hasMany(UserInterests, { foreignKey: 'turnoff_id' });
 Turnoffs.hasMany(UserTurnoffs, { foreignKey: 'turnoff_id' });
 
-module.exports = { Flowers, Flags, Blocks, Users, UserInterests, UserTurnoffs, Interests, Turnoffs }
+module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users }

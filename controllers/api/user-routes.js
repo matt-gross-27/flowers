@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Users, Flowers, Blocks, Flags } = require('../../models');
+const { Users, Flowers, Matches, Blocks, Flags } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
 
@@ -119,6 +119,16 @@ router.get('/', (req, res) => {
         as: 'received_block_from'
       },
       {
+        model: Users,
+        through: 'matches',
+        as: 'user_matches'
+      },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'matched_users'
+      },
+      {
         model: Flags,
         // kick user off platform when this gets to high? investigate after 1st flag
         attributes: [[sequelize.literal('(SELECT COUNT(*) FROM flags where flags.recipient_id = users.id)'), 'flag_count']]
@@ -132,7 +142,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET /api/users/id -> (get one user by id)
+// GET /api/users/:id -> (get one user by id)
 router.get('/:id', (req, res) => {
   Users.findOne({
     where: { id: req.params.id },
@@ -147,7 +157,7 @@ router.get('/:id', (req, res) => {
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-        attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password', ] },
         through: 'flowers',
         as: 'received_flowers_from'
       },
@@ -173,8 +183,18 @@ router.get('/:id', (req, res) => {
         model: Users,
         attributes: ['id'],
         through: 'flags',
-        as: 'received_flags_from'
+        as: 'received_flag_from'
       },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'user_matches'
+      },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'matched_users'
+      }
     ]
   })
     .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
@@ -186,7 +206,7 @@ router.get('/:id', (req, res) => {
 
 // UPDATE
 // PUT /api/users/flowers -> (send flowers from one user to another)
-router.put('/flowers', (req, res) => {
+router.put('/send-flowers', (req, res) => {
   if (req.session) {
     // expects req.body === {"recipient_id: INT "}
     Users.sendFlowers({
@@ -195,6 +215,7 @@ router.put('/flowers', (req, res) => {
     },
     {
       Flowers,
+      Matches,
       Users
     })
       .then(userData => res.json(userData))
