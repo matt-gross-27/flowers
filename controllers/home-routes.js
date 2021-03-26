@@ -1,8 +1,20 @@
 const router = require('express').Router();
+const User = require('../models/Users');
 const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users } = require('../models');
 
 // Get / Route for (Dashboard/ Homepage)
 router.get('/', (req, res) => {
+  res.render('test', { message: 'Hello from flowers 💐' });
+});
+
+router.get('/search-results', async (req, res) => {
+  let users = await User.findAll();
+
+  users = users.map(user => user.get({ plain: true }));
+
+  console.log(users, 'users')
+  // res.render('test', { message: 'Hello from flowers 💐' });
+  res.render('people', { users });
   Users.findOne({
     where: { id: 1 },
     attributes: { exclude: ['password'] },
