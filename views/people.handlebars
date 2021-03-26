@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row">
+        <!--  Sidebar/filters -->
+        <div class="col-sm-4">
+            {{> filters }}
+        </div>
+
+        <!--  Users -->
+        <div class="col-sm-8">
+            <div class="container">
+                <div class="row user-list">
+                    {{#each users as |user|}}
+                    {{> person user }}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template -->
+<div class="col-sm-4 template user-template">
+    <div class="card mb-3">
+        <img src="{{profile_picture_src}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{email}}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+</div>

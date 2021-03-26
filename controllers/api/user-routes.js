@@ -90,7 +90,14 @@ router.post('/logout', (req, res) => {
 // READ
 // GET /api/users -> (get all users)
 router.get('/', (req, res) => {
+  let where = req.query;
+
+  setTimeout(() => {
+    console.log(req.query, req.body);
+  }, 1000)
+
   Users.findAll({
+    where,
     attributes: { exclude: ['password'] }, 
     include: [
       {
