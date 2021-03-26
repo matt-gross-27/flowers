@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Users, Flowers, Blocks, Flags } = require('../../models');
+const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
 
@@ -94,6 +94,17 @@ router.get('/', (req, res) => {
     attributes: { exclude: ['password'] }, 
     include: [
       {
+        model: Interests,
+        attributes: ['interest_name'],
+        through: 'user_interests',
+        as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        through: 'user_turnoffs',
+        as: 'users_turnoffs'
+      },
+      {
         model: Users,
         attributes: ['id'],
         through: 'flowers',
@@ -119,6 +130,16 @@ router.get('/', (req, res) => {
         as: 'received_block_from'
       },
       {
+        model: Users,
+        through: 'matches',
+        as: 'user_matches'
+      },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'matched_users'
+      },
+      {
         model: Flags,
         // kick user off platform when this gets to high? investigate after 1st flag
         attributes: [[sequelize.literal('(SELECT COUNT(*) FROM flags where flags.recipient_id = users.id)'), 'flag_count']]
@@ -132,7 +153,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// GET /api/users/id -> (get one user by id)
+// GET /api/users/:id -> (get one user by id)
 router.get('/:id', (req, res) => {
   Users.findOne({
     where: { id: req.params.id },
@@ -147,7 +168,7 @@ router.get('/:id', (req, res) => {
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-        attributes: { exclude: ['password'] },
+        attributes: { exclude: ['password', ] },
         through: 'flowers',
         as: 'received_flowers_from'
       },
@@ -173,8 +194,18 @@ router.get('/:id', (req, res) => {
         model: Users,
         attributes: ['id'],
         through: 'flags',
-        as: 'received_flags_from'
+        as: 'received_flag_from'
       },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'user_matches'
+      },
+      {
+        model: Users,
+        through: 'matches',
+        as: 'matched_users'
+      }
     ]
   })
     .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
@@ -186,7 +217,7 @@ router.get('/:id', (req, res) => {
 
 // UPDATE
 // PUT /api/users/flowers -> (send flowers from one user to another)
-router.put('/flowers', (req, res) => {
+router.put('/send-flowers', (req, res) => {
   if (req.session) {
     // expects req.body === {"recipient_id: INT "}
     Users.sendFlowers({
@@ -195,6 +226,7 @@ router.put('/flowers', (req, res) => {
     },
     {
       Flowers,
+      Matches,
       Users
     })
       .then(userData => res.json(userData))
@@ -252,25 +284,25 @@ router.put('/flag', (req, res) => {
 });
 
 // PUT /api/users/:id -> (update user data with new data from user profile page)
-  /* expects to receive req.body === <Object Bellow>
-    {
-      "email": "test@hotmail.com",
-      "first_name": "Jane",
-      "last_name": "Test",
-      "password": "supersecret",
-      "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
-      "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
-      "age": 35,
-      "gender": "f",
-      "interested_in_m": true,
-      "interested_in_f": true,
-      "interested_in_o": true,
-      "interested_in_min_age": 20,
-      "interested_in_max_age": 50,
-      "latitude": 34.08929,
-      "longitude": -118.382890
-    } */
 router.put('/:id', (req, res) => {
+  /* expects to receive req.body === <Object Bellow>
+  {
+    "email": "test@hotmail.com",
+    "first_name": "Jane",
+    "last_name": "Test",
+    "password": "supersecret",
+    "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
+    "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+    "age": 35,
+    "gender": "f",
+    "interested_in_m": true,
+    "interested_in_f": true,
+    "interested_in_o": true,
+    "interested_in_min_age": 20,
+    "interested_in_max_age": 50,
+    "latitude": 34.08929,
+    "longitude": -118.382890
+  } */
   Users.update(req.body, {
     where: { id: req.params.id }
   })
