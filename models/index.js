@@ -129,9 +129,6 @@ Users.hasMany(UserInterests, { foreignKey: 'user_id' });
 Users.hasMany(UserTurnoffs, { foreignKey: 'user_id' });
 
 Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
-Interests.hasMany(UserTurnoffs, { foreignKey: 'interest_id' });
-
-Turnoffs.hasMany(UserInterests, { foreignKey: 'turnoff_id' });
 Turnoffs.hasMany(UserTurnoffs, { foreignKey: 'turnoff_id' });
 
 module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users }

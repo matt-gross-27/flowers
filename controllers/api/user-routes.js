@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Users, Flowers, Matches, Blocks, Flags } = require('../../models');
+const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
 
@@ -93,6 +93,17 @@ router.get('/', (req, res) => {
   Users.findAll({
     attributes: { exclude: ['password'] }, 
     include: [
+      {
+        model: Interests,
+        attributes: ['interest_name'],
+        through: 'user_interests',
+        as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        through: 'user_turnoffs',
+        as: 'users_turnoffs'
+      },
       {
         model: Users,
         attributes: ['id'],
