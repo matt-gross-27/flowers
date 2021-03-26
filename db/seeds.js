@@ -1,4 +1,4 @@
-const { Interests, Turnoffs, Users, UserInterests, UserTurnoffs } = require('../models');
+const { Interests, Turnoffs, Users, UserInterests, UserTurnoffs, Flowers, Matches } = require('../models');
 const sequelize = require('../config/connection');
 
 const interests = [
@@ -43,13 +43,13 @@ const testUsers = [
   //males
   {
     email: "A@hotmail.com", first_name: "A", last_name: "Test", password: "supersecret", description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-    profile_picture_src: "https://randomuser.me/api/portraits/men/1.jpg", age: 35,
+    profile_picture_src: "https://randomuser.me/api/portraits/men/2.jpg", age: 35,
     gender: "m", interested_in_m: false, interested_in_f: true, interested_in_o: false, interested_in_min_age: 20, interested_in_max_age: 50,
     latitude: "37.08929000", longitude: "-119.38289000",
   },
   {
     email: "B@hotmail.com", first_name: "B", last_name: "Test", password: "supersecret", description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-    profile_picture_src: "https://randomuser.me/api/portraits/men/2.jpg", age: 19,
+    profile_picture_src: "https://randomuser.me/api/portraits/men/1.jpg", age: 19,
     gender: "m", interested_in_m: false, interested_in_f: true, interested_in_o: false, interested_in_min_age: 20, interested_in_max_age: 50,
     latitude: "38.08929000", longitude: "-111.38289000",
   },
@@ -154,6 +154,15 @@ const userTurnoffs = [
   { user_id: 3, turnoff_id: 1 },
 ];
 
+const flowers = [
+  { sender_id: 14, recipient_id: 1 },
+  { sender_id: 1,  recipient_id: 7 },
+  { sender_id: 1,  recipient_id: 9 },
+  { sender_id: 7,  recipient_id: 1 },
+  { sender_id: 8,  recipient_id: 1 },
+  { sender_id: 1,  recipient_id: 8 },
+];
+
 seedDatabase = () => {
   Interests.bulkCreate(interests)
   .then(data => console.log('Interests seeded!'));
@@ -171,6 +180,11 @@ seedDatabase = () => {
 
   .then(() => {
     UserTurnoffs.bulkCreate(userTurnoffs);
+  })
+  .then(() => {
+    flowers.forEach(flower => {
+      Users.sendFlowers(flower, {Users, Flowers, Matches});
+    })
   })
   .then(data => console.log('UserInterests seeded!'))
 }

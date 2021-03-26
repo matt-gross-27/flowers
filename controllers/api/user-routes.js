@@ -234,7 +234,7 @@ router.put('/send-flowers', (req, res) => {
   if (req.session) {
     // expects req.body === {"recipient_id: INT "}
     Users.sendFlowers({
-      sender_id: req.session.user_id,
+      sender_id: req.session.user_id | req.body.sender_id,
       recipient_id: req.body.recipient_id
     },
     {
@@ -345,7 +345,7 @@ router.put('/:id', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
-})
+});
 
 // DELETE
 router.delete('/:id', (req, res) => {

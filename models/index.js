@@ -114,7 +114,7 @@ Users.belongsToMany(Turnoffs, {
 });
 
 Turnoffs.belongsToMany(Users, {
-  through: 'user_interests',
+  through: 'user_turnoffs',
   foreignKey: 'turnoff_id',
   as: 'repulsed_users'
 });
