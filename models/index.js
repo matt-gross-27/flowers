@@ -8,15 +8,6 @@ const Matches = require('./Matches');
 const Flowers = require('./Flowers');
 const Users = require('./Users');
 
-<<<<<<< HEAD
-// Add sequelize Table Associations
-Messages.belongsTo(Users);
-Users.hasMany(Messages); 
-Users.hasMany(Flowers);
-Flowers.belongsTo(Users); 
-Users.hasMany(Flags); 
-Flags.belongsTo(Users); 
-=======
 // Users -> Users relationship through Flowers
 Users.belongsToMany(Users, {
   through: 'flowers',
@@ -24,7 +15,6 @@ Users.belongsToMany(Users, {
   otherKey: 'recipient_id',
   as: 'sent_flowers_to'
 });
->>>>>>> develop
 
 Users.belongsToMany(Users, {
   through: 'flowers',
@@ -124,7 +114,7 @@ Users.belongsToMany(Turnoffs, {
 });
 
 Turnoffs.belongsToMany(Users, {
-  through: 'user_interests',
+  through: 'user_turnoffs',
   foreignKey: 'turnoff_id',
   as: 'repulsed_users'
 });

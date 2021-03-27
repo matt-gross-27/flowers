@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node server.js",
+    "dev": "nodemon server.js",
     "db": "mysql -u root -p"
   },
   "repository": {

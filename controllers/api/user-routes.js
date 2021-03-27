@@ -1,11 +1,7 @@
 const router = require('express').Router();
-<<<<<<< HEAD
-const { Users, Messages, Flowers, Flags} = require('../../models'); 
-=======
 const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
->>>>>>> develop
 
 // CREATE
 // POST USER /api/users -> (add a new user to the database and log in)
@@ -94,7 +90,14 @@ router.post('/logout', (req, res) => {
 // READ
 // GET /api/users -> (get all users)
 router.get('/', (req, res) => {
+  let where = req.query;
+
+  setTimeout(() => {
+    console.log(req.query, req.body);
+  }, 1000)
+
   Users.findAll({
+    where,
     attributes: { exclude: ['password'] }, 
     include: [
       {
@@ -231,7 +234,7 @@ router.put('/send-flowers', (req, res) => {
   if (req.session) {
     // expects req.body === {"recipient_id: INT "}
     Users.sendFlowers({
-      sender_id: req.session.user_id,
+      sender_id: req.session.user_id | req.body.sender_id,
       recipient_id: req.body.recipient_id
     },
     {
@@ -342,7 +345,7 @@ router.put('/:id', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
-})
+});
 
 // DELETE
 router.delete('/:id', (req, res) => {
