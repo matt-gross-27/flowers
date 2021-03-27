@@ -31,6 +31,7 @@ UserTurnoffs.init(
   {
     sequelize,
     modelName: 'user_turnoffs',
+    timestamps: false
   }
 );
 

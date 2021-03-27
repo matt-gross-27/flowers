@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs } = require('../../models');
+const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
 
@@ -24,10 +24,12 @@ router.post('/', (req, res) => {
       "latitude": 34.08929,
       "longitude": -118.382890
     } */
+  console.log(req.body);
   Users.create(req.body)
     .then(userData => {
       const user = userData.get({ plain: true });
       // log user in on create (so sign up auto logs in)
+      console.log(`req.session === ${req.session}`);
       req.session.save(() => {
         req.session.user_id = user.id
         req.session.name = `${user.first_name} ${user.last_name}`
@@ -35,7 +37,10 @@ router.post('/', (req, res) => {
         res.json({ user: userData, session: req.session })
       })
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err)
+    });
 });
 
 // POST LOGIN /api/users/login -> (create a session object with properties { name, user_id, loggedIn})
@@ -90,53 +95,59 @@ router.post('/logout', (req, res) => {
 // READ
 // GET /api/users -> (get all users)
 router.get('/', (req, res) => {
+  let where = req.query;
+
+  setTimeout(() => {
+    console.log(req.query, req.body);
+  }, 1000)
+
   Users.findAll({
+    where,
     attributes: { exclude: ['password'] }, 
     include: [
       {
         model: Interests,
-        attributes: ['interest_name'],
-        through: 'user_interests',
+        through: { attributes: [] },
         as: 'users_interests'
       },
       {
         model: Turnoffs,
-        through: 'user_turnoffs',
+        through: { attributes: [] },
         as: 'users_turnoffs'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
         attributes: { exclude: ['password'] },
-        through: 'flowers',
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
-        through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       },
       {
@@ -160,50 +171,60 @@ router.get('/:id', (req, res) => {
     attributes: { exclude: ['password'] },
     include: [
       {
+        model: Interests,
+        through: { attributes: [] },
+        as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        through: { attributes: [] },
+        as: 'users_turnoffs'
+      },
+      {
         model: Users,
         attributes: ['id'],
-        through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-        attributes: { exclude: ['password', ] },
-        through: 'flowers',
+        attributes: { exclude: ['password'] },
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'flags',
+        through: { attributes: [] },
         as: 'sent_flag_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        through: 'flags',
+        through: { attributes: [] },
         as: 'received_flag_from'
       },
       {
         model: Users,
-        through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       }
     ]
@@ -221,7 +242,7 @@ router.put('/send-flowers', (req, res) => {
   if (req.session) {
     // expects req.body === {"recipient_id: INT "}
     Users.sendFlowers({
-      sender_id: req.session.user_id,
+      sender_id: req.session.user_id | req.body.sender_id,
       recipient_id: req.body.recipient_id
     },
     {
@@ -283,6 +304,27 @@ router.put('/flag', (req, res) => {
   }
 });
 
+// PUT /api/users/interest -> (update a users interest list)
+router.put('/interests', (req, res) => {
+  if (req.session) {
+    // expects req.body === {"interest_ids: [ARRAY] "}
+    Users.updateInterests({
+      user_id: req.session.user_id,
+      ...req.body
+    }, 
+    { UserInterests, Interests, Users })
+      
+      .then(userData => res.json(userData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  } else {
+    res.status(400).json({ message: 'you must be logged in to update your interests!' })
+  }
+});
+
+
 // PUT /api/users/:id -> (update user data with new data from user profile page)
 router.put('/:id', (req, res) => {
   /* expects to receive req.body === <Object Bellow>
@@ -311,7 +353,7 @@ router.put('/:id', (req, res) => {
     console.log(err);
     res.status(500).json(err);
   });
-})
+});
 
 // DELETE
 router.delete('/:id', (req, res) => {

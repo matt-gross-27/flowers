@@ -17,7 +17,7 @@ class Users extends Model {
             sender_id: reqObj.recipient_id,
             recipient_id: reqObj.sender_id
           }
-        })
+        });
       })
       .then((checkMatchData) => {
         // if they have (above) > create a row in the match table with both user_ids
@@ -40,14 +40,20 @@ class Users extends Model {
           {
             model: Users,
             attributes: ['id'],
-            through: 'flowers',
+            through: { attributes: [] },
             as: 'sent_flowers_to',
           },
           {
             model: Users,
             attributes: ['id'],
-            through: 'matches',
+            through: { attributes: [] },
             as: 'user_matches'
+          },
+          {
+            model: Users,
+            attributes: ['id'],
+            through: { attributes: [] },
+            as: 'matched_users'
           }
         ]
       });
@@ -66,7 +72,7 @@ class Users extends Model {
         include: {
           model: Users,
           attributes: ['id'],
-          through: 'blocks',
+          through: { attributes: [] },
           as: 'sent_block_to',
         }
       });
@@ -85,8 +91,33 @@ class Users extends Model {
         include: {
           model: Users,
           attributes: ['id'],
-          through: 'flags',
+          through: { attributes: [] },
           as: 'sent_flag_to',
+        }
+      });
+    });
+  };
+
+  // update users interests method
+  static updateInterests(obj, models) {
+    return models.UserInterests.destroy({
+      where: { user_id: obj.user_id }
+    })
+    .then(() => {
+      return obj.interest_ids.forEach(interestId => {
+        models.UserInterests.create({
+          user_id: obj.user_id,
+          interest_id: interestId
+        });
+      });
+    })
+    .then(() => {
+      return models.Users.findOne({
+        where: { id: obj.user_id },
+        attributes: [ 'id', 'first_name', 'last_name'],
+        include: { model: models.Interests, 
+          through: { attributes: [] },
+          as: 'users_interests' 
         }
       });
     });

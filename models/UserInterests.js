@@ -31,6 +31,7 @@ UserInterests.init(
   {
     sequelize,
     modelName: 'user_interests',
+    timestamps: false
   }
 );
 
