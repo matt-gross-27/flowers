@@ -40,14 +40,20 @@ class Users extends Model {
           {
             model: Users,
             attributes: ['id'],
-            through: 'flowers',
+            through: { attributes: [] },
             as: 'sent_flowers_to',
           },
           {
             model: Users,
             attributes: ['id'],
-            through: 'matches',
+            through: { attributes: [] },
             as: 'user_matches'
+          },
+          {
+            model: Users,
+            attributes: ['id'],
+            through: { attributes: [] },
+            as: 'matched_users'
           }
         ]
       });
@@ -66,7 +72,7 @@ class Users extends Model {
         include: {
           model: Users,
           attributes: ['id'],
-          through: 'blocks',
+          through: { attributes: [] },
           as: 'sent_block_to',
         }
       });
@@ -85,7 +91,7 @@ class Users extends Model {
         include: {
           model: Users,
           attributes: ['id'],
-          through: 'flags',
+          through: { attributes: [] },
           as: 'sent_flag_to',
         }
       });
@@ -109,7 +115,10 @@ class Users extends Model {
       return models.Users.findOne({
         where: { id: obj.user_id },
         attributes: [ 'id', 'first_name', 'last_name'],
-        include: { model: models.Interests, as: 'users_interests' }
+        include: { model: models.Interests, 
+          through: { attributes: [] },
+          as: 'users_interests' 
+        }
       });
     });
   };

@@ -16,3 +16,15 @@
 <li>longitude: {{longitude}}</li>
 <li>createdAt: {{createdAt}}</li>
 <li>updatedAt: {{updatedAt}}</li>
+<li>users_interests:</li>  
+<ul>
+  {{#each users_interests}}
+  <li>{{interest_name}}</li>
+  {{/each}}
+</ul>
+<li>users_turnoffs:</li>  
+<ul>
+  {{#each users_turnoffs}}
+  <li>{{turnoff_name}}</li>
+  {{/each}}
+</ul>
