@@ -24,10 +24,12 @@ router.post('/', (req, res) => {
       "latitude": 34.08929,
       "longitude": -118.382890
     } */
+  console.log(req.body);
   Users.create(req.body)
     .then(userData => {
       const user = userData.get({ plain: true });
       // log user in on create (so sign up auto logs in)
+      console.log(`req.session === ${req.session}`);
       req.session.save(() => {
         req.session.user_id = user.id
         req.session.name = `${user.first_name} ${user.last_name}`
@@ -35,7 +37,10 @@ router.post('/', (req, res) => {
         res.json({ user: userData, session: req.session })
       })
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err)
+    });
 });
 
 // POST LOGIN /api/users/login -> (create a session object with properties { name, user_id, loggedIn})
