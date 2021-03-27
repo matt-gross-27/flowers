@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
+const { response } = require('express');
 
 // CREATE
 // POST USER /api/users -> (add a new user to the database and log in)
@@ -107,48 +108,47 @@ router.get('/', (req, res) => {
     include: [
       {
         model: Interests,
-        // attributes: ['interest_name'],
-        // through: 'user_interests',
+        through: { attributes: [] },
         as: 'users_interests'
       },
       {
         model: Turnoffs,
-        // through: 'user_turnoffs',
+        through: { attributes: [] },
         as: 'users_turnoffs'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
         attributes: { exclude: ['password'] },
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       },
       {
@@ -174,54 +174,60 @@ router.get('/:id', (req, res) => {
       {
         model: Interests,
         attributes: ['interest_name'],
-        // through: 'user_interests',
+        through: { attributes: [] },
         as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        attributes: ['turnoff_name'],
+        through: { attributes: [] },
+        as: 'users_turnoffs'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
         attributes: { exclude: ['password', ] },
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flags',
+        through: { attributes: [] },
         as: 'sent_flag_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flags',
+        through: { attributes: [] },
         as: 'received_flag_from'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       }
     ]
