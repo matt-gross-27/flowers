@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
-const { response } = require('express');
 
 // CREATE
 // POST USER /api/users -> (add a new user to the database and log in)
@@ -173,13 +172,11 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Interests,
-        attributes: ['interest_name'],
         through: { attributes: [] },
         as: 'users_interests'
       },
       {
         model: Turnoffs,
-        attributes: ['turnoff_name'],
         through: { attributes: [] },
         as: 'users_turnoffs'
       },
@@ -192,7 +189,7 @@ router.get('/:id', (req, res) => {
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-        attributes: { exclude: ['password', ] },
+        attributes: { exclude: ['password'] },
         through: { attributes: [] },
         as: 'received_flowers_from'
       },
