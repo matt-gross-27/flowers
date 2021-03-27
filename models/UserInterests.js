@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Flags extends Model {}
+class UserInterests extends Model {}
 
-Flags.init(
+UserInterests.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ Flags.init(
       primaryKey: true,
       autoIncrement: true
     },
-    sender_id: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -19,19 +19,19 @@ Flags.init(
         key: 'id'
       }
     },
-    recipient_id: {
+    interest_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'users',
+        model: 'interests',
         key: 'id'
-      } 
-    }
+      }
+    },
   },
   {
     sequelize,
-    modelName: 'flags',
+    modelName: 'user_interests',
   }
 );
 
-module.exports = Flags
+module.exports = UserInterests

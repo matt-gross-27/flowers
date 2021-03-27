@@ -2,7 +2,118 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
-class Users extends Model {}
+class Users extends Model {
+  // send flowers method
+  static sendFlowers(reqObj, models) {
+    // create new row in flowers table
+    return models.Flowers.create({
+      recipient_id: reqObj.recipient_id,
+      sender_id: reqObj.sender_id
+    })
+      .then(() => {
+        // check if the recipient has previously sent flowers to the sender
+        return models.Flowers.findOne({
+          where: {
+            sender_id: reqObj.recipient_id,
+            recipient_id: reqObj.sender_id
+          }
+        });
+      })
+      .then((checkMatchData) => {
+        // if they have (above) > create a row in the match table with both user_ids
+        if (checkMatchData) {
+          return models.Matches.create({
+            user_id: reqObj.sender_id,
+            match_user_id: reqObj.recipient_id
+          })
+        return;
+        }
+      })
+      .then( () => {
+      // send data back for put request response (user data with flowers and matches)
+      return Users.findOne({
+        where: { id: reqObj.sender_id },
+        attributes: [
+          'id', 'first_name', 'last_name',
+        ],
+        include: [
+          {
+            model: Users,
+            attributes: ['id'],
+            through: 'flowers',
+            as: 'sent_flowers_to',
+          },
+          {
+            model: Users,
+            attributes: ['id'],
+            through: 'matches',
+            as: 'user_matches'
+          }
+        ]
+      });
+    });
+  };
+  
+  // block another user method
+  static blockUser(obj, models) {
+    return models.Blocks.create({
+      recipient_id: obj.recipient_id,
+      sender_id: obj.sender_id
+    }).then(() => {
+      return Users.findOne({
+        where: { id: obj.sender_id },
+        attributes: [ 'id', 'first_name', 'last_name' ],
+        include: {
+          model: Users,
+          attributes: ['id'],
+          through: 'blocks',
+          as: 'sent_block_to',
+        }
+      });
+    });
+  };
+  
+  // flag another user method
+  static flagUser(obj, models) {
+    return models.Flags.create({
+      recipient_id: obj.recipient_id,
+      sender_id: obj.sender_id
+    }).then(() => {
+      return Users.findOne({
+        where: { id: obj.sender_id },
+        attributes: [ 'id', 'first_name', 'last_name' ],
+        include: {
+          model: Users,
+          attributes: ['id'],
+          through: 'flags',
+          as: 'sent_flag_to',
+        }
+      });
+    });
+  };
+
+  // update users interests method
+  static updateInterests(obj, models) {
+    return models.UserInterests.destroy({
+      where: { user_id: obj.user_id }
+    })
+    .then(() => {
+      return obj.interest_ids.forEach(interestId => {
+        models.UserInterests.create({
+          user_id: obj.user_id,
+          interest_id: interestId
+        });
+      });
+    })
+    .then(() => {
+      return models.Users.findOne({
+        where: { id: obj.user_id },
+        attributes: [ 'id', 'first_name', 'last_name'],
+        include: { model: models.Interests, as: 'users_interests' }
+      });
+    });
+  };
+}
 
 Users.init(
   {
@@ -45,6 +156,12 @@ Users.init(
       type: DataTypes.STRING,
       validate: {
         len: [0, 130]
+      }
+    },
+    profile_picture_src: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
       }
     },
     age: {
@@ -115,6 +232,6 @@ Users.init(
     sequelize,
     modelName: 'users'
   }
-)
+);
 
 module.exports = Users;

@@ -15,7 +15,7 @@ Flowers.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'user',
+        model: 'users',
         key: 'id'
       }
     },
@@ -23,7 +23,7 @@ Flowers.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'user',
+        model: 'users',
         key: 'id'
       } 
     }
@@ -31,6 +31,7 @@ Flowers.init(
   {
     sequelize,
     modelName: 'flowers',
-  });
+  }
+);
 
 module.exports = Flowers

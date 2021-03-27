@@ -1,14 +1,11 @@
 const router = require('express').Router();
 
-// const userRoutes = require('./user-routes');
+const userRoutes = require('./user-routes');
+const interestRoutes = require('./interest-routes');
+const turnoffRoutes = require('./turnoff-routes');
 
-// TEST GET /api route
-router.get('/', (req, res) => {
-  res.json({
-    request_headers: req.headers,
-    request_ip: req.signedCookies,
-    request_ip: req.ip,
-  });
-});
+router.use('/users', userRoutes);
+router.use('/interests', interestRoutes);
+router.use('/turnoffs', turnoffRoutes);
 
 module.exports = router;
