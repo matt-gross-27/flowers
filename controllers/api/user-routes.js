@@ -24,10 +24,12 @@ router.post('/', (req, res) => {
       "latitude": 34.08929,
       "longitude": -118.382890
     } */
+  console.log(req.body);
   Users.create(req.body)
     .then(userData => {
       const user = userData.get({ plain: true });
       // log user in on create (so sign up auto logs in)
+      console.log(`req.session === ${req.session}`);
       req.session.save(() => {
         req.session.user_id = user.id
         req.session.name = `${user.first_name} ${user.last_name}`
@@ -35,7 +37,10 @@ router.post('/', (req, res) => {
         res.json({ user: userData, session: req.session })
       })
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err)
+    });
 });
 
 // POST LOGIN /api/users/login -> (create a session object with properties { name, user_id, loggedIn})
@@ -102,48 +107,47 @@ router.get('/', (req, res) => {
     include: [
       {
         model: Interests,
-        // attributes: ['interest_name'],
-        // through: 'user_interests',
+        through: { attributes: [] },
         as: 'users_interests'
       },
       {
         model: Turnoffs,
-        // through: 'user_turnoffs',
+        through: { attributes: [] },
         as: 'users_turnoffs'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
         attributes: { exclude: ['password'] },
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       },
       {
@@ -168,55 +172,59 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Interests,
-        attributes: ['interest_name'],
-        // through: 'user_interests',
+        through: { attributes: [] },
         as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        through: { attributes: [] },
+        as: 'users_turnoffs'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flowers',
+        through: { attributes: [] },
         as: 'sent_flowers_to',
       },
       {
         model: Users,
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-        attributes: { exclude: ['password', ] },
-        // through: 'flowers',
+        attributes: { exclude: ['password'] },
+        through: { attributes: [] },
         as: 'received_flowers_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'sent_block_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'blocks',
+        through: { attributes: [] },
         as: 'received_block_from'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flags',
+        through: { attributes: [] },
         as: 'sent_flag_to'
       },
       {
         model: Users,
         attributes: ['id'],
-        // through: 'flags',
+        through: { attributes: [] },
         as: 'received_flag_from'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'user_matches'
       },
       {
         model: Users,
-        // through: 'matches',
+        through: { attributes: [] },
         as: 'matched_users'
       }
     ]
