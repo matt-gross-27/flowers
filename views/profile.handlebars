@@ -1,17 +1,37 @@
+{{>navigationbar}}
+{{!-- container and longer cards maybe --}}
+<div class="container">
 
-    <nav></nav>
-    <div>
-        <ul>
-<li>first_name: {{first_name}}</li>
-<li>last_name: {{last_name}}</li>
-<li>description: {{description}}</li>
-<li>profile_picture_src: {{profile_picture_src}}</li>
-<li>age: {{age}}</li>
-<li>gender: {{gender}}</li>
-<li>interested_in_m: {{interested_in_m}}</li>
-<li>interested_in_f: {{interested_in_f}}</li>
-<li>interested_in_o: {{interested_in_o}}</li>
-<li>interested_in_min_age: {{interested_in_min_age}}</li>
-<li>interested_in_max_age: {{interested_in_max_age}}</li>
-        </ul>
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <ul>
+                    <li>first_name: {{first_name}}</li>
+                    <li>last_name: {{last_name}}</li>
+                    <li>profile_picture_src: {{profile_picture_src}}</li>
+                    <li>age: {{age}}</li>
+                    <li>gender: {{gender}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            A little bit about me: {{description}}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <ul>
+                    <li>interested_in_m: {{interested_in_m}}</li>
+                    <li>interested_in_f: {{interested_in_f}}</li>
+                    <li>interested_in_o: {{interested_in_o}}</li>
+                    <li>interested_in_min_age: {{interested_in_min_age}}</li>
+                    <li>interested_in_max_age: {{interested_in_max_age}}</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
