@@ -1,12 +1,11 @@
+<!--  Sidebar/filters -->
+{{> filters }}
+
 <div class="container-fluid">
     <div class="row">
-        <!--  Sidebar/filters -->
-        <div class="col-sm-4">
-            {{> filters }}
-        </div>
 
         <!--  Users -->
-        <div class="col-sm-8">
+        <div class="col">
             <div class="container">
                 <div class="row user-list">
                     {{#each users as |user|}}
