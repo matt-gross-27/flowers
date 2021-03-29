@@ -378,20 +378,7 @@ router.get('/', (req, res) => {
     });
 });
 
-//get specific user by id 
-router.get('/:id', (req, res) => {
-    Users.findOne({
-        attributes: {exclude : ['password']}, 
-        where: {
-            id: req.params.id
-        }, 
-        include: [
-            {
-                model: Messages, 
-                attributes: []
-            }
-        ]
-    })
-})
 
-module.exports = router;
+
+
+module.exports = router;  

@@ -6,3 +6,6 @@ label {
   display: none;
 }
 
+.navbar {
+  position: fixed-right
+}
