@@ -27,7 +27,7 @@ $('#filter-btn').on('click', async function(event) {
 
     console.log('Searching with filter:', filters || 'no filters');
 
-    const users = await $.get(`/api/users?${filters}`);
+    const users = await $.get(`/api/filter?${filters}`);
 
     console.log('Results:', users);
     loadUsers(users);

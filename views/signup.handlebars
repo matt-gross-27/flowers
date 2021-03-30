@@ -1,89 +1,93 @@
-<div id='user-name-div' class='signupQuery'>
+<div class="container">
 
+
+  <div id='user-name-div' class='signupQuery'>
     <h2> Please enter your first and last name.</h2>
-
     <form id='user-name-form'>
-        <label for='user-firstname'> First Name:</label>
-        <input name='user-fistname' id='user-firstname' placeholder='First name'>
-        <label for='user-lastname'> Last Name:</label>
-        <input name='user-lastname'id='user-lastname'placeholder='Last name'>
-            <button type="submit">Submit</button>
+      
+      <div class="form-group">
+        <label class="form-text" for='user-firstname'> First Name:</label>
+        <input class="form-control" name='user-fistname' id='user-firstname' placeholder='First name'>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-text" for='user-lastname'> Last Name:</label>
+        <input class="form-control" name='user-lastname' id='user-lastname' placeholder='Last name'>
+      </div>
+      
+      <div>
+        <button class="mt-3 mt-3 btn btn-outline-success" type="submit">Next</button>
+      </div>
     </form>
-</div>
-<div id='user-about-div' class='d-none signupQuery'>
+    <p class="mt-3 small">Already have an account? <a href="/login">Login</a></p>
+  </div>
 
+  <div id='user-about-div' class='d-none signupQuery'>
     <h2> Tell us about yourself.</h2>
-
     <form id='user-about-form'>
-        <label for='user-age'>What is your age:</label>
-        <input name='user-age'id='user-age'placeholder='Age'>
-            <label for='user-gender'>Select gender</label>
+      <div class="form-group">
+        <label class="form-text" for='user-age'>What is your age:</label>
+        <input class="form-control" name='user-age' id='user-age' placeholder='Age'>
+      </div>
 
-            <select requiredname='user-gender' id='user-gender'>
-                <option disabled selceted hidden value="">gender options</option>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-                <option value="o">Non Binary</option>
-            </select>
+      <div class="form-group">
+        <label class="form-text" for='user-gender'>Select Your Gender</label>
+        <select class="form-control" required name='user-gender' id='user-gender'>
+          <option disabled selected value="">Select Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+          <option value="o">Non Binary</option>
+        </select>
+      </div>
+      
 
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
-                <label class="form-check-label" for="male">
-                    Male
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="female" id="female">
-                <label class="form-check-label" for="female">
-                    Female
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary">
-                <label class="form-check-label" for="non-binary">
-                    Non-binary
-                </label>
-            </div>
+      <p class="form-text">Check all that apply</p>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
+        <label class="form-check-label" for="male"> 
+          Interested in Men?
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="female" id="female">
+        <label class="form-check-label" for="female">
+          Interested in Women?
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary">
+        <label class="form-check-label" for="non-binary">
+          Interested in Non-Binary?
+        </label>
+      </div>
 
-            <label for='user-bio'> About you:</label>
-            <textarea id='user-bio' placeholder='About you'></textarea>
+      <div class="form-group">
+        <label class="form-text" for='user-bio'>Tell us about yourself:</label>
+        <textarea class="form-control" id='user-bio' placeholder='About you'></textarea>
+      </div>
 
-            <label for='user-photo-url'>Enter a photo url</label>
-            <input type="text" name="user-photo-url" id="user-photo-url" placeholder='Must be a url for a photo' />
+      <div class="form-group">
+        <label class="form-text" for='user-photo-url'>Enter a photo url</label>
+        <input class="form-control" type="text" name="user-photo-url" id="user-photo-url" placeholder='Must be a url for a photo' />
+      </div>
 
-            <button type="submit">Submit</button>
+      <button class="mt-3 btn btn-outline-success" type="submit">Next</button>
     </form>
-
-</div>
-<div id='user-signup-div' class='d-none signupQuery'>
-    <h2> Signup </h2>
-
+  </div>
+  
+  <div id='user-signup-div' class='d-none signupQuery'>
+    <h2>Signup</h2>
     <form id='user-signup-form'>
-        <label for='user-email'> Email:</label>
-        <input name='user-email' id='user-email' placeholder='E-mail address'>
-        <label for='user-password'> Password:</label>
-        <input name='user-password'id='user-password' placeholder='Password Must Be ≥ 8 characters'>
-            <button type="submit">Submit</button>
+      <div class="form-group">
+        <label class="form-text" for='user-email'> Email:</label>
+        <input class="form-control" name='user-email' id='user-email' placeholder='E-mail address'>
+      </div>
+      <div class="form-group">
+        <label class="form-text" for='user-password'> Password:</label>
+        <input type="password" class="form-control" name='user-password' id='user-password' placeholder='Password Must Be ≥ 8 characters'>
+      </div>
+      <button class="mt-3 btn btn-outline-success" type="submit">Sign Up</button>
     </form>
+  </div>
+  <script src="/js/signup.js"></script>
 </div>
-<script src="/js/signup.js"></script>
-
-{{!--
-{
-“email”: “test@hotmail.com”,
-“first_name”: “Jane”,
-“last_name”: “Test”,
-“password”: “supersecret”,
-“description”: “I’m a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike”,
-“profile_picture_src”:
-“https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60”,
-“age”: 35,
-“gender”: “f”,
-“interested_in_m”: true,
-“interested_in_f”: true,
-“interested_in_o”: true,
-“interested_in_min_age”: 20,
-“interested_in_max_age”: 50,
-“latitude”: 34.08929,
-“longitude”: -118.382890
-} --}}

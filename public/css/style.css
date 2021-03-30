@@ -10,6 +10,14 @@ label {
     position: fixed-right
 }
 
+.btn-no-style {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  background: none;
+  text-align: left;
+}
 
 /*#filter-form {
     position: absolute;
