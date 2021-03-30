@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
+const getDistance = require('./getDistance');
 
 // CREATE
 // POST USER /api/users -> (add a new user to the database and log in)
@@ -95,11 +96,12 @@ router.post('/logout', (req, res) => {
 // READ
 // GET /api/users -> (get all users)
 router.get('/', (req, res) => {
-    let where = req.query;
-
-    setTimeout(() => {
-        console.log(req.query, req.body);
-    }, 1000)
+    const where = ['gender'].reduce((props, prop) => {
+        if (req.query[prop]) {
+            props[prop] = req.query[prop]
+        }
+        return props;
+    }, {});
 
     Users.findAll({
             where,
@@ -158,7 +160,36 @@ router.get('/', (req, res) => {
                 }
             ]
         })
-        .then(userData => res.json(userData))
+        .then(userData => {
+            const { query } = req;
+            let { distance, latitude, longitude } = req.query;
+
+            const location = {
+                latitude,
+                longitude
+            };
+
+            if (distance) {
+                distance = Number(distance)
+            } else {
+                distance = Infinity;
+            }
+
+            //res.json(userData)
+            const data = JSON.parse(JSON.stringify(userData))
+                .map((match) => {
+                    match.distance = getDistance(location, {
+                        latitude: match.latitude,
+                        longitude: match.longitude
+                    })
+                    console.log(match.distance, distance)
+                    return match;
+                })
+                .filter(({ distance }) => distance < query.distance)
+                .sort((a, b) => a.distance > b.distance ? 1 : -1);
+
+            res.json(data)
+        })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
@@ -362,5 +393,19 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
+
+//getting all users
+router.get('/', (req, res) => {
+    Users.findAll({
+            attributes: { exclude: ['passowrd'] }
+        }).then(dbUserdata => res.json(dbUserdata))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+
+
 
 module.exports = router;

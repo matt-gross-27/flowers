@@ -1,12 +1,11 @@
+<!--  Sidebar/filters -->
+{{> filters }}
+
 <div class="container-fluid">
     <div class="row">
-        <!--  Sidebar/filters -->
-        <div class="col-sm-4">
-            {{> filters }}
-        </div>
 
         <!--  Users -->
-        <div class="col-sm-8">
+        <div class="col">
             <div class="container">
                 <div class="row user-list">
                     {{#each users as |user|}}
@@ -26,7 +25,9 @@
             <h5 class="card-title">{{email}}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
                 content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            {{!-- figure out how to connect to invidivual profile when button is clicked --}}
+            <a href="/profile/{{id}}" class="btn btn-primary">Go to Profile</a>
+            <a href="/profile/{{id}}" class="btn btn-primary">Send Flowers</a>
         </div>
     </div>
 </div>

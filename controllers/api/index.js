@@ -8,4 +8,4 @@ router.use('/users', userRoutes);
 router.use('/interests', interestRoutes);
 router.use('/turnoffs', turnoffRoutes);
 
-module.exports = router;
+module.exports = router;    

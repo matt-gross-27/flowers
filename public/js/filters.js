@@ -1,5 +1,4 @@
-$(document).ready(function() {
-});
+$(document).ready(function() {});
 
 const template = `
 <div class="col-sm-4">
@@ -19,10 +18,12 @@ const loadUsers = (users) => {
     $('.user-list').html(users.map(user => hbTemplate(user)));
 }
 
-$('#filter-form').on('submit', async function(event) {
+$('#filter-btn').on('click', async function(event) {
     event.preventDefault();
-    
-    const filters = $(this).serialize();
+
+    const filters = $('#filter-form').serialize() +
+        '&latitude=37.08929000' +
+        '&longitude=-119.38289000';
 
     console.log('Searching with filter:', filters || 'no filters');
 
@@ -30,4 +31,8 @@ $('#filter-form').on('submit', async function(event) {
 
     console.log('Results:', users);
     loadUsers(users);
+})
+
+$('[name=distance]').on('input', function() {
+    $('#distance').html($(this).val() + ' miles');
 })
