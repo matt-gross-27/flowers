@@ -1,61 +1,71 @@
-<div>
-    <h2> Please enter your information</h2>
-
-
-    <form id='user-signup'>
-        <label for='user-email'> EMail:</label>
-        <input  type='email' 
-                name='user-email' 
-                id='user-email' 
-                placeholder='E-mail address'>
-    </form>
-
-    <h2> Please enter your password of 8 characters or numbers.</h2>
-
-
-    <form id='user-signup'>
-        <label for='user-password'> Password:</label>
-        <input  type='password' 
-                name='user-password' 
-                id='user-password' 
-                placeholder='Password'>
-    </form>
+<div id='user-name-div' class='signupQuery'>
     
     <h2> Please enter your first and last name.</h2>
 
-    <form id='user-name'>
-        <label for='first_name''last_name'> Full Name:</label>
-        <input  type='full name' 
-                name='user-name' 
-                id='user-name' 
-                placeholder='Full name'>
+    <form id='user-name-form'>
+        <label for='user-firstname'> First Name:</label>
+        <input  name='user-fistname' 
+                id='user-firstname' 
+                placeholder='First name'>
+        <label for='user-lastname'> Last Name:</label>
+        <input   
+                name='user-lastname' 
+                id='user-lastname' 
+                placeholder='Last name'>
+        <button type="submit">Submit</button>
     </form>
+</div>
+<div id='user-about-div' class='d-none signupQuery'>
 
     <h2> Tell us about yourself.</h2>
 
-    <form id='user-bio'>
-        <label for='user-bio'> About you:</label>
-        <input  type='bio' 
-                name='user-bio' 
-                id='user-bio' 
-                placeholder='About you'>
+    <form id='user-about-form'>
         <label for='user-age'>What is your age:</label>
-        <input type='age'
+        <input 
                 name='user-age'
                 id='user-age'
                 placeholder='Age'>
-        <label for='user-gender'>Gender</label>
-        <input type='gender'
+        <label for='user-gender'>Select gender</label>
+        <select required 
                name='user-gender'
-               id='user-gender'
-               placeholder='Gender'> 
+               id='user-gender'>
+                <option disabled selceted hidden value="" >gender options</option>
                 <option value="m">Male</option>
                 <option value="f">Female</option>
                 <option value="o">Non Binary</option>
+        </select>
+        <label for='user-bio'> About you:</label>
+        <textarea  
+                name='user-bio' 
+                id='user-bio' 
+                placeholder='About you' >
+        </textarea>
+        
+        <label for='user-photo-url'>Enter a photo url</label>
+        <input type="text" name="user-photo-url" id="user-photo-url" placeholder='Must be a url for a photo' />
+        
+        <button type="submit">Submit</button>
     </form>
 
 </div>
+<div id='user-signup-div' class='d-none signupQuery'>
+    <h2> Signup </h2>
 
+    <form id='user-signup-form'>
+        <label for='user-email'> EMail:</label>
+        <input   
+                name='user-email' 
+                id='user-email' 
+                placeholder='E-mail address'>
+        <label for='user-password'> Password:</label>
+        <input   
+                name='user-password' 
+                id='user-password' 
+                placeholder='Password'>
+    <button type="submit">Submit</button>
+    </form>
+</div>
+<script src="/js/signup.js"></script>
 
 {{!-- 
 {
