@@ -4,7 +4,7 @@ const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests,
 
 // Get / Route for (Dashboard/ Homepage)
 // Get / Route for (Dashboard/ Homepage)
-router.get('/', (req, res) => {
+router.get('/dashboard', (req, res) => {
     Users.findOne({
             where: { id: 1 },
             attributes: { exclude: ['password'] },
@@ -72,7 +72,7 @@ router.get('/', (req, res) => {
         .then(userData => {
             const user = userData.get({ plain: true });
             console.log(user);
-            res.render('home', user);
+            res.render('test-dashboard', user);
         })
         .catch(err => {
             console.log(err);
