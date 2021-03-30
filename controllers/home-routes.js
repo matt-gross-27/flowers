@@ -4,6 +4,9 @@ const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests,
 
 // Render Homepage
 router.get('/', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/dashboard')
+  }
   res.render('home', {...req.session});
 });
 
@@ -85,7 +88,7 @@ router.get('/dashboard', (req, res) => {
 });
 
 // Render search Page
-router.get('/search', async (req, res) => {
+router.get('/search', async (req, res) => {  
   let users = await User.findAll();
 
   users = users.map(user => user.get({ plain: true }));
@@ -153,7 +156,7 @@ router.get('/search', async (req, res) => {
   })
     .then(userData => {
       const user = userData.get({ plain: true });
-      console.log(user);
+      console.log({...user, ...req.session})
       res.render('people', { ...user, ...req.session });
     })
     .catch(err => {
