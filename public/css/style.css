@@ -91,6 +91,36 @@ input:-internal-autofill-selected {
     background-color:#f0c5c2 !important;
 }
 
+.my-texts {
+  background-color:#ff6497;
+  border-radius: 20px 20px 0 20px;
+}
+
+.match-texts {
+background-color: aquamarine;
+border-radius: 20px 20px 20px 0;
+}
+
+.texts {
+  border: solid lightslategray 1px
+}
+
+.chat-box {
+  border: solid lightslategray 1px;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-anchor: none;
+}
+
+.chat-form {
+  border: solid lightslategray 1px;
+}
+
+.btn-send {
+  height: 38px;
+  margin-right: 8px;
+  align-self: center;
+}
 .footer {
   position: fixed;
   left: 0;

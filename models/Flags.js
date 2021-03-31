@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Flags extends Model {}
+class Flags extends Model { }
 
 Flags.init(
   {
@@ -25,7 +25,7 @@ Flags.init(
       references: {
         model: 'users',
         key: 'id'
-      } 
+      }
     }
   },
   {

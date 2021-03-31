@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="container">
-    <h2>Your Notifications</h2>
+  <h2>Your Notifications</h2>
+  <section class="dashboard-section">
     {{#unless received_flowers_from.length}}
     <p class="text-secondary">
       You Currently have no notifications. Check out the search for matches page and come back later to see who sent you
@@ -27,15 +27,18 @@
           </div>
       </div>
     </div>
-    <hr>
-    {{/each}}
-    <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
-    <hr>
-    <h2>Your Matches</h2>
-    <br>
+  </section>
+  <hr>
+  {{/each}}
+  <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
+  <hr>
+  <h2>Your Matches</h2>
+  <br>
+  <section class="dashboard-section">
     {{#unless user_matches.length}}
     <p class="text-secondary">
-      You Currently have no matches. When you and another user send flowers to each other, you can come back to see matches here!
+      You Currently have no matches. When you and another user send flowers to each other, you can come back to see
+      matches here!
     </p>
     {{/unless}}
 
@@ -51,8 +54,8 @@
           <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
           <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
           <div class='my-1 d-flex justify-content-around'>
-            <button data-attribute-id="{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
-              title="Message user">💬</button>
+            <a href="/chat/{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
+              title="Message user">💬</a>
             <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-block-btn"
               title="Block user">❌</button>
             <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-flag-btn"
@@ -60,9 +63,10 @@
           </div>
       </div>
     </div>
-    <hr>
-    {{/each}}
+  </section>
+  <hr>
+  {{/each}}
 
-    <script src="js/sendFlowers.js"></script>
-    <script src="js/sendBlock.js"></script>
-    <script src="js/sendFlag.js"></script>
+  <script src="js/sendFlowers.js"></script>
+  <script src="js/sendBlock.js"></script>
+  <script src="js/sendFlag.js"></script>

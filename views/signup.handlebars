@@ -24,12 +24,11 @@ a button to make the div with the stuffs disappear --}}
   <div id='user-name-div' class='signupQuery'>
    
     <form id='user-name-form'>
-      <h2> Please enter your first and last name.</h2>
       <div class="form-group">
         <label class="form-text" for='user-firstname'> First Name:</label>
         <input class="form-control" name='user-fistname' id='user-firstname' placeholder='First name'>
       </div>
-      
+
       <div class="form-group">
         <label class="form-text" for='user-lastname'> Last Name:</label>
         <input class="form-control" name='user-lastname' id='user-lastname' placeholder='Last name'>
@@ -37,28 +36,28 @@ a button to make the div with the stuffs disappear --}}
 
       <div class="form-check">
         <input class="form-check-input" type="checkbox" name="location" value="location" id="location">
-        <label class="form-text" for="location"> 
+        <label class="form-text" for="location">
           Allow Flowers to use your location to find people near you (required).
         </label>
       </div>
-      
+
       <div>
         <button class="mt-3 mt-3 btn btn-primary" type="submit">Next</button>
       </div>
     </form>
   </div>
 
-  
+
   <div id='profile-picture-div' class="d-none signupQuery">
-  <h2> Please upload your profile picture.</h2>
+    <h2> Please upload your profile picture.</h2>
     <form id='profile-picture-form' method="post" enctype="multipart/form-data">
-    <div>
-      <label for="profile-picture">File</label>
-      <input type="file" class="form-control-file" id="profile-picture">
-    </div>
-    <div>
-      <button class="mt-3 mt-3 btn btn-primary" type="submit">Upload</button>
-    </div>
+      <div>
+        <label for="profile-picture">File</label>
+        <input type="file" class="form-control-file" id="profile-picture">
+      </div>
+      <div>
+        <button class="mt-3 mt-3 btn btn-primary" type="submit">Upload</button>
+      </div>
     </form>
   </div>
 
@@ -81,12 +80,12 @@ a button to make the div with the stuffs disappear --}}
           <option value="o">Non Binary</option>
         </select>
       </div>
-      
+
 
       <p class="form-text">Check all that apply</p>
       <div class="form-check">
         <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
-        <label class="form-text" for="male"> 
+        <label class="form-text" for="male">
           Interested in Men?
         </label>
       </div>
@@ -111,17 +110,18 @@ a button to make the div with the stuffs disappear --}}
       <button class="mt-3 btn btn-primary" type="submit">Next</button>
     </form>
   </div>
-  
+
   <div id='user-signup-div' class='d-none signupQuery'>
     <h2>Signup</h2>
     <form id='user-signup-form'>
       <div class="form-group">
-        <label class="form-text" for='user-email'> Email:</label>
+        <label autocomplete="email" class="form-text" for='user-email'> Email:</label>
         <input class="form-control" name='user-email' id='user-email' placeholder='E-mail address'>
       </div>
       <div class="form-group">
         <label class="form-text" for='user-password'> Password:</label>
-        <input type="password" class="form-control" name='user-password' id='user-password' placeholder='Password Must Be ≥ 8 characters'>
+        <input autocomplete="new-password" type="password" class="form-control" name='user-password' id='user-password'
+          placeholder='Password Must Be ≥ 8 characters'>
       </div>
       <button class="mt-3 btn btn-primary" type="submit">Sign Up</button>
     </form>
