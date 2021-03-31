@@ -2,13 +2,13 @@
 <hr>
 
 <ul>
-  {{>test-dashboard-user}}
+  {{>user-data-list}}
 
   <hr>
   <li>received_flowers_from:</li>
   <ul>
     {{#each received_flowers_from}}
-      {{>test-dashboard-user}}
+      {{>user-data-list}}
       <hr>
     {{/each}}
   </ul>
@@ -17,7 +17,7 @@
   <li>user_matches:</li>
   <ul>
     {{#each user_matches}}
-      {{>test-dashboard-user}}
+      {{>user-data-list}}
       <hr>
     {{/each}}
   </ul>

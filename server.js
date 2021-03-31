@@ -8,7 +8,7 @@ const sequelize = require('./config/connection')
 
 // handle bars
 const exphbs = require('express-handlebars');
-const helpers = require('./utils/hbsHelperFunctions');
+const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
 
 const app = express();
@@ -18,13 +18,14 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const userSession = {
-  secret: process.env.SECRET,
-  cookie: {},
-  resave: false,
-  saveUninitialized: true,
-  store: new SequelizeStore({
-    db: sequelize
-  })
+    secret: 'this is a secret',
+    // secret: process.env.SECRET,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
+    })
 };
 
 app.use(express.json());
