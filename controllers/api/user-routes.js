@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { Users, Flowers, Matches, Blocks, Flags, Interests, Turnoffs, UserInterests, UserTurnoffs } = require('../../models');
 const bcrypt = require('bcrypt');
 const sequelize = require('../../config/connection');
-const getDistance = require('./getDistance');
 
 // CREATE
 // POST USER /api/users -> (add a new user to the database and log in)

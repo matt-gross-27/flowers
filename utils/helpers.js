@@ -15,10 +15,10 @@ module.exports = {
 
   format_gender: str => {
     if (str === 'm') {
-      return 'male';
+      return 'Male';
     }
     if (str === 'f') {
-      return 'female';
+      return 'Female';
     }
     if (str === 'o') {
       return 'Non-Binary';

@@ -6,7 +6,8 @@ function profileUpdateFormHandler(event) {
   //1. account settings
   //ADD IMAGE UPLOADER
   userObject.email = document.getElementById('user-email').value.trim();
-  userObject.password = document.getElementById('user-password').value.trim();
+  
+  // const passwordInput = document.getElementById('user-password').value.trim();
 
   //2. user details
 

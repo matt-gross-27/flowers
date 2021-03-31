@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const User = require('../models/Users');
-const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users } = require('../models');
+const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users, Messages } = require('../models');
+const { Op } = require("sequelize");
 
 // Render Homepage
 router.get('/', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/dashboard')
+    return;
   }
   res.render('home', { ...req.session });
 });
@@ -14,6 +15,7 @@ router.get('/', (req, res) => {
 router.get('/dashboard', (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
   Users.findOne({
     where: { id: req.session.user_id },
@@ -115,6 +117,7 @@ router.get('/dashboard', (req, res) => {
 router.get('/search', async (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
 
   Users.findOne({
@@ -290,6 +293,7 @@ router.get('/my-profile', (req, res) => {
 router.get('/:id', (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
   Users.findOne({
     where: { id: req.params.id },
@@ -365,6 +369,48 @@ router.get('/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+router.get('/chat/:id', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+    return;
+  }
+  const me = await Users.findOne({
+    where: { id: req.session.user_id },
+    attributes: { exclude: ['password'] }
+  }).then(userData => userData.get({ plain: true }))
+    .catch(err => res.status(500).json(err));
+
+  const match = await Users.findOne({
+    where: { id: req.params.id },
+    attributes: { exclude: ['password'] }
+  }).then(userData => userData.get({ plain: true }))
+    .catch(err => res.status(500).json(err));
+
+  let messages = await Messages.findAll({
+    where: {
+      [Op.or]: [
+        { 
+          sender_id: req.session.user_id,
+          recipient_id: req.params.id,
+        },
+        { 
+          recipient_id: req.session.user_id,
+          sender_id: req.params.id,
+        }
+      ]
+    }
+  }).then(messageData => messageData.map(message => message.get({ plain: true })))
+    .catch(err => res.status(500).json(err));
+
+  messages.map(message => {
+    if (message.sender_id === req.session.user_id) {
+      message.fromMe = true;
+    }
+  });
+
+    res.render('messages', {me, match, messages, ...req.session });
 });
 
 module.exports = router;

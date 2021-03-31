@@ -28,11 +28,12 @@
                   placeholder='E-mail address'>
               </div>
 
-              <div class="form-group">
-                <label class="form-text" for='user-password'> Update Password:</label>
-                <input type="password" class="form-control" name='user-password' id='user-password' value='{{password}}'
+              {{!-- BUG UPDATE PASSWORD NOT WORKING CANT LOG BACK IN TO ACCOUNT--}}
+              {{!-- <div class="form-group">
+                <label class="form-text" for='user-password'> Create New Password:</label>
+                <input type="text" class="form-control" name='user-password' id='user-password' value=''
                   placeholder='Password Must Be ≥ 8 characters'>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -67,7 +68,7 @@
                 <label class="form-text" for='user-gender'>Gender</label>
                 <select class="form-control" required name='user-gender' id='user-gender'>
 
-                  <option selected value={{gender}}>{{gender}}</option>
+                  <option selected value={{gender}}>{{format_gender gender}}</option>
                   <option value="m">Male</option>
                   <option value="f">Female</option>
                   <option value="o">Non Binary</option>

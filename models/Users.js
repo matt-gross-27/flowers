@@ -38,9 +38,6 @@ class Users extends Model {
   static getCurrentUser(id) {
     return Users.findOne({
       where: { id },
-      attributes: [
-        'id', 'first_name', 'last_name', 'interested_in_m', 'interested_in_f', 'interested_in_o',
-      ],
       include: [{
         model: Users,
         attributes: ['id'],

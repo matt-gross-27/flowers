@@ -147,3 +147,26 @@ document.getElementById('user-signup-form').addEventListener('submit', userSignu
 document.getElementById('profile-picture-form').addEventListener('submit', profilePictureFormHandler);
 
 addAgeOptions();
+
+
+function handlePermission() {
+  navigator.permissions.query({name:'geolocation'}).then(function(result) {
+    if (result.state == 'granted') {
+      report(result.state);
+    } else if (result.state == 'prompt') {
+      report(result.state);
+      navigator.geolocation.getCurrentPosition(revealPosition,positionDenied,geoSettings);
+    } else if (result.state == 'denied') {
+      report(result.state);
+    }
+    result.onchange = function() {
+      report(result.state);
+    }
+  });
+}
+
+function report(state) {
+  console.log('Permission ' + state);
+}
+
+handlePermission();

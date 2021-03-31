@@ -139,4 +139,4 @@ Messages.belongsTo, (Users, { foreignKey: 'sender_id' });
 Messages.belongsTo, (Users, { foreignKey: 'recipient_id' });
 
 
-module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users }
+module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users, Messages }
