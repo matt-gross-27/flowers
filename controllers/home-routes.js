@@ -338,7 +338,6 @@ router.get('/:id', (req, res) => {
         res.render('profile', { ...user, ...req.session, ...my })
       });
     }) 
-    
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
