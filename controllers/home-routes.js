@@ -189,7 +189,6 @@ router.get('/signup', (req, res) => {
 router.get('/my-profile', (req, res) => {
   Users.findOne({
     where: { id: req.session.user_id },
-    attributes: { exclude: ['password'] },
     include: [{
       model: Interests,
       through: { attributes: [] },

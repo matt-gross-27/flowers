@@ -8,7 +8,7 @@ const sequelize = require('./config/connection')
 
 // handle bars
 const exphbs = require('express-handlebars');
-const helpers = require('./utils/hbsHelperFunctions');
+const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
 
 const app = express();
