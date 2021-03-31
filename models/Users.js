@@ -165,10 +165,14 @@ Users.init({
         }
     },
     description: {
+<<<<<<< HEAD
         type: DataTypes.STRING,
         validate: {
             len: [0, 130]
         }
+=======
+      type: DataTypes.TEXT,
+>>>>>>> 720935129c383deba49b0f3a7b375a1eb9eaef2c
     },
     profile_picture_src: {
         type: DataTypes.STRING,

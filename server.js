@@ -41,6 +41,7 @@ app.use(routes);
 // turn on seedDatabase and set { force: true } to user seed data
 const seedDatabase = require('./db/seeds');
 
+<<<<<<< HEAD
 const force = false;
 
 sequelize.sync({ force }).then(() => {
@@ -48,4 +49,9 @@ sequelize.sync({ force }).then(() => {
         seedDatabase();
     }
     app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
+=======
+sequelize.sync({ force: true }).then(() => {
+  seedDatabase();
+  app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
+>>>>>>> 720935129c383deba49b0f3a7b375a1eb9eaef2c
 });
