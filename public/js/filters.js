@@ -104,9 +104,15 @@ $('[name=distance]').on('input', function () {
 $(document).on('click', '.send-flowers ', async function (event) {
   event.preventDefault();
 
+<<<<<<< HEAD
   // const recipient_id = $(this).closest('.user-card').data('user');
   const recipient_id = $(this).attr("value");
   console.log(recipient_id);
+=======
+    // const recipient_id = $(this).closest('.user-card').data('user');
+    const recipient_id = $(this).attr("value");
+    console.log(recipient_id);
+>>>>>>> develop
 
   currentUser = await $.ajax({
     url: '/api/users/send-flowers',
@@ -114,6 +120,11 @@ $(document).on('click', '.send-flowers ', async function (event) {
     data: { recipient_id }
   });
 
+<<<<<<< HEAD
   loadUsers(savedUsers);
 });
 
+=======
+    loadUsers(savedUsers);
+});
+>>>>>>> develop

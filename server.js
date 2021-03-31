@@ -18,6 +18,7 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const userSession = {
+<<<<<<< HEAD
   secret: process.env.SECRET,
   cookie: {},
   resave: false,
@@ -25,6 +26,15 @@ const userSession = {
   store: new SequelizeStore({
     db: sequelize
   })
+=======
+    secret: process.env.SECRET,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
+    })
+>>>>>>> develop
 };
 
 app.use(express.json());
@@ -41,6 +51,6 @@ app.use(routes);
 const seedDatabase = require('./db/seeds');
 
 sequelize.sync({ force: true }).then(() => {
-  seedDatabase();
-  app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
+    seedDatabase();
+    app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
 });
