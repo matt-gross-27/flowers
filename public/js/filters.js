@@ -104,7 +104,9 @@ $('[name=distance]').on('input', function() {
 $(document).on('click', '.send-flowers ', async function(event) {
     event.preventDefault();
 
-    const recipient_id = $(this).closest('.user-card').data('user');
+    // const recipient_id = $(this).closest('.user-card').data('user');
+    const recipient_id = $(this).attr("value");  
+    console.log(recipient_id); 
 
     currentUser = await $.ajax({
         url: '/api/users/send-flowers',
@@ -114,3 +116,4 @@ $(document).on('click', '.send-flowers ', async function(event) {
 
     loadUsers(savedUsers);
 });
+

@@ -1,15 +1,25 @@
 label {
     display: block;
 }
-
 .template {
     display: none;
 }
-
 .navbar {
     position: fixed-right
 }
-
+body {
+    background-color: #fde40061;
+}
+.btn-primary:hover {
+    color: rgb(0, 0, 0);
+    background-color: #ff6497;
+    border-color: #e91e6329;    
+}
+.btn-primary {
+    color: rgb(0, 0, 0);
+    background-color: #e91e6329;
+    border-color: #ff6497;    
+}
 .btn-no-style {
   display: inline-block;
   border: none;
@@ -18,15 +28,20 @@ label {
   background: none;
   text-align: left;
 }
-
-/*#filter-form {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    background: rgba(255, 255, 255, 0.9);
-    height: 100vh;
-    padding: 20px;
+.form-select{
+    width: 16%;
 }
-
-*/
+.form-control {
+    background-color: #e91e6329;
+    border: 1px solid #ff6497;
+}
+.form-control:focus {
+    background-color: #ff6497; 
+    transition: background-color .45s cubic-bezier(0.68, -0.55, 0.27, 1.55),box-shadow .15s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+    border-color: #ff00de;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(211 13 253 / 25%);
+}
+input:-internal-autofill-selected {
+    background-color: #ff6497 !important;
+}

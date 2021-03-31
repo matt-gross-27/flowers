@@ -8,7 +8,8 @@ router.use('/', homeRoutes);
 
 // catch all route
 router.use((req, res) => {
-  res.status(404).json({ message: "Nothing to see here" }).end();
+  // res.status(404).json({ message: "Nothing to see here" }).end();
+  res.redirect('/dashboard'); 
 });
 
 module.exports = router;

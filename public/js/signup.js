@@ -120,7 +120,7 @@ function createUser() {
     .then(res => {
       if (res.ok) {
         console.log('success')
-        window.location.replace('/dashboard');
+        window.location.href='/dashboard'; 
       }
     })
     .catch(err => {
