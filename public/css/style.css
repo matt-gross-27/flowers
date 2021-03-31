@@ -6,12 +6,15 @@ label {
 }
 .navbar {
     position: fixed-right; 
-    background-color: #3D2E2B;
+    background-color: #aae682;
+    color: rgb(255, 0, 0)
 }
 
 .navbar-brand {
   color: #fae8e0; 
 }
+
+
 
 .jumbotron-main {
   border: 60px solid transparent;
@@ -48,7 +51,7 @@ body {
 }
 .btn-primary {
     color: rgb(0, 0, 0);
-    background-color: #C1D9B7;
+    background-color: #ff6497;
     border-color: #3D2E2B;    
 }
 .btn-no-style {
