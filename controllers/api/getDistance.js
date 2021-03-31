@@ -6,7 +6,7 @@ const R = 6371000; // ≈ the earths radius (close enough for jazz)
 // c = 2 ⋅ atan2( √a, √(1−a) ) // the angular distance in radians
 // d = R ⋅ c // distance in Meters
 
-function getDistance(coords1, coords2) {
+module.exports = function getDistance(coords1, coords2) {
     const phi1 = coords1.latitude * Math.PI / 180;
     const phi2 = coords2.latitude * Math.PI / 180;
 

@@ -1,11 +1,24 @@
 label {
-  display: block;
+    display: block;
 }
 
 .template {
-  display: none;
+    display: none;
 }
 
 .navbar {
-  position: fixed-right
+    position: fixed-right
 }
+
+
+/*#filter-form {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    height: 100vh;
+    padding: 20px;
+}
+
+*/

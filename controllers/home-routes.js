@@ -247,7 +247,6 @@ router.get('/:id', (req, res) => {
     ]
   })
   .then(userData => {
- // if(!userData)
     const user = userData.get({ plain: true });
     console.log(user);
     res.render('profile' , user);
