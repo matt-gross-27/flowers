@@ -1,3 +1,39 @@
+<div class="container">
+  <h1>Welcome to Flowers!</h1>
+</div>
+
+<br><br><br><br>
+
+<div class="container">
+  <h2>Notifications</h2>
+  <h5>(flowers received)</h5>
+  <div class="row row-cols-2">
+    <div class="col-2" id = "receivedUserphotos"> <img src="{{profile_picture_src}}" class="img-thumbnail" alt="{{first_name}} {{last_name}} profile picture"></div>
+    <div class="col-4" id = "receivedBios"><h4>Firstname Lastname</h4>
+      <br>Bio: Lorem Ipsum...  
+    </div>
+    <div class="row row-cols-3"></div>
+    <div class="col-2" id = "viewProfile" ><button class="mt-3 btn btn-success" id="viewReceivedProfile">View Profile</button></div>
+    <div class="col-2" id = "receivedBios"><button class="mt-3 btn btn-warning" id="sendFlowers">Send Flowers</button></div> 
+    <div class="col-2" id = "receivedBios"><button class="mt-3 btn btn-danger" id="blockUser">Block User</button> </div>
+</div>
+
+<br><br><br><br>
+
+<div class="container">
+  <h2>Matches</h2>
+  <h5>(Both users have sent flowers to each other)</h5>
+   <div class="row row-cols-2">
+    <div class="col-2" id = "matchedUserphotos"> <img src="{{profile_picture_src}}" class="img-thumbnail" alt="{{first_name}} {{last_name}} profile picture"></div>
+    <div class="col-4" id = "matchedBios">Bio 1  </div>
+    <div class="row row-cols-3"></div>
+    <div class="col-2" id = "viewProfile" ><button class="mt-3 btn btn-success" id="viewMatchProfile">View Profile</button></div>
+    <div class="col-2" id = "receivedBios">Send Flowers</div> 
+    <div class="col-2" id = "receivedBios">Block User </div>
+</div>
+</div>
+</div>
+
 <strong>{{first_name}} {{last_name}}</strong>
 <hr>
 
