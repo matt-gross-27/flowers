@@ -5,10 +5,22 @@ label {
     display: none;
 }
 .navbar {
-    position: fixed-right
+    position: fixed-right; 
+    background-color: #3D2E2B;
 }
+
+.navbar-brand {
+  color: #fae8e0; 
+}
+
+.jumbotron-main {
+  border: 60px solid transparent;
+  padding: 15px; 
+  border-image: url(./flowers-borders-png-5613.png) 160 round;
+}
+
 body {
-    background-color: #fde40061;
+    background-color: #FDF2E7;
 }
 
 .form-check-input {
@@ -32,13 +44,13 @@ body {
 
 .btn-primary:hover {
     color: rgb(0, 0, 0);
-    background-color: #ff6497;
+    background-color: #feecc3;
     border-color: #e91e6329;    
 }
 .btn-primary {
     color: rgb(0, 0, 0);
-    background-color: #e91e6329;
-    border-color: #ff6497;    
+    background-color: #C1D9B7;
+    border-color: #3D2E2B;    
 }
 .btn-no-style {
   display: inline-block;
@@ -66,17 +78,26 @@ body {
     width: 16%;
 }
 .form-control {
-    background-color: #e91e6329;
-    border: 1px solid #ff6497;
+    background-color: #FDF2E7;
+    border: 1px solid #f0c5c2;
 }
 .form-control:focus {
-    background-color: #ff6497; 
+    background-color: #f0c5c2;   
     transition: background-color .45s cubic-bezier(0.68, -0.55, 0.27, 1.55),box-shadow .15s cubic-bezier(0.6, -0.28, 0.74, 0.05);
     border-color: #ff00de;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(211 13 253 / 25%);
 }
 input:-internal-autofill-selected {
-    background-color: #ff6497 !important;
+    background-color:#f0c5c2 !important;
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fae8e0;
+  color: white;
+  text-align: center;
+}
