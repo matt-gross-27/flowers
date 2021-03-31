@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Matches extends Model {}
+class Matches extends Model { }
 
 Matches.init(
   {
@@ -25,7 +25,7 @@ Matches.init(
       references: {
         model: 'users',
         key: 'id'
-      } 
+      }
     }
   },
   {

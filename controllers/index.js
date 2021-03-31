@@ -8,7 +8,7 @@ router.use('/', homeRoutes);
 
 // catch all route
 router.use((req, res) => {
-  res.redirect('/'); 
+  res.redirect('/');
 });
 
 module.exports = router;

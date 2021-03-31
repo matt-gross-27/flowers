@@ -85,10 +85,10 @@ router.get('/dashboard', (req, res) => {
           ...user.received_block_from,
           ...user.sent_flag_to,
           ...user.received_flag_from
-          ].map(x => x.id)
+        ].map(x => x.id)
           .includes(userObj.id) === false;
-        }
-      
+      }
+
       user.received_flowers_from = user.received_flowers_from.filter(showFlowers);
 
       function showMatches(userObj) {
@@ -97,12 +97,12 @@ router.get('/dashboard', (req, res) => {
           ...user.received_block_from,
           ...user.sent_flag_to,
           ...user.received_flag_from
-          ].map(x => x.id)
+        ].map(x => x.id)
           .includes(userObj.id) === false;
-        }
+      }
 
-        user.user_matches = user.user_matches.filter(showMatches);
-      
+      user.user_matches = user.user_matches.filter(showMatches);
+
       res.render('dashboard', { ...user, ...req.session });
     })
     .catch(err => {
@@ -359,7 +359,7 @@ router.get('/:id', (req, res) => {
         return;
       }
       const user = userData.get({ plain: true });
-      res.render('profile', { ...user, ...req.session});
+      res.render('profile', { ...user, ...req.session });
     })
     .catch(err => {
       console.log(err);

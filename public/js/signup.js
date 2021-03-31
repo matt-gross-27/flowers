@@ -43,26 +43,26 @@ function userNameFormHandler(event) {
 function profilePictureFormHandler(event) {
   event.preventDefault();
   const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dly1i5lwp/image/upload'
-  const CLOUDINARY_UPLOAD_PRESET ='z8p6o8pb'
+  const CLOUDINARY_UPLOAD_PRESET = 'z8p6o8pb'
   const file = imgInput.files[0];
   const formData = new FormData();
-  
+
   formData.append('file', file);
   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
   if (file) {
-    
+
     fetch(CLOUDINARY_URL, {
       method: 'POST',
       body: formData
     })
-    .then(res => res.json())
-    .then(data => {
-      userObject.profile_picture_src = data.url
-      profilePicDiv.classList.add('d-none');
-      userAboutDiv.classList.remove('d-none');
-    })
-    .catch(err => console.log(err));
+      .then(res => res.json())
+      .then(data => {
+        userObject.profile_picture_src = data.url
+        profilePicDiv.classList.add('d-none');
+        userAboutDiv.classList.remove('d-none');
+      })
+      .catch(err => console.log(err));
   } else {
     alert('please upload a file!');
   }
@@ -88,7 +88,7 @@ function userAboutFormHandler(event) {
     userObject.interested_in_o = interested_in_o;
     userAboutDiv.classList.add('d-none');
     userSignupDiv.classList.remove('d-none');
-  } 
+  }
   else {
     alert('Please fill out the entire form');
   }
@@ -120,7 +120,7 @@ function createUser() {
     .then(res => {
       if (res.ok) {
         console.log('success')
-        window.location.href='/dashboard'; 
+        window.location.href = '/dashboard';
       }
     })
     .catch(err => {
@@ -131,7 +131,7 @@ function createUser() {
 // create user age options
 const ageSelectEl = document.getElementById("user-age")
 
-function addAgeOptions () {
+function addAgeOptions() {
   for (let i = 18; i < 110; i++) {
     const optionEl = document.createElement('option');
     optionEl.value = i;

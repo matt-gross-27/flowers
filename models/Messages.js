@@ -1,15 +1,19 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Blocks extends Model { }
+class Messages extends Model { }
 
-Blocks.init(
+Messages.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
+    },
+    message_text: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     sender_id: {
       type: DataTypes.INTEGER,
@@ -30,8 +34,8 @@ Blocks.init(
   },
   {
     sequelize,
-    modelName: 'blocks',
+    modelName: 'messages',
   }
 );
 
-module.exports = Blocks
+module.exports = Messages

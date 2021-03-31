@@ -1,6 +1,6 @@
 <div class="container">
   <div class="container">
-    <h2>Your Notifications</h2>
+    <h2>Your Notifications {{format_date created_at}}</h2>
     {{#unless received_flowers_from.length}}
     <p class="text-secondary">
       You Currently have no notifications. Check out the search for matches page and come back later to see who sent you
@@ -35,7 +35,8 @@
     <br>
     {{#unless user_matches.length}}
     <p class="text-secondary">
-      You Currently have no matches. When you and another user send flowers to each other, you can come back to see matches here!
+      You Currently have no matches. When you and another user send flowers to each other, you can come back to see
+      matches here!
     </p>
     {{/unless}}
 
