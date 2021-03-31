@@ -1,60 +1,68 @@
 <div class="container">
-  <h1>Welcome to Flowers!</h1>
-</div>
+  <div class="container">
+    <h2>Your Notifications</h2>
+    {{#unless received_flowers_from.length}}
+    <p class="text-secondary">
+      You Currently have no notifications. Check out the search for matches page and come back later to see who sent you
+      flowers!
+    </p>
+    {{/unless}}
 
-<br><br><br><br>
-
-<div class="container">
-  <h2>Notifications</h2>
-  <h5>(flowers received)</h5>
-  <div class="row row-cols-2">
-    <div class="col-2" id = "receivedUserphotos"> <img src="{{profile_picture_src}}" class="img-thumbnail" alt="{{first_name}} {{last_name}} profile picture"></div>
-    <div class="col-4" id = "receivedBios"><h4>Firstname Lastname</h4>
-      <br>Bio: Lorem Ipsum...  
-    </div>
-    <div class="row row-cols-3"></div>
-    <div class="col-2" id = "viewProfile" ><button class="mt-3 btn btn-success" id="viewReceivedProfile">View Profile</button></div>
-    <div class="col-2" id = "receivedBios"><button class="mt-3 btn btn-warning" id="sendFlowers">Send Flowers</button></div> 
-    <div class="col-2" id = "receivedBios"><button class="mt-3 btn btn-danger" id="blockUser">Block User</button> </div>
-</div>
-
-<br><br><br><br>
-
-<div class="container">
-  <h2>Matches</h2>
-  <h5>(Both users have sent flowers to each other)</h5>
-   <div class="row row-cols-2">
-    <div class="col-2" id = "matchedUserphotos"> <img src="{{profile_picture_src}}" class="img-thumbnail" alt="{{first_name}} {{last_name}} profile picture"></div>
-    <div class="col-4" id = "matchedBios">Bio 1  </div>
-    <div class="row row-cols-3"></div>
-    <div class="col-2" id = "viewProfile" ><button class="mt-3 btn btn-success" id="viewMatchProfile">View Profile</button></div>
-    <div class="col-2" id = "receivedBios">Send Flowers</div> 
-    <div class="col-2" id = "receivedBios">Block User </div>
-</div>
-</div>
-</div>
-
-<strong>{{first_name}} {{last_name}}</strong>
-<hr>
-
-<ul>
-  {{>user-data-list}}
-
-  <hr>
-  <li>received_flowers_from:</li>
-  <ul style="list-style: none;">
     {{#each received_flowers_from}}
-      {{>user-data-list}}
-      <hr>
+    <div class="row d-flex flex-wrap">
+      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+        <img src="{{profile_picture_src}}" class="dashboard-img w-100"
+          alt="{{first_name}} {{last_name}} profile picture" />
+      </div>
+      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
+        <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
+          <p>{{description}}</p>
+          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
+          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          <div class='my-1 d-flex justify-content-around'>
+            <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
+              class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}"
+              class="btn btn-primary dashboard-btn send-block-btn" title="Block user">❌</button>
+          </div>
+      </div>
+    </div>
+    <hr>
     {{/each}}
-  </ul>
+    <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
+    <hr>
+    <h2>Your Matches</h2>
+    <br>
+    {{#unless user_matches.length}}
+    <p class="text-secondary">
+      You Currently have no matches. When you and another user send flowers to each other, you can come back to see matches here!
+    </p>
+    {{/unless}}
 
-  <hr>
-  <li>user_matches:</li>
-  <ul style="list-style: none;">
     {{#each user_matches}}
-      {{>user-data-list}}
-      <hr>
+    <div class="row d-flex flex-wrap">
+      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+        <img src="{{profile_picture_src}}" class="dashboard-img w-100"
+          alt="{{first_name}} {{last_name}} profile picture" />
+      </div>
+      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
+        <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
+          <p>{{description}}</p>
+          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
+          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          <div class='my-1 d-flex justify-content-around'>
+            <button data-attribute-id="{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
+              title="Message user">💬</button>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-block-btn"
+              title="Block user">❌</button>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-flag-btn"
+              title="Report abuse">🏴‍☠️</button>
+          </div>
+      </div>
+    </div>
+    <hr>
     {{/each}}
-  </ul>
-</ul>
+
+    <script src="js/sendFlowers.js"></script>
+    <script src="js/sendBlock.js"></script>
+    <script src="js/sendFlag.js"></script>

@@ -28,6 +28,20 @@ body {
   background: none;
   text-align: left;
 }
+
+.dashboard-btn {
+  width: 40%;
+}
+
+.dashboard-img {
+  width: 100;
+  height: auto;
+}
+
+.span-list:nth-of-type(n + 2)::before {
+  content: ", ";
+}
+
 .form-select{
     width: 16%;
 }
@@ -45,3 +59,4 @@ body {
 input:-internal-autofill-selected {
     background-color: #ff6497 !important;
 }
+

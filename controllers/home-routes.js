@@ -12,6 +12,9 @@ router.get('/', (req, res) => {
 
 // Render Dashboard
 router.get('/dashboard', (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+  }
   Users.findOne({
     where: { id: req.session.user_id },
     attributes: { exclude: ['password'] },
@@ -66,19 +69,40 @@ router.get('/dashboard', (req, res) => {
     },
     {
       model: Users,
+      attributes: { exclude: ['password',] },
       through: { attributes: [] },
       as: 'user_matches'
-    },
-    {
-      model: Users,
-      through: { attributes: [] },
-      as: 'matched_users'
     }
     ]
   })
     .then(userData => {
       const user = userData.get({ plain: true });
-      console.log(user);
+
+      function showFlowers(userObj) {
+        return [
+          ...user.sent_flowers_to,
+          ...user.sent_block_to,
+          ...user.received_block_from,
+          ...user.sent_flag_to,
+          ...user.received_flag_from
+          ].map(x => x.id)
+          .includes(userObj.id) === false;
+        }
+      
+      user.received_flowers_from = user.received_flowers_from.filter(showFlowers);
+
+      function showMatches(userObj) {
+        return [
+          ...user.sent_block_to,
+          ...user.received_block_from,
+          ...user.sent_flag_to,
+          ...user.received_flag_from
+          ].map(x => x.id)
+          .includes(userObj.id) === false;
+        }
+
+        user.user_matches = user.user_matches.filter(showMatches);
+      
       res.render('dashboard', { ...user, ...req.session });
     })
     .catch(err => {
@@ -89,6 +113,9 @@ router.get('/dashboard', (req, res) => {
 
 // Render search Page
 router.get('/search', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+  }
 
   Users.findOne({
     where: { id: req.session.user_id },
@@ -138,11 +165,13 @@ router.get('/search', async (req, res) => {
     },
     {
       model: Users,
+      attributes: { exclude: ['password'] },
       through: { attributes: [] },
       as: 'user_matches'
     },
     {
       model: Users,
+      attributes: { exclude: ['password'] },
       through: { attributes: [] },
       as: 'matched_users'
     }
@@ -162,7 +191,7 @@ router.get('/search', async (req, res) => {
 router.get('/login', (req, res) => {
   //set up redirect
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
   res.render('login');
@@ -172,7 +201,7 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
   //set up redirect if logged in 
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
   res.render('signup');
@@ -180,6 +209,10 @@ router.get('/signup', (req, res) => {
 
 // Render my-profile pages
 router.get('/my-profile', (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
   Users.findOne({
     where: { id: req.session.user_id },
     include: [{
@@ -231,11 +264,13 @@ router.get('/my-profile', (req, res) => {
     },
     {
       model: Users,
+      attributes: { exclude: ['password'] },
       through: { attributes: [] },
       as: 'user_matches'
     },
     {
       model: Users,
+      attributes: { exclude: ['password'] },
       through: { attributes: [] },
       as: 'matched_users'
     }
@@ -253,6 +288,9 @@ router.get('/my-profile', (req, res) => {
 
 // Render Profile Other Peoples Profile Pages
 router.get('/:id', (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+  }
   Users.findOne({
     where: { id: req.params.id },
     attributes: { exclude: ['password'] },
@@ -321,24 +359,8 @@ router.get('/:id', (req, res) => {
         return;
       }
       const user = userData.get({ plain: true });
-      return userData.get({ plain: true })
+      res.render('profile', { ...user, ...req.session});
     })
-    .then(() => {
-
-      Users.findOne({
-        where: { id: req.session.user_id },
-      })
-        .then(loggedData => {
-          const loggedInUser = loggedData.get({ plain: true });
-          const my = {
-            latitude: loggedInUser.latitude,
-            longitude: loggedInUser.longitude
-          }
-          console.log({ ...user, ...req.session, loggedInUser });
-          res.render('profile', { ...user, ...req.session, ...my })
-        });
-    })
-
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
