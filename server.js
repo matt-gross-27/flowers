@@ -23,7 +23,7 @@ const userSession = {
     resave: false,
     saveUninitialized: true,
     store: new SequelizeStore({
-      db: sequelize
+        db: sequelize
     })
 };
 
@@ -41,6 +41,6 @@ app.use(routes);
 const seedDatabase = require('./db/seeds');
 
 sequelize.sync({ force: true }).then(() => {
-  seedDatabase();
-  app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
+    seedDatabase();
+    app.listen(PORT, () => console.log(`application live at http://localhost:${PORT}/`));
 });
