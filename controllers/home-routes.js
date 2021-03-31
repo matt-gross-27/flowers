@@ -329,8 +329,24 @@ router.get('/:id', (req, res) => {
         return;
       }
       const user = userData.get({ plain: true });
-      res.render('profile', { ...user, ...req.session });
+      return userData.get({ plain: true })
     })
+    .then(() => {
+      
+      Users.findOne({
+        where: {id: req.session.user_id }, 
+      })
+      .then(loggedData => {
+        const loggedInUser = loggedData.get({ plain: true };
+        const my = {
+          lattitude: loggedInUser.lattitude, 
+          longitude: loggedInUser.longitude
+        }
+        console.log({ ...user, ...req.session, loggedInUser });
+        res.render('profile', { ...user, ...req.session, ...my })
+      });
+    }) 
+    
     .catch(err => {
       console.log(err);
       res.status(500).json(err);

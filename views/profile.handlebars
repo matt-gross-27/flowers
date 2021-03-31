@@ -1,35 +1,58 @@
-<div class="container">
+<div class = "container">
+  <div class = "row">
+    <div class = "col-12 col-md-4">
+      <img src="{{profile_picture_src}}" class="img-fluid w-100" alt="{{first_name}} {{last_name}} profile picture">
+    </div>
 
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <ul>
-          <li>first_name: {{first_name}}</li>
-          <li>last_name: {{last_name}}</li>
-          <li>profile_picture_src: {{profile_picture_src}}</li>
-          <li>age: {{age}}</li>
-          <li>gender: {{gender}}</li>
-        </ul>
+    <div class = "col-12 col-md-8 ">
+      <h2>{{first_name}} {{last_name}}</h2>
+      <h4>{{age}} years old</h4>
+      <br>
+      <strong>Bio {{first_name}}</strong>
+      <br>
+      {{description}}
+      <br><br><br><br>
+     <div class="d-grid gap-2 col-4 mx-auto">
+      <button type="button" class="btn btn-primary btn-sm" style = >Send Flowers</button>
+    </div>
+    </div>
+    
+    <div class = "col-12 col-md-12">
+      
+      <div class="accordion" id="userDetails">
+    <div class="accordion-item">
+    <h2 class="accordion-header" id="interestDetails">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Interests
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#userDetails">
+      <div class="accordion-body">
+       <strong><ul>
+          {{#each users_interests}}
+          <li>{{interest_name}}</li>
+          {{/each}}</ul>  </strong>
       </div>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      A little bit about me: {{description}}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="turnoffDetails">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Turnoffs
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#userDetails">
+      <div class="accordion-body">
+        <strong><ul>
+         <strong><ul>
+          {{#each users_turnoffs}}
+          <li>{{turnoff_name}}</li>
+          {{/each}}</ul></strong>
+      </div>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      <ul>
-        <li>interested_in_m: {{interested_in_m}}</li>
-        <li>interested_in_f: {{interested_in_f}}</li>
-        <li>interested_in_o: {{interested_in_o}}</li>
-        <li>interested_in_min_age: {{interested_in_min_age}}</li>
-        <li>interested_in_max_age: {{interested_in_max_age}}</li>
-      </ul>
+</div>
     </div>
   </div>
-
+  
 </div>
