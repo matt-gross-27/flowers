@@ -1,69 +1,74 @@
-<div id='user-name-div' class='signupQuery'>
+<div id='user-name-div' class='signupQuery col-4 m-5'>
 
-    <h2> Please enter your first and last name.</h2>
 
-    <form id='user-name-form'>
+    <form id='user-name-form' class='d-flex flex-column justify-content-center align-items-center'>
+        <h2 class='text-center m-3'> Please enter your first and last name.</h2>
         <label for='user-firstname'> First Name:</label>
-        <input name='user-fistname' id='user-firstname' placeholder='First name'>
+        <input class="form-control col-2 p-2 m-2" name='user-firstname' id='user-firstname' placeholder='Enter first name...'>
         <label for='user-lastname'> Last Name:</label>
-        <input name='user-lastname'id='user-lastname'placeholder='Last name'>
-            <button type="submit">Submit</button>
+        <input class="form-control p-2 m-2" name='user-lastname' id='user-lastname' placeholder='Enter last name...'>
+        <button type="submit" class="d-flex p-3 m-3 btn btn-primary">Submit</button>
     </form>
 </div>
-<div id='user-about-div' class='d-none signupQuery'>
+<div id='user-about-div' class='d-none signupQuery m-5 col-6 d-flex flex-column justify-content-center align-items-center'>
 
     <h2> Tell us about yourself.</h2>
 
-    <form id='user-about-form'>
-        <label for='user-age'>What is your age:</label>
-        <input name='user-age'id='user-age'placeholder='Age'>
-            <label for='user-gender'>Select gender</label>
 
-            <select requiredname='user-gender' id='user-gender'>
-                <option disabled selceted hidden value="">gender options</option>
-                <option value="m">Male</option>
-                <option value="f">Female</option>
-                <option value="o">Non Binary</option>
-            </select>
+    <form id='user-about-form' class='row align-items-center'>
+        <div class='row'>
+            <label for='user-age'>What is your age?</label>
+            {{!-- <input type='range' name='user-age' id='user-age' min='18' max='100' /> --}}
+            <input type="text"  class="form-control d-inline-flex" name='user-age' id='user-age' placeholder='Age'>
+        </div>
+{{!-- class="visually-hidden" --}}
+        <label  for='user-gender'>Select gender</label>
 
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
-                <label class="form-check-label" for="male">
-                    Male
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="female" id="female">
-                <label class="form-check-label" for="female">
-                    Female
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary">
-                <label class="form-check-label" for="non-binary">
-                    Non-binary
-                </label>
-            </div>
+        <select class="form-control form-select" requiredname='user-gender' id='user-gender' placeholder='Gender Options'>
+            <option disabled selected hidden value="">---</option>
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+            <option value="o">Non Binary</option>
+        </select>
 
-            <label for='user-bio'> About you:</label>
-            <textarea id='user-bio' placeholder='About you'></textarea>
+        {{!-- <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
+            <label class="form-check-label" for="male">
+                Male
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="gender" value="female" id="female">
+            <label class="form-check-label" for="female">
+                Female
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary">
+            <label class="form-check-label" for="non-binary">
+                Non-binary
+            </label>
+        </div> --}}
 
-            <label for='user-photo-url'>Enter a photo url</label>
-            <input type="text" name="user-photo-url" id="user-photo-url" placeholder='Must be a url for a photo' />
+        <label for='user-bio'> About you:</label>
+        <textarea class="form-control" id='user-bio' placeholder='About you'></textarea>
 
-            <button type="submit">Submit</button>
+        <label for='user-photo-url'>Enter a photo url</label>
+        <input class="form-control" type="text" name="user-photo-url" id="user-photo-url" placeholder='Must be a url for a photo' />
+
+        <button class="d-flex p-3 m-3 btn btn-primary" type="submit">Submit</button>
     </form>
 
 </div>
-<div id='user-signup-div' class='d-none signupQuery'>
+<div id='user-signup-div' class='d-none signupQuery form-control'>
     <h2> Signup </h2>
 
-    <form id='user-signup-form'>
+    <form id='user-signup-form' >
         <label for='user-email'> Email:</label>
         <input name='user-email' id='user-email' placeholder='E-mail address'>
         <label for='user-password'> Password:</label>
-        <input name='user-password'id='user-password' placeholder='Password Must Be ≥ 8 characters'>
-            <button type="submit">Submit</button>
+        <input name='user-password' id='user-password' placeholder='Password Must Be ≥ 8 characters'>
+        <button class="d-flex p-3 m-3 btn btn-primary" type="submit">Submit</button>
     </form>
 </div>
 <script src="/js/signup.js"></script>
