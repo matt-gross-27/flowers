@@ -5,16 +5,40 @@ const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests,
 // Render Homepage
 router.get('/', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/dashboard')
+        return res.redirect('/dashboard')
     }
     res.render('home', {...req.session });
 });
 
+
+// //Render Login page
+router.get('/login', (req, res) => {
+    //set up redirect
+    if (req.session.loggedIn) {
+        return res.redirect('/dashboard');
+    }
+    res.render('login');
+})
+
+//Render Signup page
+router.get('/signup', (req, res) => {
+    //set up redirect if logged in 
+    if (req.session.loggedIn) {
+        return res.redirect('/dashboard');
+    }
+    res.render('signup');
+})
+
+// Private section
+router.use((req, res, next) => {
+    if (!req.session.loggedIn) {
+        return res.redirect('/')
+    }
+    next()
+});
+
 // Render Dashboard
 router.get('/dashboard', (req, res) => {
-    if (!req.session.loggedIn) {
-        res.redirect('/')
-    }
     Users.findOne({
             where: { id: req.session.user_id },
             attributes: { exclude: ['password'] },
@@ -113,10 +137,6 @@ router.get('/dashboard', (req, res) => {
 
 // Render search Page
 router.get('/search', async(req, res) => {
-    if (!req.session.loggedIn) {
-        res.redirect('/')
-    }
-
     Users.findOne({
             where: { id: req.session.user_id },
             attributes: { exclude: ['password'] },
@@ -187,32 +207,8 @@ router.get('/search', async(req, res) => {
         });
 });
 
-// //Render Login page
-router.get('/login', (req, res) => {
-    //set up redirect
-    if (req.session.loggedIn) {
-        res.redirect('/dashboard');
-        return;
-    }
-    res.render('login');
-})
-
-//Render Signup page
-router.get('/signup', (req, res) => {
-    //set up redirect if logged in 
-    if (req.session.loggedIn) {
-        res.redirect('/dashboard');
-        return;
-    }
-    res.render('signup');
-})
-
 // Render my-profile pages
 router.get('/my-profile', (req, res) => {
-    if (!req.session.loggedIn) {
-        res.redirect('/');
-        return;
-    }
     Users.findOne({
             where: { id: req.session.user_id },
             include: [{
@@ -290,9 +286,6 @@ router.get('/my-profile', (req, res) => {
 router.get('/:id', (req, res) => {
     if (req.originalUrl.match(/\./)) {
         return res.sendStatus(404);
-    }
-    if (!req.session.loggedIn) {
-        res.redirect('/')
     }
 
     Users.findOne({

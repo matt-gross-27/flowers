@@ -210,77 +210,6 @@ router.get('/current-user', async(req, res) => {
     res.json(user);
 });
 
-// GET /api/users/:id -> (get one user by id)
-router.get('/:id', (req, res) => {
-    Users.findOne({
-            where: { id: req.params.id },
-            attributes: { exclude: ['password'] },
-            include: [{
-                    model: Interests,
-                    through: { attributes: [] },
-                    as: 'users_interests'
-                },
-                {
-                    model: Turnoffs,
-                    through: { attributes: [] },
-                    as: 'users_turnoffs'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flowers_to',
-                },
-                {
-                    model: Users,
-                    // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-                    attributes: { exclude: ['password'] },
-                    through: { attributes: [] },
-                    as: 'received_flowers_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_block_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_block_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flag_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_flag_from'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'user_matches'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'matched_users'
-                }
-            ]
-        })
-        .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
-});
-
 // UPDATE
 // PUT /api/users/flowers -> (send flowers from one user to another)
 router.put('/send-flowers', (req, res) => {
@@ -408,10 +337,81 @@ router.delete('/:id', (req, res) => {
         });
 });
 
+// GET /api/users/:id -> (get one user by id)
+router.get('/:id', (req, res) => {
+    Users.findOne({
+            where: { id: req.params.id },
+            attributes: { exclude: ['password'] },
+            include: [{
+                    model: Interests,
+                    through: { attributes: [] },
+                    as: 'users_interests'
+                },
+                {
+                    model: Turnoffs,
+                    through: { attributes: [] },
+                    as: 'users_turnoffs'
+                },
+                {
+                    model: Users,
+                    attributes: ['id'],
+                    through: { attributes: [] },
+                    as: 'sent_flowers_to',
+                },
+                {
+                    model: Users,
+                    // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
+                    attributes: { exclude: ['password'] },
+                    through: { attributes: [] },
+                    as: 'received_flowers_from'
+                },
+                {
+                    model: Users,
+                    attributes: ['id'],
+                    through: { attributes: [] },
+                    as: 'sent_block_to'
+                },
+                {
+                    model: Users,
+                    attributes: ['id'],
+                    through: { attributes: [] },
+                    as: 'received_block_from'
+                },
+                {
+                    model: Users,
+                    attributes: ['id'],
+                    through: { attributes: [] },
+                    as: 'sent_flag_to'
+                },
+                {
+                    model: Users,
+                    attributes: ['id'],
+                    through: { attributes: [] },
+                    as: 'received_flag_from'
+                },
+                {
+                    model: Users,
+                    through: { attributes: [] },
+                    as: 'user_matches'
+                },
+                {
+                    model: Users,
+                    through: { attributes: [] },
+                    as: 'matched_users'
+                }
+            ]
+        })
+        .then(userData => !userData ? res.status(404).json({ message: `user ${req.params.id} not found` }) : res.json(userData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
 //getting all users
 router.get('/', (req, res) => {
     Users.findAll({
-            attributes: { exclude: ['passowrd'] }
+            attributes: { exclude: ['password'] }
         }).then(dbUserdata => res.json(dbUserdata))
         .catch(err => {
             console.log(err);

@@ -5,6 +5,8 @@ const getDistance = require('./getDistance');
 
 const savePreferences = (req, res, next) => {
     // Save preferences on db
+    return next();
+
     const preferences = ['gender'].reduce((props, prop) => {
         if (req.query[prop]) {
             props[prop] = req.query[prop]
@@ -26,10 +28,9 @@ router.get('/', savePreferences, (req, res) => {
         return props;
     }, {});
 
-    console.log(where);
-
     Users.findAll({
             where,
+            exclude: {},
             attributes: { exclude: ['password'] },
             include: [{
                     model: Interests,
@@ -100,16 +101,15 @@ router.get('/', savePreferences, (req, res) => {
                 distance = Infinity;
             }
 
-            //res.json(userData)
-            const data = JSON.parse(JSON.stringify(userData))
+            const data = userData
                 .map((match) => {
                     match.distance = getDistance(location, {
                         latitude: match.latitude,
                         longitude: match.longitude
                     })
-                    console.log(match.distance, distance)
                     return match;
                 })
+                .filter(({ id }) => id !== req.session.user_id)
                 .filter(({ distance }) => distance < query.distance)
                 .sort((a, b) => a.distance > b.distance ? 1 : -1);
 
