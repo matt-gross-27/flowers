@@ -1,4 +1,108 @@
-{{!-- <div id='user-name-div' class='signupQuery col-4 m-5'>
+<div class="container">
+  <div id='user-name-div' class='signupQuery'>
+    <h2> Please enter your first and last name.</h2>
+    <form id='user-name-form'>
+      
+      <div class="form-group">
+        <label class="form-text" for='user-firstname'> First Name:</label>
+        <input class="form-control" name='user-fistname' id='user-firstname' placeholder='First name'>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-text" for='user-lastname'> Last Name:</label>
+        <input class="form-control" name='user-lastname' id='user-lastname' placeholder='Last name'>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="location" value="location" id="location">
+        <label class="form-text" for="location"> 
+          Allow Flowers to use your location to find people near you (required).
+        </label>
+      </div>
+      
+      <div>
+        <button class="mt-3 mt-3 btn btn-outline-success" type="submit">Next</button>
+      </div>
+    </form>
+  </div>
+  
+  <div id='profile-picture-div' class="d-none signupQuery">
+  <h2> Please upload your profile picture.</h2>
+    <form id='profile-picture-form' method="post" enctype="multipart/form-data">
+    <div>
+      <label for="profile-picture">File</label>
+      <input type="file" class="form-control-file" id="profile-picture">
+    </div>
+    <div>
+      <button class="mt-3 mt-3 btn btn-outline-success" type="submit">Upload</button>
+    </div>
+    </form>
+  </div>
+  <div id='user-about-div' class='d-none signupQuery'>
+    <h2> Tell us about yourself.</h2>
+    <form id='user-about-form'>
+      <div class="form-group">
+        <label class="form-text" for='user-age'>Select Your Age</label>
+        <select class="form-control" name='user-age' id='user-age' placeholder='Age'>
+          <option disabled selected value="">Select Age</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-text" for='user-gender'>Select Your Gender</label>
+        <select class="form-control" required name='user-gender' id='user-gender'>
+          <option disabled selected value="">Select Gender</option>
+          <option value="m">Male</option>
+          <option value="f">Female</option>
+          <option value="o">Non Binary</option>
+        </select>
+      </div>
+      
+      <p class="form-text">Check all that apply</p>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="male" id="male">
+        <label class="form-text" for="male"> 
+          Interested in Men?
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="female" id="female">
+        <label class="form-text" for="female">
+          Interested in Women?
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary">
+        <label class="form-text" for="non-binary">
+          Interested in Non-Binary?
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-text" for='user-bio'>Tell us about yourself:</label>
+        <textarea class="form-control" id='user-bio' placeholder='About you'></textarea>
+      </div>
+      <button class="mt-3 btn btn-outline-success" type="submit">Next</button>
+    </form>
+  </div>
+  
+  <div id='user-signup-div' class='d-none signupQuery'>
+    <h2>Signup</h2>
+    <form id='user-signup-form'>
+      <div class="form-group">
+        <label class="form-text" for='user-email'> Email:</label>
+        <input class="form-control" name='user-email' id='user-email' placeholder='E-mail address'>
+      </div>
+      <div class="form-group">
+        <label class="form-text" for='user-password'> Password:</label>
+        <input type="password" class="form-control" name='user-password' id='user-password' placeholder='Password Must Be ≥ 8 characters'>
+      </div>
+      <button class="mt-3 btn btn-outline-success" type="submit">Sign Up</button>
+    </form>
+  </div>
+  <p class="mt-3 small">Already have an account? <a href="/login">Login</a></p>
+  <script src="/js/signup.js"></script>
+</div>
+
+
+{{!-- {{!-- <div id='user-name-div' class='signupQuery col-4 m-5'>
 
 
     <form id='user-name-form' class='d-flex flex-column justify-content-center align-items-center'>
@@ -16,18 +120,17 @@
 <div class="container">
 
 
-  <div id='user-name-div' class='signupQuery'>
-    <h2> Please enter your first and last name.</h2>
-    <form id='user-name-form'>
-      
+  <div id='user-name-div' class='signupQuery col-4 m-5'>
+    <form id='user-name-form' class='d-flex flex-column justify-content-center align-items-center'>
+      <h2 class='text-center m-3'> Please enter your first and last name.</h2>
       <div class="form-group">
         <label class="form-text" for='user-firstname'> First Name:</label>
-        <input class="form-control" name='user-fistname' id='user-firstname' placeholder='First name'>
+        <input class="form-control col-2 p-2 m-2" name='user-fistname' id='user-firstname' placeholder='First name'>
       </div>
       
       <div class="form-group">
         <label class="form-text" for='user-lastname'> Last Name:</label>
-        <input class="form-control" name='user-lastname' id='user-lastname' placeholder='Last name'>
+        <input class="form-control p-2 m-2" name='user-lastname' id='user-lastname' placeholder='Last name'>
       </div>
 
       <div class="form-check">
@@ -38,13 +141,13 @@
       </div>
       
       <div>
-        <button class="mt-3 mt-3 btn btn-outline-success" type="submit">Next</button>
+        <button class="d-flex p-3 m-3 btn btn-primary" type="submit">Next</button>
       </div>
     </form>
   </div>
 
   
-  <div id='profile-picture-div' class="d-none signupQuery">
+  <div id='profile-picture-div' class='d-none signupQuery m-5 col-6 d-flex flex-column justify-content-center align-items-center'>
   <h2> Please upload your profile picture.</h2>
     <form id='profile-picture-form' method="post" enctype="multipart/form-data">
     <div>
@@ -184,4 +287,4 @@
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="/js/signup.js"></script>
-</div>
+</div> --}}

@@ -48,13 +48,6 @@ body {
     box-shadow: 0 0 0 0.25rem rgb(211 13 253 / 25%);
 }
 
-input{
-    text-align: center;
-}
-
-select{
-    text-align: center;
-}
 
 input:-internal-autofill-selected {
     background-color: #ff6497 !important;
