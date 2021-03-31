@@ -26,20 +26,19 @@ body {
 .form-check-input {
     background-color: #e91e6329;
     border-color: #ff6497;
-    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
     
 }  
 
 .form-check-input:checked {
     background-color: #e91e6329;
     box-shadow: #ff6497;
-    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
+    background-image: url('./icons/noun_Flower_1552356.svg');
 }
 
 .form-check-input:focus {
     border-color: #e91e6329;
     border-color: #ff6497;
-    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
+    /* background-image: url(flowers/utils/icons/noun_Flower_1552356.svg); */
 }
 
 .btn-primary:hover {
@@ -100,4 +99,52 @@ input:-internal-autofill-selected {
   background-color: #fae8e0;
   color: white;
   text-align: center;
+}
+
+
+#signup-modal {
+  height: 100vh;
+  width: 100vw;
+  background-color:rgba(0, 0, 0,0.5);
+  z-index: 1000;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 5px;
+} 
+
+#modal-stuffs-container {
+  height: 500px;
+  width: 450px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 60px solid transparent;
+  padding: 15px; 
+  border-image: url(./flowers-borders-png-5613.png) 160 round;
+}
+
+#modal-close-button {
+  border: silver 1px solid;
+  border-radius: 1em;
+  height: 3em;
+  width: 5em;
+  color: purple;
+  background-image: linear-gradient(lightgreen, lightyellow, lightpink);
+}
+#modal-close-button:hover {
+  border: silver 3px solid;
+  border-radius: 1em;
+  height: 4em;
+  width: 6em;
+  color: rgb(255, 0, 255);
+  transition: background-image .45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-image: linear-gradient(lightpink, lightyellow, lightgreen);
 }

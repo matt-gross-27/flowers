@@ -112,7 +112,7 @@ function userSignupFormHandler(event) {
 };
 
 function createUser() {
-  fetch('api/users', {
+  fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userObject)
@@ -140,10 +140,19 @@ function addAgeOptions () {
   }
 }
 
+function closeModal() {
+  const modalEl = document.getElementById('signup-modal')
+
+  modalEl.style.display = 'none';
+}
+
+
 document.getElementById('user-name-form').addEventListener('submit', userNameFormHandler);
 document.getElementById('user-name-form').addEventListener('submit', getUsersLocation);
 document.getElementById('user-about-form').addEventListener('submit', userAboutFormHandler);
 document.getElementById('user-signup-form').addEventListener('submit', userSignupFormHandler);
 document.getElementById('profile-picture-form').addEventListener('submit', profilePictureFormHandler);
+document.getElementById('modal-close-button').addEventListener('click', closeModal)
+
 
 addAgeOptions();
