@@ -246,6 +246,9 @@ Users.init({
         },
         async beforeUpdate(userData) {
             userData.password = await bcrypt.hash(userData.password, 10);
+        },
+        async beforeBulkCreate(userData) {
+          userData.password = await bcrypt.hash(userData.password, 10);
         }
     },
     sequelize,
