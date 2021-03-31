@@ -4,178 +4,178 @@ const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests,
 
 // Render Homepage
 router.get('/', (req, res) => {
-    if (req.session.loggedIn) {
-        res.redirect('/dashboard')
-    }
-    res.render('home', {...req.session });
+  if (req.session.loggedIn) {
+    res.redirect('/dashboard')
+  }
+  res.render('home', { ...req.session });
 });
 
 // Render Dashboard
 router.get('/dashboard', (req, res) => {
-    Users.findOne({
-            where: { id: req.session.user_id },
-            attributes: { exclude: ['password'] },
-            include: [{
-                    model: Interests,
-                    attributes: ['interest_name'],
-                    through: { attributes: [] },
-                    as: 'users_interests'
-                },
-                {
-                    model: Turnoffs,
-                    attributes: ['turnoff_name'],
-                    through: { attributes: [] },
-                    as: 'users_turnoffs'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flowers_to',
-                },
-                {
-                    model: Users,
-                    // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-                    attributes: { exclude: ['password', ] },
-                    through: { attributes: [] },
-                    as: 'received_flowers_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_block_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_block_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flag_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_flag_from'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'user_matches'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'matched_users'
-                }
-            ]
-        })
-        .then(userData => {
-            const user = userData.get({ plain: true });
-            console.log(user);
-            res.render('dashboard', {...user, ...req.session });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+  Users.findOne({
+    where: { id: req.session.user_id },
+    attributes: { exclude: ['password'] },
+    include: [{
+      model: Interests,
+      attributes: ['interest_name'],
+      through: { attributes: [] },
+      as: 'users_interests'
+    },
+    {
+      model: Turnoffs,
+      attributes: ['turnoff_name'],
+      through: { attributes: [] },
+      as: 'users_turnoffs'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_flowers_to',
+    },
+    {
+      model: Users,
+      // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
+      attributes: { exclude: ['password',] },
+      through: { attributes: [] },
+      as: 'received_flowers_from'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_block_to'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'received_block_from'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_flag_to'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'received_flag_from'
+    },
+    {
+      model: Users,
+      through: { attributes: [] },
+      as: 'user_matches'
+    },
+    {
+      model: Users,
+      through: { attributes: [] },
+      as: 'matched_users'
+    }
+    ]
+  })
+    .then(userData => {
+      const user = userData.get({ plain: true });
+      console.log(user);
+      res.render('dashboard', { ...user, ...req.session });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // Render search Page
-router.get('/search', async(req, res) => {
+router.get('/search', async (req, res) => {
 
-    Users.findOne({
-            where: { id: req.session.user_id },
-            attributes: { exclude: ['password'] },
-            include: [{
-                    model: Interests,
-                    attributes: ['interest_name'],
-                    through: { attributes: [] },
-                    as: 'users_interests'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flowers_to',
-                },
-                {
-                    model: Users,
-                    // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-                    attributes: { exclude: ['password', ] },
-                    through: { attributes: [] },
-                    as: 'received_flowers_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_block_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_block_from'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'sent_flag_to'
-                },
-                {
-                    model: Users,
-                    attributes: ['id'],
-                    through: { attributes: [] },
-                    as: 'received_flag_from'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'user_matches'
-                },
-                {
-                    model: Users,
-                    through: { attributes: [] },
-                    as: 'matched_users'
-                }
-            ]
-        })
-        .then(userData => {
-            const user = userData.get({ plain: true });
-            res.render('people', {...user, ...req.session });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+  Users.findOne({
+    where: { id: req.session.user_id },
+    attributes: { exclude: ['password'] },
+    include: [{
+      model: Interests,
+      attributes: ['interest_name'],
+      through: { attributes: [] },
+      as: 'users_interests'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_flowers_to',
+    },
+    {
+      model: Users,
+      // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
+      attributes: { exclude: ['password',] },
+      through: { attributes: [] },
+      as: 'received_flowers_from'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_block_to'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'received_block_from'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'sent_flag_to'
+    },
+    {
+      model: Users,
+      attributes: ['id'],
+      through: { attributes: [] },
+      as: 'received_flag_from'
+    },
+    {
+      model: Users,
+      through: { attributes: [] },
+      as: 'user_matches'
+    },
+    {
+      model: Users,
+      through: { attributes: [] },
+      as: 'matched_users'
+    }
+    ]
+  })
+    .then(userData => {
+      const user = userData.get({ plain: true });
+      res.render('people', { ...user, ...req.session });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // //Render Login page
 router.get('/login', (req, res) => {
-    //set up redirect
-    if (req.session.loggedIn) {
-        res.redirect('/');
-        return;
-    }
-    res.render('login');
+  //set up redirect
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
 })
 
 //Render Signup page
 router.get('/signup', (req, res) => {
-    //set up redirect if logged in 
-    if (req.session.loggedIn) {
-        res.redirect('/');
-        return;
-    }
-    res.render('signup');
+  //set up redirect if logged in 
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('signup');
 })
 
 // Render my-profile pages
@@ -316,28 +316,29 @@ router.get('/:id', (req, res) => {
     ]
   })
     .then(userData => {
-      if(!userData) { 
-        res.status(404).json({ message: `User not found`})
+      if (!userData) {
+        res.status(404).json({ message: `User not found` })
         return;
       }
       const user = userData.get({ plain: true });
       return userData.get({ plain: true })
     })
     .then(() => {
-      
+
       Users.findOne({
-        where: {id: req.session.user_id }, 
+        where: { id: req.session.user_id },
       })
-      .then(loggedData => {
-        const loggedInUser = loggedData.get({ plain: true };
-        const my = {
-          lattitude: loggedInUser.lattitude, 
-          longitude: loggedInUser.longitude
-        }
-        console.log({ ...user, ...req.session, loggedInUser });
-        res.render('profile', { ...user, ...req.session, ...my })
-      });
-    }) 
+        .then(loggedData => {
+          const loggedInUser = loggedData.get({ plain: true });
+          const my = {
+            latitude: loggedInUser.latitude,
+            longitude: loggedInUser.longitude
+          }
+          console.log({ ...user, ...req.session, loggedInUser });
+          res.render('profile', { ...user, ...req.session, ...my })
+        });
+    })
+
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
