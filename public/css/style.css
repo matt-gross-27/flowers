@@ -10,6 +10,26 @@ label {
 body {
     background-color: #fde40061;
 }
+
+.form-check-input {
+    background-color: #e91e6329;
+    border-color: #ff6497;
+    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
+    
+}  
+
+.form-check-input:checked {
+    background-color: #e91e6329;
+    box-shadow: #ff6497;
+    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
+}
+
+.form-check-input:focus {
+    border-color: #e91e6329;
+    border-color: #ff6497;
+    background-image: url(flowers/utils/icons/noun_Flower_1552356.svg);
+}
+
 .btn-primary:hover {
     color: rgb(0, 0, 0);
     background-color: #ff6497;
