@@ -44,6 +44,46 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/', (req, res) => {
+    /* expects to receive req.body === <Object Bellow>
+      {
+        "email": "test@hotmail.com",
+        "first_name": "Jane",
+        "last_name": "Test",
+        "password": "supersecret",
+        "description": "I'm a 35 year old pan-sexual who likes music and tv. Looking for a friend for my dog spike",
+        "profile_picture_src": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW58ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+        "age": 35,
+        "gender": "f",
+        "interested_in_m": true,
+        "interested_in_f": true,
+        "interested_in_o": true,
+        "interested_in_min_age": 20,
+        "interested_in_max_age": 50,
+        "latitude": 34.08929,
+        "longitude": -118.382890
+      } */
+    const { id, ...data } = req.body;
+    console.log(req.body, data, id);
+    Users.update(data, { where: { id: req.body.id }, returning: true, plain: true })
+        .then(() => {
+            return Users.findOne({
+                where: { id: req.body.id }
+            })
+        })
+        .then(userData => {
+            const user = userData;
+            // log user in on create (so sign up auto logs in)
+            console.log('User Data --------------------', userData);
+
+            res.json({ user: userData })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err)
+        });
+});
+
 // POST LOGIN /api/users/login -> (create a session object with properties { name, user_id, loggedIn})
 router.post('/login', (req, res) => {
     //expects req.body = { "email": "STR(isEmail)", "password": "STR(len >= 8)" }
@@ -53,14 +93,15 @@ router.post('/login', (req, res) => {
             }
         })
         .then(userData => {
+            console.log(userData);
             if (!userData) {
-                res.status(404).json({ message: `No user found with that email address` });
+                res.status(401).json({ message: `Invalid credentials, verify your email and password.` });
                 return;
             }
             bcrypt.compare(req.body.password, userData.password)
                 .then(validPassword => {
                     if (!validPassword) {
-                        res.status(400).json({ message: `Email does not match password` });
+                        res.status(401).json({ message: `Invalid credentials, verify your email and password.` });
                         return;
                     }
                     req.session.save(() => {
@@ -94,17 +135,13 @@ router.post('/logout', (req, res) => {
 });
 
 // READ
+
 // GET /api/users -> (get all users)
 router.get('/', (req, res) => {
-    const where = ['gender'].reduce((props, prop) => {
-        if (req.query[prop]) {
-            props[prop] = req.query[prop]
-        }
-        return props;
-    }, {});
+    const { user_id } = req.session;
+    const excludeSelf = ({ id }) => id !== user_id;
 
     Users.findAll({
-            where,
             attributes: { exclude: ['password'] },
             include: [{
                     model: Interests,
@@ -160,40 +197,17 @@ router.get('/', (req, res) => {
                 }
             ]
         })
-        .then(userData => {
-            const { query } = req;
-            let { distance, latitude, longitude } = req.query;
+        .then(userData => res.json(userData.filter(excludeSelf)))
+        .catch(err => res.status(500).json(err));
+});
 
-            const location = {
-                latitude,
-                longitude
-            };
+router.get('/current-user', async(req, res) => {
+    if (!req.session) {
+        return res.status(400).json({ message: 'you must be logged in to send flowers!' })
+    }
 
-            if (distance) {
-                distance = Number(distance)
-            } else {
-                distance = Infinity;
-            }
-
-            //res.json(userData)
-            const data = JSON.parse(JSON.stringify(userData))
-                .map((match) => {
-                    match.distance = getDistance(location, {
-                        latitude: match.latitude,
-                        longitude: match.longitude
-                    })
-                    console.log(match.distance, distance)
-                    return match;
-                })
-                .filter(({ distance }) => distance < query.distance)
-                .sort((a, b) => a.distance > b.distance ? 1 : -1);
-
-            res.json(data)
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+    const user = await Users.getCurrentUser(req.session.user_id | req.body.sender_id)
+    res.json(user);
 });
 
 // GET /api/users/:id -> (get one user by id)

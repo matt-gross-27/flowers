@@ -1,19 +1,25 @@
-{{!-- flower notification goes here --}}
-{{>navigationbar}}
 
-<div class="container">
+<strong>{{first_name}} {{last_name}}</strong>
+<hr>
 
-{{!-- card for user to see who sent them flowers  --}}
-    <div class="card">
-  <div class="card-body">
-    <h1>Flowers Received!</h1>
-  </div>
-</div>
+<ul>
+  {{>user-data-list}}
 
-{{!-- card for users to see who they matched with --}}
-<div class="card">
-  <div class="card-body"> 
-    <h1>Your Matches!</h1>
-  </div>
-</div>
-</div>
+  <hr>
+  <li>received_flowers_from:</li>
+  <ul>
+    {{#each received_flowers_from}}
+      {{>user-data-list}}
+      <hr>
+    {{/each}}
+  </ul>
+
+  <hr>
+  <li>user_matches:</li>
+  <ul>
+    {{#each user_matches}}
+      {{>user-data-list}}
+      <hr>
+    {{/each}}
+  </ul>
+</ul>
