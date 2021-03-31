@@ -162,10 +162,7 @@ Users.init(
       }
     },
     description: {
-      type: DataTypes.STRING,
-      validate: {
-        len: [0, 130]
-      }
+      type: DataTypes.TEXT,
     },
     profile_picture_src: {
       type: DataTypes.STRING,
