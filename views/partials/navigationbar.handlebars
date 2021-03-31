@@ -20,7 +20,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2 container-fluid">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Flowers</a>
+    <a class="navbar-brand" href="/">Flowers</a>
+    {{#if loggedIn}}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -28,17 +29,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Flowers</a>
+          <a class="nav-link" href="/dashboard">My Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Search for Matches</a>
+          <a class="nav-link" href="/search">Search for Matches</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Edit Profile</a>
+          <a class="nav-link" href="/my-profile">Edit Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Log Out</a>
+          <button class="btn-no-style nav-link" id="logout-btn">Log Out</a>
         </li>
+        {{/if}}
       </ul>
     </div>
   </div>

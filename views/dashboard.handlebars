@@ -1,2 +1,24 @@
-{{!-- flower notification goes here --}}
-{{>navigationbar}}
+<strong>{{first_name}} {{last_name}}</strong>
+<hr>
+
+<ul>
+  {{>user-data-list}}
+
+  <hr>
+  <li>received_flowers_from:</li>
+  <ul>
+    {{#each received_flowers_from}}
+      {{>user-data-list}}
+      <hr>
+    {{/each}}
+  </ul>
+
+  <hr>
+  <li>user_matches:</li>
+  <ul>
+    {{#each user_matches}}
+      {{>user-data-list}}
+      <hr>
+    {{/each}}
+  </ul>
+</ul>

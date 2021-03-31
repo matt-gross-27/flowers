@@ -23,6 +23,14 @@ body {
     background-color: #e91e6329;
     border-color: #ff6497;    
 }
+.btn-no-style {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  background: none;
+  text-align: left;
+}
 
 .form-select{
     width: 16%;

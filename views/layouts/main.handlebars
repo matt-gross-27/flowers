@@ -29,6 +29,9 @@
 <body class='d-flex flex-column justify-content-center align-items-center'>
     {{>navigationbar}}
     {{{body}}}
+
+  {{#if loggedIn}}<script src="js/logout.js"></script>{{/if}}
+
 </body>
 
 </html>
