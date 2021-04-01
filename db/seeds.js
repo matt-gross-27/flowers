@@ -2,6 +2,7 @@ const { Interests, Turnoffs, Users, UserInterests, UserTurnoffs, Flowers, Matche
 const sequelize = require('../config/connection');
 
 const interests = [
+<<<<<<< HEAD
     { id: 1, interest_name: "interest # 1" },
     { id: 2, interest_name: "interest # 2" },
     { id: 3, interest_name: "interest # 3" },
@@ -37,6 +38,43 @@ const turnoffs = [
     { id: 14, turnoff_name: "turnoff # 14" },
     { id: 15, turnoff_name: "turnoff # 15" },
     { id: 16, turnoff_name: "turnoff # 16" }
+=======
+  { id: 1, interest_name:  "Hiking" },
+  { id: 2, interest_name:  "Reading" },
+  { id: 3, interest_name:  "Fishing" },
+  { id: 4, interest_name:  "Astrology" },
+  { id: 5, interest_name:  "Music" },
+  { id: 6, interest_name:  "Binging Netflix" },
+  { id: 7, interest_name:  "Bowling" },
+  { id: 8, interest_name:  "Cooking" },
+  { id: 9, interest_name:  "Art" },
+  { id: 10, interest_name: "Fashion" },
+  { id: 11, interest_name: "Hacking" },
+  { id: 12, interest_name: "Lego building" },
+  { id: 13, interest_name: "Needlepoint" },
+  { id: 14, interest_name: "Cats" },
+  { id: 15, interest_name: "Dogs" },
+  { id: 16, interest_name: "Wine" }
+];
+
+const turnoffs = [
+  { id: 1, turnoff_name: "Selfishness" },
+  { id: 2, turnoff_name: "Aggression" },
+  { id: 3, turnoff_name: "Drinking" },
+  { id: 4, turnoff_name: "Smoking" },
+  { id: 5, turnoff_name: "Boring People" },
+  { id: 6, turnoff_name: "Over Sensitivity" },
+  { id: 7, turnoff_name: "Bad Driving" },
+  { id: 8, turnoff_name: "Bad Teeth" },
+  { id: 9, turnoff_name: "Baby Talk" },
+  { id: 10, turnoff_name: "Ex-Talk" },
+  { id: 11, turnoff_name: "Meanness" },
+  { id: 12, turnoff_name: "Bad Hygiene" },
+  { id: 13, turnoff_name: "Long Fingernails" },
+  { id: 14, turnoff_name: "Laziness" },
+  { id: 15, turnoff_name: "Bad Listeners" },
+  { id: 16, turnoff_name: "Bad Kissers" }
+>>>>>>> feature/interests
 ];
 
 const testUsers = [
