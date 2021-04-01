@@ -1,0 +1,25 @@
+<div class="container">
+
+  <h2 class="text-center">Flowers Chat</h2>
+
+  <hr>
+
+  <section id="chat-box" class="chat-box">
+    {{#each messages}}
+    <div class="p-2 m-2 texts
+      {{#if fromMe}}text-end my-texts{{/if}} 
+      {{#unless fromMe}}text-left match-texts{{/unless}}">
+      {{message_text}}
+    </div>
+    {{/each}}
+  </section>
+  <section class="chat-form form-group">
+    <form id="chat-form" class= "d-flex">
+      <input id="chat-input" class="m-2 form-control w-100" type="text">
+      <button class="btn btn-primary btn-send" type="submit">Send</button>
+    </form>
+  </section>
+
+  <footer class="mt-5"><a href="/dashboard"> ↩ back to dashboard</a></footer>
+
+<script src="../js/messages.js"></script>

@@ -1,7 +1,7 @@
 $(document).ready(function() {});
 let savedUsers;
 
-const template = `
+const hbTemplate = Handlebars.compile(`
 <div class="col-sm-6 col-md-4">
   <div class="card mb-3 user-card" data-user="{{id}}">
     <img src="{{profile_picture_src}}" class="card-img-top" alt="...">
@@ -15,19 +15,23 @@ const template = `
       {{/if}}
     </div>
   </div>
-</div>`;
+</div>`);
 
 let currentUser;
 
-async function init() {
-    const user = await $.get('/api/users/current-user');
-    currentUser = user;
-    showUsers();
+function loadPreferences() {
+    $('input:checkbox').each(function() {
+        $(this).attr('checked', currentUser[$(this).attr('id')])
+    })
 }
 
-init();
+(async function init() {
+    const user = await $.get('/api/users/current-user');
+    currentUser = user;
 
-const hbTemplate = Handlebars.compile(template);
+    loadPreferences();
+    showFilteredUsers();
+})()
 
 const flowersSent = user => !currentUser.sent_flowers_to.find(({ id }) => id == user.id);
 const loadUsers = (users) => {
@@ -45,23 +49,26 @@ const loadUsers = (users) => {
     $('.user-list').html(filteredUsers.length ?
         filteredUsers :
         'There are no users around you ');
-
 }
 
-$('#filter-btn').on('click', async function(event) {
-    event.preventDefault();
+async function showFilteredUsers(event) {
+    event && event.preventDefault();
     const form = $('#filter-form');
 
+    const { latitude, longitude } = currentUser;
 
-    const filters = form.serialize() +
-        '&latitude=37.08929000' +
-        '&longitude=-119.38289000';
+    const filters = form.serialize()
+        .replace(/interested_in_\w/g, 'gender') +
+        `&latitude=${latitude}` +
+        `&longitude=${longitude}`;
 
     showUsers(filters);
     saveUserPreferences(form);
 
     const modal = $('#exampleModal').modal('hide');
-})
+}
+
+$('#filter-btn').on('click', showFilteredUsers)
 
 async function showUsers(filters) {
     const url = filters ? `/api/filter?${filters}` : '/api/users'
@@ -101,16 +108,18 @@ $('[name=distance]').on('input', function() {
     $('#distance').html($(this).val() + ' miles');
 })
 
-$(document).on('click', '.send-flowers ', async function(event) {
-    event.preventDefault();
+// $(document).on('click', '.send-flowers ', async function(event) {
+//     event.preventDefault();
 
-    const recipient_id = $(this).closest('.user-card').data('user');
+//     // const recipient_id = $(this).closest('.user-card').data('user');
+//     const recipient_id = $(this).attr("value");
+//     console.log(recipient_id);
 
-    currentUser = await $.ajax({
-        url: '/api/users/send-flowers',
-        method: 'PUT',
-        data: { recipient_id }
-    });
+//     currentUser = await $.ajax({
+//         url: '/api/users/send-flowers',
+//         method: 'PUT',
+//         data: JSON.stringify(recipient_id)
+//     });
 
-    loadUsers(savedUsers);
-});
+//     loadUsers(savedUsers);
+// });

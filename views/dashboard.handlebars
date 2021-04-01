@@ -1,24 +1,72 @@
-<strong>{{first_name}} {{last_name}}</strong>
-<hr>
+<div class="container">
+  <h2>Your Notifications</h2>
+  <section class="dashboard-section">
+    {{#unless received_flowers_from.length}}
+    <p class="text-secondary">
+      You Currently have no notifications. Check out the search for matches page and come back later to see who sent you
+      flowers!
+    </p>
+    {{/unless}}
 
-<ul>
-  {{>user-data-list}}
-
-  <hr>
-  <li>received_flowers_from:</li>
-  <ul>
     {{#each received_flowers_from}}
-      {{>user-data-list}}
-      <hr>
-    {{/each}}
-  </ul>
-
+    <div class="row d-flex flex-wrap">
+      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+        <img src="{{profile_picture_src}}" class="dashboard-img w-100"
+          alt="{{first_name}} {{last_name}} profile picture" />
+      </div>
+      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
+        <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
+          <p>{{description}}</p>
+          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
+          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          <div class='my-1 d-flex justify-content-around'>
+            <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
+              class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}"
+              class="btn btn-primary dashboard-btn send-block-btn" title="Block user">❌</button>
+          </div>
+      </div>
+    </div>
+  </section>
   <hr>
-  <li>user_matches:</li>
-  <ul>
+  {{/each}}
+  <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
+  <hr>
+  <h2>Your Matches</h2>
+  <br>
+  <section class="dashboard-section">
+    {{#unless user_matches.length}}
+    <p class="text-secondary">
+      You Currently have no matches. When you and another user send flowers to each other, you can come back to see
+      matches here!
+    </p>
+    {{/unless}}
+
     {{#each user_matches}}
-      {{>user-data-list}}
-      <hr>
-    {{/each}}
-  </ul>
-</ul>
+    <div class="row d-flex flex-wrap">
+      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+        <img src="{{profile_picture_src}}" class="dashboard-img w-100"
+          alt="{{first_name}} {{last_name}} profile picture" />
+      </div>
+      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
+        <h5> Matched with {{first_name}} {{last_name}}, {{age}}</h3>
+          <p>{{description}}</p>
+          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
+          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          <div class='my-1 d-flex justify-content-around'>
+            <a href="/chat/{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
+              title="Message user">💬</a>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-block-btn"
+              title="Block user">❌</button>
+            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-flag-btn"
+              title="Report abuse">🏴‍☠️</button>
+          </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+  {{/each}}
+
+  <script src="js/sendFlowers.js"></script>
+  <script src="js/sendBlock.js"></script>
+  <script src="js/sendFlag.js"></script>

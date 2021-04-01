@@ -27,6 +27,24 @@
 
           <!-- Gender -->
           <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="interested_in_m" value="m" id="interested_in_m">
+            <label class="form-check-label" for="interested_in_m">
+              Male
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="interested_in_f" value="f" id="interested_in_f">
+            <label class="form-check-label" for="interested_in_f">
+              Female
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="interested_in_o" value="o" id="interested_in_o">
+            <label class="form-check-label" for="interested_in_o">
+              Non-binary
+            </label>
+          </div>
+          <!--<div class="form-check">
             {{#if interested_in_m}}
             <input class="form-check-input" type="checkbox" name="interested_in_m" value="true" id="male" checked>
             {{else }}
@@ -62,7 +80,7 @@
           <!-- Distance -->
           <div class="form-group">
             <label for="distance">Distance</label>
-            <input type="range" name="distance" min="1" max="1000" value="100">
+            <input type="range" name="distance" min="1" max="1000" value="500">
             <div id="distance">100 miles</div>
           </div>
 
@@ -79,4 +97,5 @@
 </div>
 
 
-<script src="/js/filters.js"></script>
+{{!--
+<script src="/js/filters.js"></script> --}}

@@ -39,7 +39,7 @@ class Users extends Model {
         return Users.findOne({
             where: { id },
             attributes: [
-                'id', 'first_name', 'last_name', 'interested_in_m', 'interested_in_f', 'interested_in_o',
+                'id', 'first_name', 'last_name', 'interested_in_m', 'interested_in_f', 'interested_in_o', 'latitude', 'longitude'
             ],
             include: [{
                     model: Users,
@@ -165,7 +165,7 @@ Users.init({
         }
     },
     description: {
-      type: DataTypes.TEXT,
+        type: DataTypes.TEXT,
     },
     profile_picture_src: {
         type: DataTypes.STRING,
@@ -246,6 +246,11 @@ Users.init({
         },
         async beforeUpdate(userData) {
             userData.password = await bcrypt.hash(userData.password, 10);
+        },
+        async beforeBulkCreate(userData) {
+            userData.forEach(async user => {
+                user.password = await bcrypt.hash(user.password, 10);
+            });
         }
     },
     sequelize,
