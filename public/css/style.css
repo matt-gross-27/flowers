@@ -4,17 +4,39 @@ label {
 .template {
     display: none;
 }
+
+.a {
+  color:#e9f899;
+}
 .navbar {
     position: fixed-right; 
     background-color: #aae682;
-    color: rgb(255, 0, 0)
+    background-image: url("./icons/kmohckdndcv.png") ;
+    color: rgb(255, 0, 0);
 }
 
 .navbar-brand {
   color: #fae8e0; 
 }
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  box-shadow: rgba(128, 0, 128, 0.623) 0.25rem;
+}
+.navbar-toggler .custom-toggler {
+  padding: .25rem .75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: #ff6497;
+  background-image: url(./icons/yeelllow_Flower.png);
+  border: 1px solid #c840fd;
+  border-radius: .25rem;
+  transition: box-shadow .15s ease-in-out;
+}
 
-
+.navbar-toggler-icon .custom-toggler {
+  background-image: url('./css/icons/yeelllow_Flower_1552356 copy.png');
+}
 
 .jumbotron-main {
   border: 60px solid transparent;
@@ -46,7 +68,7 @@ body {
 
 .btn-primary:hover {
     color: rgb(0, 0, 0);
-    background-color: #feecc3;
+    background-color: #c840fd;
     border-color: #e91e6329;    
 }
 .btn-primary {
