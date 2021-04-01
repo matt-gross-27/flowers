@@ -405,7 +405,8 @@ router.get('/chat/:id', async(req, res) => {
                         sender_id: req.params.id,
                     }
                 ]
-            }
+            },
+            order: [['created_at']]
         }).then(messageData => messageData.map(message => message.get({ plain: true })))
         .catch(err => res.status(500).json(err));
 
