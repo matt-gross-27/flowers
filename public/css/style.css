@@ -8,6 +8,7 @@ label {
 .a {
   color:#e9f899;
 }
+
 .navbar {
     position: fixed-right; 
     background-color: #aae682;
@@ -15,17 +16,38 @@ label {
     color: rgb(255, 0, 0);
 }
 
+.nav-link {
+  color: #f5d325;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color:  #e9f899;
+}
+
+.navbar-brand:hover {
+  color:  #e9f899;
+}
+
+.btn-no-style:hover {
+  color:  #e9f899;
+}
+
 .navbar-brand {
-  color: #fae8e0; 
+  color: #f5d325;;
+  font-weight: bold; 
+  font-size: 1.75rem;
 }
 .navbar-toggler:focus {
   text-decoration: none;
-  outline: 0;
-  box-shadow: rgba(128, 0, 128, 0.623) 0.25rem;
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
 .navbar-toggler .custom-toggler {
   padding: .25rem .75rem;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   line-height: 1;
   background-color: #ff6497;
   background-image: url(./icons/yeelllow_Flower.png);
@@ -55,14 +77,14 @@ body {
 }  
 
 .form-check-input:checked {
-    background-color: #e91e6329;
-    box-shadow: #ff6497;
-    background-image: url('./icons/noun_Flower_1552356.svg');
+    box-shadow: #ff6497; 
+    background-color: #ff6497;
 }
 
 .form-check-input:focus {
-    border-color: #e91e6329;
     border-color: #ff6497;
+    outline: none;
+    box-shadow: none;
     /* background-image: url(flowers/utils/icons/noun_Flower_1552356.svg); */
 }
 
