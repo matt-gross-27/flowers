@@ -66,6 +66,10 @@ label {
   border-image: url(./flowers-borders-png-5613.png) 160 round;
 }
 
+.card {
+  min-height: 250px;
+}
+
 body {
     background-color: #FDF2E7;
 }

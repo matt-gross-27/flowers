@@ -11,7 +11,8 @@ const hbTemplate = Handlebars.compile(`
       {{#if sentFlowers}}
       <em>Flowers sent</em>
       {{else}}
-      <a href="#" class="btn btn-primary send-flowers">Send Flowers</a>
+      <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
+              class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>
       {{/if}}
     </div>
   </div>
