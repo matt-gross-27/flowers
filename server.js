@@ -38,7 +38,7 @@ app.set('view engine', 'handlebars');
 app.use(routes);
 
 // turn on seedDatabase and set { force: true } to user seed data
-// const seedDatabase = require('./db/seeds');
+const seedDatabase = require('./db/seeds');
 
 sequelize.sync({ force: true }).then(() => {
     seedDatabase();
