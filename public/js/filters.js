@@ -12,7 +12,7 @@ const hbTemplate = Handlebars.compile(`
       <em>Flowers sent</em>
       {{else}}
       <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
-              class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>
+              class="btn btn-primary dashboard-btn send-flowers-btn" title="Send Flowers">🌹</button>
       {{/if}}
     </div>
   </div>
