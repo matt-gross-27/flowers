@@ -35,7 +35,7 @@ label {
 }
 
 .navbar-brand {
-  color: #f5d325;;
+  color: #f5d325;
   font-weight: bold; 
   font-size: 1.75rem;
 }
@@ -58,6 +58,18 @@ label {
 
 .navbar-toggler-icon .custom-toggler {
   background-image: url('./css/icons/yeelllow_Flower_1552356 copy.png');
+}
+
+.in-doc-link {
+  color: #ff6497;
+  font-weight: bold;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.in-doc-link:hover {
+  color: #c840fd;
+  font-weight: bold; 
 }
 
 .jumbotron-main {
@@ -96,12 +108,35 @@ body {
     color: rgb(0, 0, 0);
     background-color: #c840fd;
     border-color: #e91e6329;    
+    box-shadow: none;
 }
+
+.btn-primary:active {
+  color: rgb(0, 0, 0);
+  background-color: #c840fd;
+  border-color: #e91e6329;
+  box-shadow: none;
+}
+
+.btn-primary:focus {
+  color: rgb(0, 0, 0);
+  background-color: #ff6497;
+  border-color: #e91e6329;
+  box-shadow: none;
+}
+
 .btn-primary {
     color: rgb(0, 0, 0);
     background-color: #ff6497;
-    border-color: #3D2E2B;    
+    border-color: #3D2E2B;
+    box-shadow: none;
 }
+
+.btn-primary:active:focus {
+  box-shadow: 0 0 0 0.25rem gold;
+  background-color: #c840fd;
+}
+
 .btn-no-style {
   display: inline-block;
   border: none;
@@ -228,4 +263,15 @@ border-radius: 20px 20px 20px 0;
   color: rgb(255, 0, 255);
   transition: background-image .45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   background-image: linear-gradient(lightpink, lightyellow, lightgreen);
+}
+
+.search-img {
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  height: 400px;
+}
+
+.card-body-text {
+  height: 125px;
+  overflow-y: scroll;
 }

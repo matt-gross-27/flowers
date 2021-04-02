@@ -18,8 +18,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-
+        
         <form id="filter-form">
           <div>{{log interested_in_m}}</div>
           <div>{{log interested_in_f}}</div>
@@ -44,36 +43,6 @@
               Non-binary
             </label>
           </div>
-          <!--<div class="form-check">
-            {{#if interested_in_m}}
-            <input class="form-check-input" type="checkbox" name="interested_in_m" value="true" id="male" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_m" value="true" id="male">
-            {{/if}}
-            <label class="form-check-label" for="male">
-              Male
-            </label>
-          </div>
-          <div class="form-check">
-            {{#if interested_in_f}}
-            <input class="form-check-input" type="checkbox" name="interested_in_f" value="true" id="female" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_f" value="true" id="female">
-            {{/if}}
-            <label class="form-check-label" for="female">
-              Female
-            </label>
-          </div>
-          <div class="form-check">
-            {{#if interested_in_o}}
-            <input class="form-check-input" type="checkbox" name="interested_in_o" value="true" id="non-binary" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_o" value="true" id="non-binary">
-            {{/if}}
-            <label class="form-check-label" for="non-binary">
-              Non-binary
-            </label>
-          </div>
 
           <!-- Age -->
 
@@ -81,7 +50,7 @@
           <div class="form-group">
             <label for="distance">Distance</label>
             <input type="range" name="distance" min="1" max="1000" value="500">
-            <div id="distance">100 miles</div>
+            <div id="distance"></div>
           </div>
 
           <!-- ... -->
@@ -95,7 +64,3 @@
     </div>
   </div>
 </div>
-
-
-{{!--
-<script src="/js/filters.js"></script> --}}
