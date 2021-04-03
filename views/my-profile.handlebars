@@ -3,7 +3,7 @@
     <div class="slide-down col-12 col-md-6 col-lg-4 col-xl-3">
       <h3>Your Profile</h3>
         <div class="slide-down card mb-3 user-card" data-user="{{id}}">
-          <img class="search-img" src="{{profile_picture_src}}" class="card-img-top" alt="...">
+          <img id="currentPhoto" class="search-img" src="{{profile_picture_src}}" class="card-img-top" alt="...">
           <div class="card-body">
             <div class="card-body-text">
 
@@ -12,8 +12,8 @@
               <p class="card-text">
                 X miles away <br />
                 {{description}} <br />
-                {{#if users_interests.length}} <strong>Interests:</strong> {{#each users_interests}} <span class="c-s-l">{{interest_name}}</span>{{/each}} {{/if}} <br />
-                {{#if users_turnoffs.length}} <strong>Turnoffs:</strong> {{#each users_turnoffs}} <span class="c-s-l">{{turnoff_name}}</span>{{/each}} {{/if}} <br />
+                {{#if users_interests.length}} <strong>Interests:</strong> {{#each users_interests}} <span class="c-s-l">{{interest_name}}</span>{{/each}}  <br />{{/if}}
+                {{#if users_turnoffs.length}} <strong>Turnoffs:</strong> {{#each users_turnoffs}} <span class="c-s-l">{{turnoff_name}}</span>{{/each}} <br />{{/if}}
               </p>
               
             </div>

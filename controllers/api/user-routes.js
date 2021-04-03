@@ -376,6 +376,25 @@ router.put('/interests', (req, res) => {
   }
 });
 
+// PUT /api/users/turnoffs -> (update a users turnoffs list)
+router.put('/turnoffs', (req, res) => {
+  if (req.session) {
+    // expects req.body === {"turnoff_ids: [ARRAY] "}
+    Users.updateTurnoffs({
+      user_id: req.session.user_id,
+      ...req.body
+    }, { UserTurnoffs, Turnoffs, Users })
+
+      .then(userData => res.json(userData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  } else {
+    res.status(400).json({ message: 'you must be logged in to update your turnoffs!' })
+  }
+});
+
 
 // PUT /api/users/:id -> (update user data with new data from user profile page)
 router.put('/:id', (req, res) => {

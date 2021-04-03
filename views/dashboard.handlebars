@@ -19,8 +19,8 @@
         <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
           <p>{{getDistance latitude longitude ../latitude ../longitude}} miles away</p>
           <p>Bio: {{description}}</p>
-          <p>Interests: {{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
-          <p>Turnoffs: {{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          {{#if users_interests.length}}<p>Interests: {{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>{{/if}}
+          {{#if users_turnoffs.length}}<p>Turnoffs: {{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>{{/if}}
           <div class='my-1 d-flex justify-content-around'>
             <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
               class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>

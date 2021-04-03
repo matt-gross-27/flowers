@@ -126,6 +126,32 @@ class Users extends Model {
         });
       });
   };
+
+  // update users turnoffs method
+  static updateTurnoffs(obj, models) {
+    return models.UserTurnoffs.destroy({
+      where: { user_id: obj.user_id }
+    })
+      .then(() => {
+        return obj.turnoff_ids.forEach(turnoffId => {
+          models.UserTurnoffs.create({
+            user_id: obj.user_id,
+            turnoff_id: turnoffId
+          });
+        });
+      })
+      .then(() => {
+        return models.Users.findOne({
+          where: { id: obj.user_id },
+          attributes: ['id', 'first_name', 'last_name'],
+          include: {
+            model: models.Turnoffs,
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        });
+      });
+  };
 }
 
 Users.init({
