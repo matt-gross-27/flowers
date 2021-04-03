@@ -44,7 +44,21 @@ router.get('/dashboard', (req, res) => {
         // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
         attributes: { exclude: ['password',] },
         through: { attributes: [] },
-        as: 'received_flowers_from'
+        as: 'received_flowers_from',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
       },
       {
         model: Users,
@@ -74,13 +88,41 @@ router.get('/dashboard', (req, res) => {
         model: Users,
         attributes: { exclude: ['password',] },
         through: { attributes: [] },
-        as: 'user_matches'
+        as: 'user_matches',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
       },
       {
         model: Users,
         attributes: { exclude: ['password',] },
         through: { attributes: [] },
-        as: 'matched_users'
+        as: 'matched_users',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
       }
     ]
   })
@@ -136,6 +178,10 @@ router.get('/dashboard', (req, res) => {
 
 // Render search Page
 router.get('/search', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+    return;
+  }
   Users.findOne({
     where: { id: req.session.user_id },
     attributes: { exclude: ['password'] },

@@ -4,14 +4,20 @@ let savedUsers;
 
 // HANDLE BARS TEMPLATE FOR ONE CARD
 const hbTemplate = Handlebars.compile(`
-  <div class="col-12 col-md-6 col-lg-4">
+  <div class="col-12 col-md-6 col-lg-4 col-xl-3">
     <div class="card mb-3 user-card" data-user="{{id}}">
       <img class="search-img" src="{{profile_picture_src}}" class="card-img-top" alt="...">
       <div class="card-body">
         <div class="card-body-text">
 
         <h5 class="card-title">{{first_name}} {{last_name}}, {{age}}</h5>
-        <p class="card-text">{{description}}</p>
+        <p class="card-text">
+          
+
+          {{description}} <br />
+          {{#if users_interests.length}} <strong>Interests:</strong> {{#each users_interests}} <span class="c-s-l">{{interest_name}}</span>{{/each}} {{/if}} <br />
+          {{#if users_turnoffs.length}} <strong>Turnoffs:</strong> {{#each users_turnoffs}} <span class="c-s-l">{{turnoff_name}}</span>{{/each}} {{/if}} <br />
+        </p>
 
         </div>
         <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
@@ -29,6 +35,7 @@ let currentUser;
 function loadPreferences() {
   $('input:checkbox').each(function () {
     $(this).attr('checked', currentUser[$(this).attr('id')])
+    showFilteredUsers();
   })
 }
 
@@ -37,7 +44,6 @@ function loadPreferences() {
   currentUser = user;
 
   loadPreferences();
-  showFilteredUsers();
 })()
 
 const flowersSent = user => !currentUser.sent_flowers_to.find(({ id }) => id == user.id);

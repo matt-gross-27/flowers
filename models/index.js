@@ -108,6 +108,13 @@ Interests.belongsToMany(Users, {
   as: 'interested_users'
 });
 
+UserInterests.belongsTo(Users, { foreignKey: 'user_id' });
+UserInterests.belongsTo(Interests, { foreignKey: 'interest_id' });
+
+Users.hasMany(UserInterests, { foreignKey: 'user_id' });
+Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
+
+
 Users.belongsToMany(Turnoffs, {
   through: 'user_turnoffs',
   foreignKey: 'user_id',
@@ -120,16 +127,11 @@ Turnoffs.belongsToMany(Users, {
   as: 'repulsed_users'
 });
 
-UserInterests.belongsTo(Users, { foreignKey: 'user_id' });
-UserInterests.belongsTo(Interests, { foreignKey: 'interest_id' });
 
 UserTurnoffs.belongsTo(Users, { foreignKey: 'user_id' });
 UserTurnoffs.belongsTo(Turnoffs, { foreignKey: 'turnoff_id' });
 
-Users.hasMany(UserInterests, { foreignKey: 'user_id' });
 Users.hasMany(UserTurnoffs, { foreignKey: 'user_id' });
-
-Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
 Turnoffs.hasMany(UserTurnoffs, { foreignKey: 'turnoff_id' });
 
 //User + Messages associations

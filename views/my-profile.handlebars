@@ -1,166 +1,194 @@
 <div class="container">
-  <h2>Update Profile</h1>
-    <br>
-    <img src="{{profile_picture_src}}" id="currentPhoto" class="img-thumbnail"
-      alt="{{first_name}} {{last_name}} profile picture">
-    <div class="accordion" id="userProfileUpdate">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="aboutDetails">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-            aria-expanded="false" aria-controls="collapseOne">
-            Account Settings
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-          data-bs-parent="#userProfileUpdate">
-          <div class="accordion-body">
-            <div class="form-group">
-              <label class="form-text" for='user-photo-url'>Update photo</label>
-              <div id='profile-picture-form' method="post" enctype="multipart/form-data">
-                <div>
-                  <input type="file" class="form-control-file" id="profile-picture">
-                </div>
-              </div>
+  <div class="row">
+    <div class="slide-down col-12 col-md-6 col-lg-4 col-xl-3">
+      <h3>Your Profile</h3>
+        <div class="slide-down card mb-3 user-card" data-user="{{id}}">
+          <img class="search-img" src="{{profile_picture_src}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <div class="card-body-text">
 
-              <div class="form-group">
-                <label class="form-text" for='user-email'> Update Email:</label>
-                <input class="form-control" name='user-email' id='user-email' value='{{email}}'
-                  placeholder='E-mail address'>
-              </div>
-
-              {{!-- BUG UPDATE PASSWORD NOT WORKING CANT LOG BACK IN TO ACCOUNT--}}
-              {{!-- <div class="form-group">
-                <label class="form-text" for='user-password'> Create New Password:</label>
-                <input type="text" class="form-control" name='user-password' id='user-password' value=''
-                  placeholder='Password Must Be ≥ 8 characters'>
-              </div> --}}
+              <h5 class="card-title">{{first_name}} {{last_name}}, {{age}}</h5>
+              
+              <p class="card-text">
+                X miles away <br />
+                {{description}} <br />
+                {{#if users_interests.length}} <strong>Interests:</strong> {{#each users_interests}} <span class="c-s-l">{{interest_name}}</span>{{/each}} {{/if}} <br />
+                {{#if users_turnoffs.length}} <strong>Turnoffs:</strong> {{#each users_turnoffs}} <span class="c-s-l">{{turnoff_name}}</span>{{/each}} {{/if}} <br />
+              </p>
+              
             </div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="userDetailsUpdate">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              User Details
+            <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
+              class="btn btn-primary mt-3 w-100 send-flowers-btn" title="Send Flowers">
+              Send Flowers 🌹
             </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-            data-bs-parent="#userProfileUpdate">
-            <div class="accordion-body">
-              <div class="form-group">
-                <label class="form-text" for='user-firstname'> First Name:</label>
-                <input class="form-control" name='user-fistname' id='user-firstname' value='{{first_name}}'
-                  placeholder='First name'>
-              </div>
-
-              <div class="form-group">
-                <label class="form-text" for='user-lastname'> Last Name:</label>
-                <input class="form-control" name='user-lastname' id='user-lastname' value='{{last_name}}'
-                  placeholder='Last name'>
-              </div>
-
-              <div class="form-group">
-                <label for="userAge" class="form-text">Age</label>
-                <input type="text" class="form-control" id="userAge" value='{{age}}' placeholder="Age">
-              </div>
-
-              <div class="form-group">
-                <label class="form-text" for='user-gender'>Gender</label>
-                <select class="form-control" required name='user-gender' id='user-gender'>
-
-                  <option selected value={{gender}}>{{format_gender gender}}</option>
-                  <option value="m">Male</option>
-                  <option value="f">Female</option>
-                  <option value="o">Non Binary</option>
-                </select>
-              </div>
-              <br>
-              <div class="form-group">
-                <p class="form-text">Interested in:
-                  (check all that apply)</p>
-                <div class="form-check">
-
-                  <input class="form-check-input" type="checkbox" name="gender" value="male" id="male" {{#if
-                    interested_in_m}} checked="true" {{/if}}>
-                  <label class="form-check-label" for="male">
-                    Men?
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="gender" value="female" id="female" {{#if
-                    interested_in_f}} checked="true" {{/if}}>
-                  <label class="form-check-label" for="female">
-                    Women?
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary" {{#if
-                    interested_in_o}} checked="true" {{/if}}>
-                  <label class="form-check-label" for="non-binary">
-                    Non-Binary?
-                  </label>
-                </div>
-              </div>
-
-              <br>
-              <div class="form-group">
-                <label class="form-text" for='user-bio'>Update your bio</label>
-                <textarea class="form-control" id='user-bio' placeholder='About you'>{{description}}</textarea>
-              </div>
-            </div>
           </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="interestDetails">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              My Interests
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-            data-bs-parent="#userProfileUpdate">
-            <div class="accordion-body">
-              <div class="form-group">
-                <p class="form-text">Your interests: <br>(check all that apply)</p>
-                <div id="interestContainer">
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="turnoffDetails">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-              My Turnoffs
-            </button>
-          </h2>
-          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-            data-bs-parent="#userProfileUpdate">
-            <div class="accordion-body">
-              <div class="form-group">
-                <p class="form-text">Your Turn Offs: <br>(check all that apply)</p>
-                <div id="turnOffContainer">
-
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="mt-3 btn btn-primary" id="updateProfilebtn">Update Profile</button>
-
     </div>
 
-    <div id="userId" data-attribute-id="{{id}}"></div>
+
+    <div class="col-12 col-md-6 col-lg-8 col-xl-9">
+      <h3>Edit Your Profile</h3>
+
+      <div class="accordion" id="userProfileUpdate">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="aboutDetails">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+              aria-expanded="false" aria-controls="collapseOne">
+              Account Settings
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+            data-bs-parent="#userProfileUpdate">
+            <div class="accordion-body">
+              <div class="form-group">
+                <label class="form-text" for='user-photo-url'>Update photo</label>
+                <div id='profile-picture-form' method="post" enctype="multipart/form-data">
+                  <div>
+                    <input type="file" class="form-control-file" id="profile-picture">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-text" for='user-email'> Update Email:</label>
+                  <input class="form-control" name='user-email' id='user-email' value='{{email}}'
+                    placeholder='E-mail address'>
+                </div>
+
+                {{!-- BUG UPDATE PASSWORD NOT WORKING CANT LOG BACK IN TO ACCOUNT--}}
+                {{!-- <div class="form-group">
+                  <label class="form-text" for='user-password'> Create New Password:</label>
+                  <input type="text" class="form-control" name='user-password' id='user-password' value=''
+                    placeholder='Password Must Be ≥ 8 characters'>
+                </div> --}}
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="userDetailsUpdate">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                User Details
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+              data-bs-parent="#userProfileUpdate">
+              <div class="accordion-body">
+                <div class="form-group">
+                  <label class="form-text" for='user-firstname'> First Name:</label>
+                  <input class="form-control" name='user-fistname' id='user-firstname' value='{{first_name}}'
+                    placeholder='First name'>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-text" for='user-lastname'> Last Name:</label>
+                  <input class="form-control" name='user-lastname' id='user-lastname' value='{{last_name}}'
+                    placeholder='Last name'>
+                </div>
+
+                <div class="form-group">
+                  <label for="userAge" class="form-text">Age</label>
+                  <input type="text" class="form-control" id="userAge" value='{{age}}' placeholder="Age">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-text" for='user-gender'>Gender</label>
+                  <select class="form-control" required name='user-gender' id='user-gender'>
+
+                    <option selected value={{gender}}>{{format_gender gender}}</option>
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="o">Non Binary</option>
+                  </select>
+                </div>
+                <br>
+                <div class="form-group">
+                  <p class="form-text">Interested in:
+                    (check all that apply)</p>
+                  <div class="form-check">
+
+                    <input class="form-check-input" type="checkbox" name="gender" value="male" id="male" {{#if
+                      interested_in_m}} checked="true" {{/if}}>
+                    <label class="form-check-label" for="male">
+                      Men?
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" value="female" id="female" {{#if
+                      interested_in_f}} checked="true" {{/if}}>
+                    <label class="form-check-label" for="female">
+                      Women?
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="gender" value="non-binary" id="non-binary"
+                      {{#if interested_in_o}} checked="true" {{/if}}>
+                    <label class="form-check-label" for="non-binary">
+                      Non-Binary?
+                    </label>
+                  </div>
+                </div>
+
+                <br>
+                <div class="form-group">
+                  <label class="form-text" for='user-bio'>Update your bio</label>
+                  <textarea class="form-control" id='user-bio' placeholder='About you'>{{description}}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="interestDetails">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                My Interests
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+              data-bs-parent="#userProfileUpdate">
+              <div class="accordion-body">
+                <div class="form-group">
+                  <p class="form-text">Your interests: <br>(check all that apply)</p>
+                  <div id="interestContainer">
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="turnoffDetails">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                My Turnoffs
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+              data-bs-parent="#userProfileUpdate">
+              <div class="accordion-body">
+                <div class="form-group">
+                  <p class="form-text">Your Turn Offs: <br>(check all that apply)</p>
+                  <div id="turnOffContainer">
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="mt-3 btn btn-primary" id="updateProfilebtn">Update Profile</button>
+
+      </div>
+
+      <div id="userId" data-attribute-id="{{id}}"></div>
+    </div>
+  </div>
 
 
-    <script src="/js/myProfile.js"></script>
-    <!--{{> user-data-list }} -->
+  <script src="/js/myProfile.js"></script>
+  <!--{{> user-data-list }} -->

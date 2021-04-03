@@ -1,6 +1,7 @@
 label {
     display: block;
 }
+
 .template {
     display: none;
 }
@@ -70,12 +71,6 @@ label {
 .in-doc-link:hover {
   color: #c840fd;
   font-weight: bold; 
-}
-
-.jumbotron-main {
-  border: 60px solid transparent;
-  padding: 15px; 
-  border-image: url(./flowers-borders-png-5613.png) 160 round;
 }
 
 .card {
@@ -152,12 +147,15 @@ body {
 
 .dashboard-img {
   width: 100;
-  height: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  height: 400px;
 }
 
-.span-list:nth-of-type(n + 2)::before {
+
+/* .c-s-l:not(:last-child):after {
   content: ", ";
-}
+} */
 
 .form-select{
     width: 16%;
@@ -250,16 +248,16 @@ border-radius: 20px 20px 20px 0;
 #modal-close-button {
   border: silver 1px solid;
   border-radius: 1em;
-  height: 3em;
-  width: 5em;
+  height: 4em;
+  width: 6em;
   color: purple;
   background-image: linear-gradient(lightgreen, lightyellow, lightpink);
 }
 #modal-close-button:hover {
   border: silver 3px solid;
   border-radius: 1em;
-  height: 4em;
-  width: 6em;
+  height: 4.5em;
+  width: 6.5em;
   color: rgb(255, 0, 255);
   transition: background-image .45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   background-image: linear-gradient(lightpink, lightyellow, lightgreen);
@@ -272,6 +270,44 @@ border-radius: 20px 20px 20px 0;
 }
 
 .card-body-text {
-  height: 125px;
+  height: 100px;
   overflow-y: scroll;
+}
+
+.card-text {
+  line-height: 1.8;
+}
+
+.log-in-btn {
+  width: 103.188px
+}
+
+.form-text {
+  margin-top: 16px;
+}
+
+#updateProfilebtn {
+  margin-bottom: 32px;
+}
+
+@media only screen and (min-width: 625px) {
+
+  .jumbotron-main {
+    height: calc(100vh - 108px);
+    border: 60px solid transparent;
+    padding: 15px; 
+    border-image: url(./flowers-borders-png-5613.png) 160 round;
+    overflow-y: auto;
+  } 
+
+  .footer-text::after {
+    content: "flowers borders png transparent by transparentpng.com is licensed under CC BY 4.0"
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .slide-down {
+    position: sticky;
+    top: 0;
+  }
 }

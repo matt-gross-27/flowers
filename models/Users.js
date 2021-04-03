@@ -168,7 +168,7 @@ Users.init({
     type: DataTypes.TEXT,
   },
   profile_picture_src: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     validate: {
       isUrl: true
     }
