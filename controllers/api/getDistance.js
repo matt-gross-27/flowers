@@ -22,14 +22,4 @@ module.exports = function getDistance(coords1, coords2) {
 
   // return distance in miles
   return d / 1609.34
-}
-
-let c1 = {
-  latitude: 34.0855782,
-  longitude: -118.3863773
-};
-
-let c2 = {
-  latitude: 34.034711879486345,
-  longitude: -118.68583010257383
 };

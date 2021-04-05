@@ -28,16 +28,16 @@
 </head>
 
 <body>
-    {{>navigationbar}}
+    {{> navigationbar}}
     <div class="jumbotron-main">
         {{{body}}}
     </div>
-    {{#if loggedIn}}
-    <script src="js/logout.js"></script>{{/if}}
+    
+    {{#if loggedIn}}<script src="js/logout.js"></script>{{/if}}
 
-    <div class="footer">
-        <p>"flowers borders png transparent" by transparentpng.com is licensed under CC BY 4.0</p>
-    </div>
+    <footer class="footer">
+        <p class="footer-text"></p>
+    </footer>
 
 </body>
 
