@@ -1,37 +1,137 @@
 label {
     display: block;
 }
+
 .template {
     display: none;
 }
+
+.a {
+  color:#e9f899;
+}
+
 .navbar {
     position: fixed-right; 
-    background-color: #3D2E2B;
+    background-color: #aae682;
+    background-image: url("./icons/kmohckdndcv.png") ;
+    color: rgb(255, 0, 0);
+}
+
+.nav-link {
+  color: #f5d325;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color:  #e9f899;
+}
+
+.navbar-brand:hover {
+  color:  #e9f899;
+}
+
+.btn-no-style:hover {
+  color:  #e9f899;
 }
 
 .navbar-brand {
-  color: #fae8e0; 
+  color: #f5d325;
+  font-weight: bold; 
+  font-size: 1.75rem;
+}
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.navbar-toggler .custom-toggler {
+  padding: .25rem .75rem;
+  font-size: 1.75rem;
+  line-height: 1;
+  background-color: #ff6497;
+  background-image: url(./icons/yeelllow_Flower.png);
+  border: 1px solid #c840fd;
+  border-radius: .25rem;
+  transition: box-shadow .15s ease-in-out;
 }
 
-.jumbotron-main {
-  border: 60px solid transparent;
-  padding: 15px; 
-  border-image: url(./flowers-borders-png-5613.png) 160 round;
+.navbar-toggler-icon .custom-toggler {
+  background-image: url('./css/icons/yeelllow_Flower_1552356 copy.png');
+}
+
+.in-doc-link {
+  color: #ff6497;
+  font-weight: bold;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.in-doc-link:hover {
+  color: #c840fd;
+  font-weight: bold; 
+}
+
+.card {
+  min-height: 250px;
 }
 
 body {
     background-color: #FDF2E7;
 }
+
+.form-check-input {
+    background-color: #e91e6329;
+    border-color: #ff6497;
+    
+}  
+
+.form-check-input:checked {
+    box-shadow: #ff6497; 
+    background-color: #ff6497;
+}
+
+.form-check-input:focus {
+    border-color: #ff6497;
+    outline: none;
+    box-shadow: none;
+    /* background-image: url(flowers/utils/icons/noun_Flower_1552356.svg); */
+}
+
 .btn-primary:hover {
     color: rgb(0, 0, 0);
-    background-color: #feecc3;
+    background-color: #c840fd;
     border-color: #e91e6329;    
+    box-shadow: none;
 }
+
+.btn-primary:active {
+  color: rgb(0, 0, 0);
+  background-color: #c840fd;
+  border-color: #e91e6329;
+  box-shadow: none;
+}
+
+.btn-primary:focus {
+  color: rgb(0, 0, 0);
+  background-color: #ff6497;
+  border-color: #e91e6329;
+  box-shadow: none;
+}
+
 .btn-primary {
     color: rgb(0, 0, 0);
-    background-color: #C1D9B7;
-    border-color: #3D2E2B;    
+    background-color: #ff6497;
+    border-color: #3D2E2B;
+    box-shadow: none;
 }
+
+.btn-primary:active:focus {
+  box-shadow: 0 0 0 0.25rem gold;
+  background-color: #c840fd;
+}
+
 .btn-no-style {
   display: inline-block;
   border: none;
@@ -47,12 +147,15 @@ body {
 
 .dashboard-img {
   width: 100;
-  height: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  height: 400px;
 }
 
-.span-list:nth-of-type(n + 2)::before {
+
+/* .c-s-l:not(:last-child):after {
   content: ", ";
-}
+} */
 
 .form-select{
     width: 16%;
@@ -72,6 +175,36 @@ input:-internal-autofill-selected {
     background-color:#f0c5c2 !important;
 }
 
+.my-texts {
+  background-color:#ff6497;
+  border-radius: 20px 20px 0 20px;
+}
+
+.match-texts {
+background-color: aquamarine;
+border-radius: 20px 20px 20px 0;
+}
+
+.texts {
+  border: solid lightslategray 1px
+}
+
+.chat-box {
+  border: solid lightslategray 1px;
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-anchor: none;
+}
+
+.chat-form {
+  border: solid lightslategray 1px;
+}
+
+.btn-send {
+  height: 38px;
+  margin-right: 8px;
+  align-self: center;
+}
 .footer {
   position: fixed;
   left: 0;
@@ -80,4 +213,101 @@ input:-internal-autofill-selected {
   background-color: #fae8e0;
   color: white;
   text-align: center;
+}
+
+
+#signup-modal {
+  height: 100vh;
+  width: 100vw;
+  background-color:rgba(0, 0, 0,0.5);
+  z-index: 1000;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 5px;
+} 
+
+#modal-stuffs-container {
+  height: 500px;
+  width: 450px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 60px solid transparent;
+  padding: 15px; 
+  border-image: url(./flowers-borders-png-5613.png) 160 round;
+}
+
+#modal-close-button {
+  border: silver 1px solid;
+  border-radius: 1em;
+  height: 4em;
+  width: 6em;
+  color: purple;
+  background-image: linear-gradient(lightgreen, lightyellow, lightpink);
+}
+#modal-close-button:hover {
+  border: silver 3px solid;
+  border-radius: 1em;
+  height: 4.5em;
+  width: 6.5em;
+  color: rgb(255, 0, 255);
+  transition: background-image .45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  background-image: linear-gradient(lightpink, lightyellow, lightgreen);
+}
+
+.search-img {
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  height: 400px;
+}
+
+.card-body-text {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.card-text {
+  line-height: 1.8;
+}
+
+.log-in-btn {
+  width: 103.188px
+}
+
+.form-text {
+  margin-top: 16px;
+}
+
+#updateProfilebtn {
+  margin-bottom: 32px;
+}
+
+@media only screen and (min-width: 625px) {
+
+  .jumbotron-main {
+    height: calc(100vh - 108px);
+    border: 60px solid transparent;
+    padding: 15px; 
+    border-image: url(./flowers-borders-png-5613.png) 160 round;
+    overflow-y: auto;
+  } 
+
+  .footer-text::after {
+    content: "flowers borders png transparent by transparentpng.com is licensed under CC BY 4.0"
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .slide-down {
+    position: sticky;
+    top: 0;
+  }
 }

@@ -1,24 +1,26 @@
 <div class="container">
-  <div class="container">
-    <h2>Your Notifications</h2>
+  <h2>Your Notifications</h2>
+  <section class="dashboard-section">
     {{#unless received_flowers_from.length}}
     <p class="text-secondary">
-      You Currently have no notifications. Check out the search for matches page and come back later to see who sent you
+      You Currently have no notifications. Check out the <a class='in-doc-link' href="/search">search for matches</a>
+      page and come back later to see who sent you
       flowers!
     </p>
     {{/unless}}
 
     {{#each received_flowers_from}}
     <div class="row d-flex flex-wrap">
-      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+      <div class="col-12 col-md-6 col-xl-4 d-flex align-items-center justify-content-around">
         <img src="{{profile_picture_src}}" class="dashboard-img w-100"
           alt="{{first_name}} {{last_name}} profile picture" />
       </div>
-      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
+      <div class="col-12 col-md-6 col-xl-8 d-flex flex-column justify-content-between p-3">
         <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
-          <p>{{description}}</p>
-          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
-          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+          <p>{{getDistance latitude longitude ../latitude ../longitude}} miles away</p>
+          <p>Bio: {{description}}</p>
+          {{#if users_interests.length}}<p>Interests: {{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>{{/if}}
+          {{#if users_turnoffs.length}}<p>Turnoffs: {{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>{{/if}}
           <div class='my-1 d-flex justify-content-around'>
             <button data-attribute-id="{{id}}" id="send-flowers-{{id}}"
               class="btn btn-primary dashboard-btn send-flowers-btn" title="Send flowers back">🌹</button>
@@ -27,42 +29,47 @@
           </div>
       </div>
     </div>
-    <hr>
-    {{/each}}
-    <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
-    <hr>
-    <h2>Your Matches</h2>
-    <br>
+  </section>
+  <hr />
+  {{/each}}
+  <p class="text-center">🌼🌸🌹💐♥️💐🌹🌸🌼</p>
+  <hr />
+  <h2>Your Matches</h2>
+  <br>
+  <section class="dashboard-section">
     {{#unless user_matches.length}}
     <p class="text-secondary">
-      You Currently have no matches. When you and another user send flowers to each other, you can come back to see matches here!
+      You Currently have no matches. When you and another user send flowers to each other, you can come back to see
+      matches here!
     </p>
     {{/unless}}
 
     {{#each user_matches}}
     <div class="row d-flex flex-wrap">
-      <div class="col-12 col-md-4 d-flex align-items-center justify-content-around">
+      <div class="col-12 col-md-6 col-xl-4 d-flex align-items-center justify-content-around">
         <img src="{{profile_picture_src}}" class="dashboard-img w-100"
           alt="{{first_name}} {{last_name}} profile picture" />
       </div>
-      <div class="col-12 col-md-8 d-flex flex-column justify-content-between p-3">
-        <h5>🌹 from {{first_name}} {{last_name}}, {{age}}</h3>
-          <p>{{description}}</p>
-          <p>{{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
-          <p>{{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
-          <div class='my-1 d-flex justify-content-around'>
-            <button data-attribute-id="{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
-              title="Message user">💬</button>
-            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-block-btn"
-              title="Block user">❌</button>
-            <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-flag-btn"
-              title="Report abuse">🏴‍☠️</button>
-          </div>
+      <div class="col-12 col-md-6 col-xl-8 d-flex flex-column justify-content-between p-3">
+        <h5> Matched with {{first_name}} {{last_name}}, {{age}}</h3>
+        <p>{{getDistance latitude longitude ../latitude ../longitude}} miles away</p>
+        <p>Bio: {{description}}</p>
+        <p>Interests: {{#each users_interests}} <span class="span-list">{{interest_name}}</span>{{/each}}</p>
+        <p>Turnoffs: {{#each users_turnoffs}} <span class="span-list">{{turnoff_name}}</span>{{/each}}</p>
+        <div class='my-1 d-flex justify-content-around'>
+          <a href="/chat/{{id}}" id="send-message-{{id}}" class="btn btn-primary w-25 send-message-btn"
+            title="Message user">💬</a>
+          <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-block-btn"
+            title="Block user">❌</button>
+          <button data-attribute-id="{{id}}" id="send-block-{{id}}" class="btn btn-primary w-25 send-flag-btn"
+            title="Report abuse">🏴‍☠️</button>
+        </div>
       </div>
     </div>
-    <hr>
-    {{/each}}
+  </section>
+  <hr />
+  {{/each}}
 
-    <script src="js/sendFlowers.js"></script>
-    <script src="js/sendBlock.js"></script>
-    <script src="js/sendFlag.js"></script>
+  <script src="js/sendFlowers.js"></script>
+  <script src="js/sendBlock.js"></script>
+  <script src="js/sendFlag.js"></script>

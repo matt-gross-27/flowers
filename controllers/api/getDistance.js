@@ -7,29 +7,19 @@ const R = 6371000; // ≈ the earths radius (close enough for jazz)
 // d = R ⋅ c // distance in Meters
 
 module.exports = function getDistance(coords1, coords2) {
-    const phi1 = coords1.latitude * Math.PI / 180;
-    const phi2 = coords2.latitude * Math.PI / 180;
+  const phi1 = coords1.latitude * Math.PI / 180;
+  const phi2 = coords2.latitude * Math.PI / 180;
 
-    const deltaPhi = (coords2.latitude - coords1.latitude) * Math.PI / 180;
-    const deltaLambda = (coords2.longitude - coords1.longitude) * Math.PI / 180;
+  const deltaPhi = (coords2.latitude - coords1.latitude) * Math.PI / 180;
+  const deltaLambda = (coords2.longitude - coords1.longitude) * Math.PI / 180;
 
-    const a = Math.pow(Math.sin(deltaPhi / 2), 2) +
-        Math.cos(phi1) * Math.cos(phi2) * Math.pow(Math.sin(deltaLambda / 2), 2)
+  const a = Math.pow(Math.sin(deltaPhi / 2), 2) +
+    Math.cos(phi1) * Math.cos(phi2) * Math.pow(Math.sin(deltaLambda / 2), 2)
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    const d = R * c
+  const d = R * c
 
-    // return distance in miles
-    return d / 1609.34
-}
-
-let c1 = {
-    latitude: 34.0855782,
-    longitude: -118.3863773
-};
-
-let c2 = {
-    latitude: 34.034711879486345,
-    longitude: -118.68583010257383
+  // return distance in miles
+  return d / 1609.34
 };

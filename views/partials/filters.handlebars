@@ -18,8 +18,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-
+        
         <form id="filter-form">
           <div>{{log interested_in_m}}</div>
           <div>{{log interested_in_f}}</div>
@@ -27,32 +26,20 @@
 
           <!-- Gender -->
           <div class="form-check">
-            {{#if interested_in_m}}
-            <input class="form-check-input" type="checkbox" name="interested_in_m" value="true" id="male" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_m" value="true" id="male">
-            {{/if}}
-            <label class="form-check-label" for="male">
+            <input class="form-check-input" type="checkbox" name="interested_in_m" value="m" id="interested_in_m">
+            <label class="form-check-label" for="interested_in_m">
               Male
             </label>
           </div>
           <div class="form-check">
-            {{#if interested_in_f}}
-            <input class="form-check-input" type="checkbox" name="interested_in_f" value="true" id="female" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_f" value="true" id="female">
-            {{/if}}
-            <label class="form-check-label" for="female">
+            <input class="form-check-input" type="checkbox" name="interested_in_f" value="f" id="interested_in_f">
+            <label class="form-check-label" for="interested_in_f">
               Female
             </label>
           </div>
           <div class="form-check">
-            {{#if interested_in_o}}
-            <input class="form-check-input" type="checkbox" name="interested_in_o" value="true" id="non-binary" checked>
-            {{else }}
-            <input class="form-check-input" type="checkbox" name="interested_in_o" value="true" id="non-binary">
-            {{/if}}
-            <label class="form-check-label" for="non-binary">
+            <input class="form-check-input" type="checkbox" name="interested_in_o" value="o" id="interested_in_o">
+            <label class="form-check-label" for="interested_in_o">
               Non-binary
             </label>
           </div>
@@ -62,7 +49,7 @@
           <!-- Distance -->
           <div class="form-group">
             <label for="distance">Distance</label>
-            <input type="range" name="distance" min="1" max="1000" value="100">
+            <input type="range" name="distance" min="1" max="500" value="100">
             <div id="distance">100 miles</div>
           </div>
 
@@ -77,6 +64,3 @@
     </div>
   </div>
 </div>
-
-
-<script src="/js/filters.js"></script>

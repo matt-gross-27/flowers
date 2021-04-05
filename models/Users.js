@@ -26,20 +26,20 @@ class Users extends Model {
             user_id: reqObj.sender_id,
             match_user_id: reqObj.recipient_id
           })
-          return;
         }
+        return;
       })
       .then(() => {
         // send data back for put request response (user data with flowers and matches)
         return this.getCurrentUser(reqObj.sender_id);
-      });
+      }).catch(err => console.log(err))
   };
 
   static getCurrentUser(id) {
     return Users.findOne({
       where: { id },
       attributes: [
-        'id', 'first_name', 'last_name', 'interested_in_m', 'interested_in_f', 'interested_in_o',
+        'id', 'first_name', 'last_name', 'interested_in_m', 'interested_in_f', 'interested_in_o', 'latitude', 'longitude'
       ],
       include: [{
         model: Users,
@@ -126,6 +126,32 @@ class Users extends Model {
         });
       });
   };
+
+  // update users turnoffs method
+  static updateTurnoffs(obj, models) {
+    return models.UserTurnoffs.destroy({
+      where: { user_id: obj.user_id }
+    })
+      .then(() => {
+        return obj.turnoff_ids.forEach(turnoffId => {
+          models.UserTurnoffs.create({
+            user_id: obj.user_id,
+            turnoff_id: turnoffId
+          });
+        });
+      })
+      .then(() => {
+        return models.Users.findOne({
+          where: { id: obj.user_id },
+          attributes: ['id', 'first_name', 'last_name'],
+          include: {
+            model: models.Turnoffs,
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        });
+      });
+  };
 }
 
 Users.init({
@@ -168,7 +194,7 @@ Users.init({
     type: DataTypes.TEXT,
   },
   profile_picture_src: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     validate: {
       isUrl: true
     }

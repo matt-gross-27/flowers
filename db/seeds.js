@@ -1,357 +1,220 @@
 const { Interests, Turnoffs, Users, UserInterests, UserTurnoffs, Flowers, Matches } = require('../models');
-const sequelize = require('../config/connection');
+const oSrcArr = require('./non-binary-src');
+
+function randomNumBtw(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function randomIntBtw(min, max) {
+  return Math.floor(Math.random() * (max - min) + min)
+}
 
 const interests = [
-    { id: 1, interest_name: "interest # 1" },
-    { id: 2, interest_name: "interest # 2" },
-    { id: 3, interest_name: "interest # 3" },
-    { id: 4, interest_name: "interest # 4" },
-    { id: 5, interest_name: "interest # 5" },
-    { id: 6, interest_name: "interest # 6" },
-    { id: 7, interest_name: "interest # 7" },
-    { id: 8, interest_name: "interest # 8" },
-    { id: 9, interest_name: "interest # 9" },
-    { id: 10, interest_name: "interest # 10" },
-    { id: 11, interest_name: "interest # 11" },
-    { id: 12, interest_name: "interest # 12" },
-    { id: 13, interest_name: "interest # 13" },
-    { id: 14, interest_name: "interest # 14" },
-    { id: 15, interest_name: "interest # 15" },
-    { id: 16, interest_name: "interest # 16" }
+  { id: 1, interest_name: "Hiking" },
+  { id: 2, interest_name: "Reading" },
+  { id: 3, interest_name: "Fishing" },
+  { id: 4, interest_name: "Astrology" },
+  { id: 5, interest_name: "Music" },
+  { id: 6, interest_name: "Binging Netflix" },
+  { id: 7, interest_name: "Bowling" },
+  { id: 8, interest_name: "Cooking" },
+  { id: 9, interest_name: "Art" },
+  { id: 10, interest_name: "Fashion" },
+  { id: 11, interest_name: "Hacking" },
+  { id: 12, interest_name: "Lego building" },
+  { id: 13, interest_name: "Needlepoint" },
+  { id: 14, interest_name: "Cats" },
+  { id: 15, interest_name: "Dogs" },
+  { id: 16, interest_name: "Wine" }
 ];
 
 const turnoffs = [
-    { id: 1, turnoff_name: "turnoff # 1" },
-    { id: 2, turnoff_name: "turnoff # 2" },
-    { id: 3, turnoff_name: "turnoff # 3" },
-    { id: 4, turnoff_name: "turnoff # 4" },
-    { id: 5, turnoff_name: "turnoff # 5" },
-    { id: 6, turnoff_name: "turnoff # 6" },
-    { id: 7, turnoff_name: "turnoff # 7" },
-    { id: 8, turnoff_name: "turnoff # 8" },
-    { id: 9, turnoff_name: "turnoff # 9" },
-    { id: 10, turnoff_name: "turnoff # 10" },
-    { id: 11, turnoff_name: "turnoff # 11" },
-    { id: 12, turnoff_name: "turnoff # 12" },
-    { id: 13, turnoff_name: "turnoff # 13" },
-    { id: 14, turnoff_name: "turnoff # 14" },
-    { id: 15, turnoff_name: "turnoff # 15" },
-    { id: 16, turnoff_name: "turnoff # 16" }
+  { id: 1, turnoff_name: "Selfishness" },
+  { id: 2, turnoff_name: "Aggression" },
+  { id: 3, turnoff_name: "Drinking" },
+  { id: 4, turnoff_name: "Smoking" },
+  { id: 5, turnoff_name: "Boring People" },
+  { id: 6, turnoff_name: "Over Sensitivity" },
+  { id: 7, turnoff_name: "Bad Driving" },
+  { id: 8, turnoff_name: "Bad Teeth" },
+  { id: 9, turnoff_name: "Baby Talk" },
+  { id: 10, turnoff_name: "Ex-Talk" },
+  { id: 11, turnoff_name: "Meanness" },
+  { id: 12, turnoff_name: "Bad Hygiene" },
+  { id: 13, turnoff_name: "Long Fingernails" },
+  { id: 14, turnoff_name: "Laziness" },
+  { id: 15, turnoff_name: "Bad Listeners" },
+  { id: 16, turnoff_name: "Bad Kissers" }
 ];
 
-const testUsers = [
-    //males
-    {
-        email: "MA@hotmail.com",
-        first_name: "MA",
-        last_name: "LikesF",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/2.jpg",
-        age: 35,
-        gender: "m",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "37.08929000",
-        longitude: "-119.38289000",
-    },
-    {
-        email: "MB@hotmail.com",
-        first_name: "MB",
-        last_name: "LikesF",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/1.jpg",
-        age: 19,
-        gender: "m",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "38.08929000",
-        longitude: "-111.38289000",
-    },
-    {
-        email: "MC@hotmail.com",
-        first_name: "MC",
-        last_name: "LikesF",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/3.jpg",
-        age: 35,
-        gender: "m",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "38.08929000",
-        longitude: "-111.38289000",
-    },
-    {
-        email: "MD@hotmail.com",
-        first_name: "MD",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/4.jpg",
-        age: 35,
-        gender: "m",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "35.08929",
-        longitude: "-119.2344",
-    },
-    {
-        email: "ME@hotmail.com",
-        first_name: "ME",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/5.jpg",
-        age: 35,
-        gender: "m",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "40.08929",
-        longitude: "-116.944",
-    },
-    {
-        email: "MF@hotmail.com",
-        first_name: "MF",
-        last_name: "LikesMF",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/6.jpg",
-        age: 60,
-        gender: "m",
-        interested_in_m: true,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "40.08929",
-        longitude: "-116.944",
-    },
-    //females
-    {
-        email: "FA@hotmail.com",
-        first_name: "FA",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/1.jpg",
-        age: 35,
-        gender: "f",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "37.08929000",
-        longitude: "-119.38289000",
-    },
-    {
-        email: "FB@hotmail.com",
-        first_name: "FB",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/2.jpg",
-        age: 19,
-        gender: "f",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "38.08929000",
-        longitude: "-111.38289000",
-    },
-    {
-        email: "FC@hotmail.com",
-        first_name: "FC",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/3.jpg",
-        age: 35,
-        gender: "f",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "38.08929000",
-        longitude: "-111.38289000",
-    },
-    {
-        email: "FD@hotmail.com",
-        first_name: "FD",
-        last_name: "LikesAll",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/4.jpg",
-        age: 35,
-        gender: "f",
-        interested_in_m: true,
-        interested_in_f: true,
-        interested_in_o: true,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "35.08929",
-        longitude: "-119.2344",
-    },
-    {
-        email: "FE@hotmail.com",
-        first_name: "FE",
-        last_name: "LikesFO",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/5.jpg",
-        age: 35,
-        gender: "f",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "50.08929",
-        longitude: "-150.944",
-    },
-    {
-        email: "FF@hotmail.com",
-        first_name: "FF",
-        last_name: "LikesFO",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/6.jpg",
-        age: 60,
-        gender: "f",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: true,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "40.08929",
-        longitude: "-116.944",
-    },
-    {
-        email: "OA@hotmail.com",
-        first_name: "OA",
-        last_name: "LikesF",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/7.jpg",
-        age: 35,
-        gender: "o",
-        interested_in_m: false,
-        interested_in_f: true,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "30.08929",
-        longitude: "-112.944",
-    },
-    {
-        email: "OB@hotmail.com",
-        first_name: "OB",
-        last_name: "LikesAll",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/women/8.jpg",
-        age: 35,
-        gender: "o",
-        interested_in_m: true,
-        interested_in_f: true,
-        interested_in_o: true,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "40.082329",
-        longitude: "-116.9234",
-    },
-    {
-        email: "OC@hotmail.com",
-        first_name: "OC",
-        last_name: "LikesM",
-        password: "supersecret",
-        description: "I'm a 35 year old fun person who likes music and tv. Looking for a friend for my dog spike",
-        profile_picture_src: "https://randomuser.me/api/portraits/men/9.jpg",
-        age: 35,
-        gender: "o",
-        interested_in_m: true,
-        interested_in_f: false,
-        interested_in_o: false,
-        interested_in_min_age: 20,
-        interested_in_max_age: 50,
-        latitude: "41.0929",
-        longitude: "-116.044",
+function generateTestUsers(num) {
+  var userArr = [];
+  var iM = 0;
+  var iW = 0;
+  var iO = 0;
+
+  for (let i = 1; i < num + 1; i++) {
+    let user = {}
+    user.email = `${i}@hotmail.com`;
+    user.first_name = `Test`;
+    user.last_name = `User`;
+    user.password = '12345678';
+    user.age = Math.floor(Math.random() * 50 + 18)
+    let x = Math.random()
+    if (x < .4) {
+      user.gender = "m";
+      user.profile_picture_src = `https://randomuser.me/api/portraits/men/${iM}.jpg`;
+      iM++;
+    } else if (x < .8) {
+      user.gender = "f";
+      user.profile_picture_src = `https://randomuser.me/api/portraits/women/${iW}.jpg`;
+      iW++;
+    } else {
+      user.gender = "o";
+      user.profile_picture_src = oSrcArr[iO];
+      iO++;
     }
-];
 
-const userInterests = [
-    { user_id: 1, interest_id: 1 },
-    { user_id: 1, interest_id: 2 },
-    { user_id: 1, interest_id: 3 },
-    { user_id: 2, interest_id: 1 },
-    { user_id: 2, interest_id: 2 },
-    { user_id: 2, interest_id: 5 },
-    { user_id: 3, interest_id: 9 },
-];
+    if (Math.random() > 0.5) {
+      user.interested_in_m = true;
+    } else {
+      user.interested_in_m = false;
+    }
 
-const userTurnoffs = [
-    { user_id: 1, turnoff_id: 9 },
-    { user_id: 1, turnoff_id: 8 },
-    { user_id: 1, turnoff_id: 7 },
-    { user_id: 2, turnoff_id: 6 },
-    { user_id: 2, turnoff_id: 5 },
-    { user_id: 2, turnoff_id: 4 },
-    { user_id: 3, turnoff_id: 1 },
-];
+    if (Math.random() > 0.5) {
+      user.interested_in_f = true;
+    } else {
+      user.interested_in_f = false;
+    }
+
+    if (Math.random() > 0.5) {
+      user.interested_in_o = true;
+    } else {
+      user.interested_in_o = false;
+    }
+
+    const str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    user.description = str.substring(0, Math.floor(Math.random() * 100 + 10));
+    user.latitude = randomNumBtw(33.753886, 34.188941).toFixed(8);
+    user.longitude = randomNumBtw(-118.38367, -117.867312).toFixed(8);
+
+    userArr.push(user);
+  }
+  return userArr;
+}
+
+const testUsers = generateTestUsers(100);
+
+function generateUserInterests(num) {
+  var arr = []
+  for (let i = 1; i < num + 1; i++) {
+    if (Math.random() > 0.5) {
+      let usrInt = {};
+      usrInt.user_id = i;
+      usrInt.interest_id = randomIntBtw(1, 5);
+      arr.push(usrInt);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrInt = {};
+      usrInt.user_id = i;
+      usrInt.interest_id = randomIntBtw(5, 9);
+      arr.push(usrInt);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrInt = {};
+      usrInt.user_id = i;
+      usrInt.interest_id = randomIntBtw(9, 13);
+      arr.push(usrInt);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrInt = {};
+      usrInt.user_id = i;
+      usrInt.interest_id = randomIntBtw(13, 17);
+      arr.push(usrInt);
+    }
+  }
+  return arr;
+}
+
+
+const userInterests = generateUserInterests(100);
+
+function generateUserTurnoffs(num) {
+  var arr = []
+  for (let i = 1; i < num + 1; i++) {
+    if (Math.random() > 0.5) {
+      let usrTrn = {};
+      usrTrn.user_id = i;
+      usrTrn.turnoff_id = randomIntBtw(1, 5);
+      arr.push(usrTrn);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrTrn = {};
+      usrTrn.user_id = i;
+      usrTrn.turnoff_id = randomIntBtw(5, 9);
+      arr.push(usrTrn);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrTrn = {};
+      usrTrn.user_id = i;
+      usrTrn.turnoff_id = randomIntBtw(9, 13);
+      arr.push(usrTrn);
+    }
+
+    if (Math.random() > 0.5) {
+      let usrTrn = {};
+      usrTrn.user_id = i;
+      usrTrn.turnoff_id = randomIntBtw(13, 17);
+      arr.push(usrTrn);
+    }
+  }
+  return arr;
+}
+
+const userTurnoffs = generateUserTurnoffs(100);
 
 const flowers = [
-    { sender_id: 14, recipient_id: 1 },
-    { sender_id: 1, recipient_id: 7 },
-    { sender_id: 1, recipient_id: 9 },
-    { sender_id: 7, recipient_id: 1 },
-    { sender_id: 8, recipient_id: 1 },
-    { sender_id: 1, recipient_id: 8 },
+  { sender_id: 2, recipient_id: 1 },
+  { sender_id: 3, recipient_id: 1 },
+  { sender_id: 4, recipient_id: 1 },
+  { sender_id: 5, recipient_id: 1 },
+  { sender_id: 6, recipient_id: 1 },
+  { sender_id: 7, recipient_id: 1 },
 ];
 
-seedDatabase = () => {
-    Interests.bulkCreate(interests)
-        .then(data => console.log('Interests seeded!'));
+seedDatabase = async () => {
+  var a = await Interests.bulkCreate(interests).catch(err => console.log(err));
+  
+  if (a) {
+    var b = await Turnoffs.bulkCreate(turnoffs).catch(err => console.log(err));
+  }
 
-    Turnoffs.bulkCreate(turnoffs)
-        .then(data => console.log('Turnoffs seeded!'));
+  if (b) {
+    var c = await Users.bulkCreate(testUsers, { individualHooks: true }).catch(err => console.log(err));
+  }
 
-    Users.bulkCreate(testUsers, { individualHooks: true })
-        .then(data => console.log('TestUsers seeded!'))
+  if (c) {
+    var d = await UserInterests.bulkCreate(userInterests).catch(err => console.log(err));
+  }
 
-    .then(() => {
-            UserInterests.bulkCreate(userInterests);
-        })
-        .then(data => console.log('UserInterests seeded!'))
+  if (d) {
+    var e = await UserTurnoffs.bulkCreate(userTurnoffs).catch(err => console.log(err));
+  }
 
-    .then(() => {
-            UserTurnoffs.bulkCreate(userTurnoffs);
-        })
-        .then(() => {
-            flowers.forEach(flower => {
-                Users.sendFlowers(flower, { Users, Flowers, Matches });
-            })
-        })
-        .then(data => console.log('UserInterests seeded!'))
+  if (e) {
+    var f = await flowers.forEach(flower => {
+      Users.sendFlowers(flower, { Users, Flowers, Matches })
+    });
+  }
+  
+  if (f) {
+    console.log(`=========== db seeded ===========`)
+  }
 }
 
 module.exports = seedDatabase;

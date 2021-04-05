@@ -2,6 +2,7 @@ const Interests = require('./Interests');
 const Turnoffs = require('./Turnoffs');
 const UserInterests = require('./UserInterests');
 const UserTurnoffs = require('./UserTurnoffs');
+const Messages = require('./Messages');
 const Flags = require('./Flags');
 const Blocks = require('./Blocks');
 const Matches = require('./Matches');
@@ -107,6 +108,13 @@ Interests.belongsToMany(Users, {
   as: 'interested_users'
 });
 
+UserInterests.belongsTo(Users, { foreignKey: 'user_id' });
+UserInterests.belongsTo(Interests, { foreignKey: 'interest_id' });
+
+Users.hasMany(UserInterests, { foreignKey: 'user_id' });
+Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
+
+
 Users.belongsToMany(Turnoffs, {
   through: 'user_turnoffs',
   foreignKey: 'user_id',
@@ -119,16 +127,18 @@ Turnoffs.belongsToMany(Users, {
   as: 'repulsed_users'
 });
 
-UserInterests.belongsTo(Users, { foreignKey: 'user_id' });
-UserInterests.belongsTo(Interests, { foreignKey: 'interest_id' });
 
 UserTurnoffs.belongsTo(Users, { foreignKey: 'user_id' });
 UserTurnoffs.belongsTo(Turnoffs, { foreignKey: 'turnoff_id' });
 
-Users.hasMany(UserInterests, { foreignKey: 'user_id' });
 Users.hasMany(UserTurnoffs, { foreignKey: 'user_id' });
-
-Interests.hasMany(UserInterests, { foreignKey: 'interest_id' });
 Turnoffs.hasMany(UserTurnoffs, { foreignKey: 'turnoff_id' });
 
-module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users }
+//User + Messages associations
+Users.hasMany(Messages, { foreignKey: 'sender_id' });
+Users.hasMany(Messages, { foreignKey: 'recipient_id' });
+Messages.belongsTo, (Users, { foreignKey: 'sender_id' });
+Messages.belongsTo, (Users, { foreignKey: 'recipient_id' });
+
+
+module.exports = { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users, Messages }

@@ -1,11 +1,12 @@
 const router = require('express').Router();
-const User = require('../models/Users');
-const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users } = require('../models');
+const { Flowers, Matches, Flags, Blocks, UserInterests, UserTurnoffs, Interests, Turnoffs, Users, Messages } = require('../models');
+const { Op } = require("sequelize");
 
 // Render Homepage
 router.get('/', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/dashboard')
+    return;
   }
   res.render('home', { ...req.session });
 });
@@ -14,65 +15,115 @@ router.get('/', (req, res) => {
 router.get('/dashboard', (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
   Users.findOne({
     where: { id: req.session.user_id },
     attributes: { exclude: ['password'] },
-    include: [{
-      model: Interests,
-      attributes: ['interest_name'],
-      through: { attributes: [] },
-      as: 'users_interests'
-    },
-    {
-      model: Turnoffs,
-      attributes: ['turnoff_name'],
-      through: { attributes: [] },
-      as: 'users_turnoffs'
-    },
-    {
-      model: Users,
-      attributes: ['id'],
-      through: { attributes: [] },
-      as: 'sent_flowers_to',
-    },
-    {
-      model: Users,
-      // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
-      attributes: { exclude: ['password',] },
-      through: { attributes: [] },
-      as: 'received_flowers_from'
-    },
-    {
-      model: Users,
-      attributes: ['id'],
-      through: { attributes: [] },
-      as: 'sent_block_to'
-    },
-    {
-      model: Users,
-      attributes: ['id'],
-      through: { attributes: [] },
-      as: 'received_block_from'
-    },
-    {
-      model: Users,
-      attributes: ['id'],
-      through: { attributes: [] },
-      as: 'sent_flag_to'
-    },
-    {
-      model: Users,
-      attributes: ['id'],
-      through: { attributes: [] },
-      as: 'received_flag_from'
-    },
-    {
-      model: Users,
-      attributes: { exclude: ['password',] },
-      through: { attributes: [] },
-      as: 'user_matches'
-    }
+    include: [
+      {
+        model: Interests,
+        attributes: ['interest_name'],
+        through: { attributes: [] },
+        as: 'users_interests'
+      },
+      {
+        model: Turnoffs,
+        attributes: ['turnoff_name'],
+        through: { attributes: [] },
+        as: 'users_turnoffs'
+      },
+      {
+        model: Users,
+        attributes: ['id'],
+        through: { attributes: [] },
+        as: 'sent_flowers_to',
+      },
+      {
+        model: Users,
+        // attributes: ['id', 'first_name', 'last_name', 'description', 'profile_picture_src', 'age', 'gender', 'latitude', 'longitude'],
+        attributes: { exclude: ['password',] },
+        through: { attributes: [] },
+        as: 'received_flowers_from',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
+      },
+      {
+        model: Users,
+        attributes: ['id'],
+        through: { attributes: [] },
+        as: 'sent_block_to'
+      },
+      {
+        model: Users,
+        attributes: ['id'],
+        through: { attributes: [] },
+        as: 'received_block_from'
+      },
+      {
+        model: Users,
+        attributes: ['id'],
+        through: { attributes: [] },
+        as: 'sent_flag_to'
+      },
+      {
+        model: Users,
+        attributes: ['id'],
+        through: { attributes: [] },
+        as: 'received_flag_from'
+      },
+      {
+        model: Users,
+        attributes: { exclude: ['password',] },
+        through: { attributes: [] },
+        as: 'user_matches',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
+      },
+      {
+        model: Users,
+        attributes: { exclude: ['password',] },
+        through: { attributes: [] },
+        as: 'matched_users',
+        include: [
+          {
+            model: Interests,
+            attributes: ['interest_name'],
+            through: { attributes: [] },
+            as: 'users_interests'
+          },
+          {
+            model: Turnoffs,
+            attributes: ['turnoff_name'],
+            through: { attributes: [] },
+            as: 'users_turnoffs'
+          }
+        ]
+      }
     ]
   })
     .then(userData => {
@@ -85,10 +136,10 @@ router.get('/dashboard', (req, res) => {
           ...user.received_block_from,
           ...user.sent_flag_to,
           ...user.received_flag_from
-          ].map(x => x.id)
+        ].map(x => x.id)
           .includes(userObj.id) === false;
-        }
-      
+      }
+
       user.received_flowers_from = user.received_flowers_from.filter(showFlowers);
 
       function showMatches(userObj) {
@@ -97,14 +148,28 @@ router.get('/dashboard', (req, res) => {
           ...user.received_block_from,
           ...user.sent_flag_to,
           ...user.received_flag_from
-          ].map(x => x.id)
+        ].map(x => x.id)
           .includes(userObj.id) === false;
-        }
+      }
 
-        user.user_matches = user.user_matches.filter(showMatches);
-      
+      user.user_matches = [...user.user_matches, ...user.matched_users].filter(showMatches);
+
+      function getUniqueById(arr) {
+        let newArr = [];
+        for (let i = 0; i < arr.length; i++) {
+          const newArrIds = newArr.map(obj => obj.id);
+          if (newArrIds.includes(arr[i].id) === false) {
+            newArr.push(arr[i]);
+          }
+        }
+        return newArr
+      }
+
+      user.user_matches = getUniqueById(user.user_matches);
+
       res.render('dashboard', { ...user, ...req.session });
     })
+
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -115,8 +180,8 @@ router.get('/dashboard', (req, res) => {
 router.get('/search', async (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
-
   Users.findOne({
     where: { id: req.session.user_id },
     attributes: { exclude: ['password'] },
@@ -290,6 +355,7 @@ router.get('/my-profile', (req, res) => {
 router.get('/:id', (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/')
+    return;
   }
   Users.findOne({
     where: { id: req.params.id },
@@ -359,12 +425,54 @@ router.get('/:id', (req, res) => {
         return;
       }
       const user = userData.get({ plain: true });
-      res.render('profile', { ...user, ...req.session});
+      res.render('profile', { ...user, ...req.session });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+router.get('/chat/:id', async (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/')
+    return;
+  }
+  const me = await Users.findOne({
+    where: { id: req.session.user_id },
+    attributes: { exclude: ['password'] }
+  }).then(userData => userData.get({ plain: true }))
+    .catch(err => res.status(500).json(err));
+
+  const match = await Users.findOne({
+    where: { id: req.params.id },
+    attributes: { exclude: ['password'] }
+  }).then(userData => userData.get({ plain: true }))
+    .catch(err => res.status(500).json(err));
+
+  let messages = await Messages.findAll({
+    where: {
+      [Op.or]: [{
+        sender_id: req.session.user_id,
+        recipient_id: req.params.id,
+      },
+      {
+        recipient_id: req.session.user_id,
+        sender_id: req.params.id,
+      }
+      ]
+    },
+    order: [['created_at']]
+  }).then(messageData => messageData.map(message => message.get({ plain: true })))
+    .catch(err => res.status(500).json(err));
+
+  messages.map(message => {
+    if (message.sender_id === req.session.user_id) {
+      message.fromMe = true;
+    }
+  });
+
+  res.render('messages', { me, match, messages, ...req.session });
 });
 
 module.exports = router;
