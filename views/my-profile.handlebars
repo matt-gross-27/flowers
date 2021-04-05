@@ -10,7 +10,6 @@
               <h5 class="card-title">{{first_name}} {{last_name}}, {{age}}</h5>
               
               <p class="card-text">
-                X miles away <br />
                 {{description}} <br />
                 {{#if users_interests.length}} <strong>Interests:</strong><span class="csl-wrap">{{#each users_interests}}<span class="csl">{{interest_name}}</span>{{/each}}</span><br />{{/if}}
                 {{#if users_turnoffs.length}} <strong>Turnoffs:</strong><span class="csl-wrap">{{#each users_turnoffs}}<span class="csl">{{turnoff_name}}</span>{{/each}}</span><br />{{/if}}
