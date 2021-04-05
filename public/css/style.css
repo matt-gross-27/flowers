@@ -11,10 +11,12 @@ label {
 }
 
 .navbar {
-    position: fixed-right; 
+    position: sticky; 
+    top: 0;
     background-color: #aae682;
     background-image: url("./icons/kmohckdndcv.png") ;
     color: rgb(255, 0, 0);
+    z-index: 99999;
 }
 
 .nav-link {
@@ -153,9 +155,13 @@ body {
 }
 
 
-/* .c-s-l:not(:last-child):after {
+.csl::before {
   content: ", ";
-} */
+}
+
+.csl:first-child::before {
+  content: " ";
+}
 
 .form-select{
     width: 16%;
@@ -191,7 +197,7 @@ border-radius: 20px 20px 20px 0;
 
 .chat-box {
   border: solid lightslategray 1px;
-  height: 70vh;
+  height: 67vh;
   overflow-y: scroll;
   overflow-anchor: none;
 }
@@ -302,6 +308,12 @@ border-radius: 20px 20px 20px 0;
 
   .footer-text::after {
     content: "flowers borders png transparent by transparentpng.com is licensed under CC BY 4.0"
+  }
+}
+
+@media only screen and (max-width: 625px) {
+  .footer {
+    display: none;
   }
 }
 

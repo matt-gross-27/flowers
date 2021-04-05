@@ -15,8 +15,8 @@ const hbTemplate = Handlebars.compile(`
           
 
           {{description}} <br />
-          {{#if users_interests.length}} <strong>Interests:</strong> {{#each users_interests}} <span class="c-s-l">{{interest_name}}</span>{{/each}} {{/if}} <br />
-          {{#if users_turnoffs.length}} <strong>Turnoffs:</strong> {{#each users_turnoffs}} <span class="c-s-l">{{turnoff_name}}</span>{{/each}} {{/if}} <br />
+          {{#if users_interests.length}} <strong>Interests:</strong><span class="csl-wrap">{{#each users_interests}}<span class="csl">{{interest_name}}</span>{{/each}}</span><br />{{/if}}
+          {{#if users_turnoffs.length}} <strong>Turnoffs:</strong><span class="csl-wrap">{{#each users_turnoffs}}<span class="csl">{{turnoff_name}}</span>{{/each}}</span><br />{{/if}}
         </p>
 
         </div>
